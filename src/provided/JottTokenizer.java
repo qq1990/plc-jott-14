@@ -3,12 +3,20 @@ package src.provided;
 /**
  * This class is responsible for tokenizing Jott code.
  * 
- * @author Donald Burke, 
+ * @author Donald Burke, Andrew Yansick
  **/
 
 import java.util.ArrayList;
 
 public class JottTokenizer {
+
+  // The list of tokens that will be returned by the tokenizer
+  public ArrayList<Token> tokens;
+
+  // Constructor
+  public JottTokenizer() {
+    tokens = new ArrayList<Token>();
+  }
 
 	/**
      * Takes in a filename and tokenizes that file into Tokens
