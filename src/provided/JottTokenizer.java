@@ -11,7 +11,6 @@ import java.io.FileNotFoundException;
  * @author Donald Burke, Thomas Ehlers
  **/
 public class JottTokenizer {
-    
     /**
      * Takes in a filename and tokenizes that file into Tokens
      * based on the rules of the Jott Language
