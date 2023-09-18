@@ -43,15 +43,22 @@ public class JottTokenizer {
         while (i < data.length() && i != -1) {
             buffer = String.valueOf(data.charAt(i));
             i++;
+            // Whitespace Handler
             if (buffer.equals(" ") || buffer.equals("\r")) {
                 buffer = ""; // Does nothing
-            } else if (buffer.equals("#")) {
+            } 
+            // Comment Handler
+            else if (buffer.equals("#")) {
                 while (i < data.length() && (data.charAt(i) != '\n')) {
                     i++;
                 }
-            } else if (buffer.equals("\n")) {
+            } 
+            // Newline Handler
+            else if (buffer.equals("\n")) {
                 line++;
-            } else if (buffer.equals(",")) {
+            } 
+            // Comma, Rbracket, Lbracket, Rbrace, Lbrace, and Semicolon Handler
+            else if (buffer.equals(",")) {
                 tokens.add(new Token(buffer, filename, line, TokenType.COMMA));
             } else if (buffer.equals("]")) {
                 tokens.add(new Token(buffer, filename, line, TokenType.R_BRACKET));
@@ -63,7 +70,9 @@ public class JottTokenizer {
                 tokens.add(new Token(buffer, filename, line, TokenType.L_BRACE));
             } else if (buffer.equals(";")) {
                 tokens.add(new Token(buffer, filename, line, TokenType.SEMICOLON));
-            } else if (buffer.equals(":")) {
+            } 
+            // Colon Handler (also checks for double colon representing function call)
+            else if (buffer.equals(":")) {
                 if (i < data.length() && data.charAt(i) == ':') {
                     buffer += data.charAt(i);
                     i++;
@@ -71,9 +80,13 @@ public class JottTokenizer {
                 } else {
                     tokens.add(new Token(buffer, filename, line, TokenType.COLON));
                 }
-            } else if (buffer.equals("+") || buffer.equals("-") || buffer.equals("*") || buffer.equals("/")) {
+            } 
+            // Math Operation Handler
+            else if (buffer.equals("+") || buffer.equals("-") || buffer.equals("*") || buffer.equals("/")) {
                 tokens.add(new Token(buffer, filename, line, TokenType.MATH_OP));
-            } else if (buffer.equals("=") || buffer.equals("!") || buffer.equals("<") || buffer.equals(">")) {
+            } 
+            // Relational Operator and Assignment Handler
+            else if (buffer.equals("=") || buffer.equals("!") || buffer.equals("<") || buffer.equals(">")) {
                 if (i < data.length() && data.charAt(i) == '=') {
                     buffer += data.charAt(i);
                     i++;
