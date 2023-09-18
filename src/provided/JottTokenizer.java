@@ -32,6 +32,7 @@ public class JottTokenizer {
         } catch (FileNotFoundException e) {
             System.out.println("File "+filename+" could not be located/opened.");
             //e.printStackTrace();
+            return null;
         }
 
         // Tokenize the String
@@ -81,9 +82,9 @@ public class JottTokenizer {
                     tokens.add(new Token(buffer, filename, line, TokenType.ASSIGN));
                 } else if (buffer.equals("!")) {
                     if (i < data.length()) {
-                        System.err.println("Error on line "+line+": '!' expected '=', got '"+data.charAt(i)+"' (ASCII="+(int)data.charAt(i)+").");
+                        System.err.println("Syntax Error:\n'!' expected '=', got '"+data.charAt(i)+"' (ASCII="+(int)data.charAt(i)+")\n"+filename+":"+line);
                     } else {
-                        System.err.println("Error on line "+line+": '!' expected '=', reached end of file.");
+                        System.err.println("Syntax Error:\n'!' expected '=', reached end of file\n"+filename+":"+line);
                     }
                     i = -1;
                 } else {
@@ -114,9 +115,9 @@ public class JottTokenizer {
                     tokens.add(new Token(buffer, filename, line, TokenType.NUMBER));
                 } else {
                     if (i >= data.length()) {
-                        System.err.println("Error on line "+line+": '.' expected a digit, reached end of file.");
+                        System.err.println("Syntax Error:\n'.' expected a digit, reached end of file\n"+filename+":"+line);
                     } else {
-                        System.err.println("Error on line "+line+": '.' expected a digit, got '"+data.charAt(i)+"' (ASCII="+(int)data.charAt(i)+").");
+                        System.err.println("Syntax Error:\n'.' expected a digit, got '"+data.charAt(i)+"' (ASCII="+(int)data.charAt(i)+")\n"+filename+":"+line);
                     }
                     i = -1;
                 }
@@ -126,14 +127,14 @@ public class JottTokenizer {
                     i++;
                 }
                 if (i >= data.length()) {
-                    System.err.println("Error on line "+line+": String expected '\"', reached end of file.");
+                    System.err.println("Syntax Error:\nString expected '\"', reached end of file\n"+filename+":"+line);
                     i = -1;
                 } else if (data.charAt(i)=='\"') {
                     buffer += data.charAt(i);
                     i++;
                     tokens.add(new Token(buffer, filename, line, TokenType.STRING));
                 } else {
-                    System.err.println("Error on line "+line+": String expected '\"', got '"+data.charAt(i)+"' (ASCII="+(int)data.charAt(i)+").");
+                    System.err.println("System Error:\nString expected '\"', got '"+data.charAt(i)+"' (ASCII="+(int)data.charAt(i)+")\n"+filename+":"+line);
                     i = -1;
                 }
             } else if (Character.isLetter(buffer.charAt(0))) {
@@ -143,12 +144,13 @@ public class JottTokenizer {
                 }
                 tokens.add(new Token(buffer, filename, line, TokenType.ID_KEYWORD));
             } else {
-                System.err.println("Error on line "+line+": Unknown character, '"+buffer+"' (ASCII="+(int)buffer.charAt(0)+").");
+                System.err.println("Syntax Error:\nUnknown character, '"+buffer+"' (ASCII="+(int)buffer.charAt(0)+")\n"+filename+":"+line);
                 i = -1;
             }
         }
-        // Testing Code
-        System.out.println(data); 
+        if (i == -1) {
+            return null;
+        }
 		return tokens;
 	}
 
