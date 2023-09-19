@@ -42,15 +42,6 @@ public class JottTokenizer {
             return null;
         }
 
-        String fname = "";
-        for (int i=filename.length()-1; i>=0; i--) {
-            if (filename.charAt(i) == '\\' || filename.charAt(i) == '/') {
-                i = 0;
-            } else {
-                fname = filename.charAt(i)+fname;
-            }
-        }
-
         // Tokenize the String
         ArrayList<Token> tokens = new ArrayList<Token>();
         String buffer;
@@ -114,9 +105,9 @@ public class JottTokenizer {
                 } else if (buffer.equals("!")) {
                     if (i < data.length()) {
                         printErrorMsg("'!' expected '=', got '"+data.charAt(i)+
-                                "' (ASCII="+(int)data.charAt(i)+")", fname, line);
+                                "' (ASCII="+(int)data.charAt(i)+")", filename, line);
                     } else {
-                        printErrorMsg("'!' expected '=', reached end of file", fname, line);
+                        printErrorMsg("'!' expected '=', reached end of file", filename, line);
                     }
                     i = -1;
                 } else {
@@ -152,10 +143,10 @@ public class JottTokenizer {
                     tokens.add(new Token(buffer, filename, line, TokenType.NUMBER));
                 } else {
                     if (i >= data.length()) {
-                        printErrorMsg("'.' expected a digit, reached end of file", fname, line);
+                        printErrorMsg("'.' expected a digit, reached end of file", filename, line);
                     } else {
                         printErrorMsg("'.' expected a digit, got '"+data.charAt(i)+
-                                "' (ASCII="+(int)data.charAt(i)+")", fname, line);
+                                "' (ASCII="+(int)data.charAt(i)+")", filename, line);
                     }
                     i = -1;
                 }
@@ -169,7 +160,7 @@ public class JottTokenizer {
                 }
                 if (i >= data.length()) {
                     printErrorMsg("String expected '\"', reached end of file",
-                            fname, line);
+                            filename, line);
                     i = -1;
                 } else if (data.charAt(i)=='\"') {
                     buffer += data.charAt(i);
@@ -177,7 +168,7 @@ public class JottTokenizer {
                     tokens.add(new Token(buffer, filename, line, TokenType.STRING));
                 } else {
                     printErrorMsg("System Error:\nString expected '\"', got '"+data.charAt(i)+
-                            "' (ASCII="+(int)data.charAt(i)+")", fname, line);
+                            "' (ASCII="+(int)data.charAt(i)+")", filename, line);
                     i = -1;
                 }
             } 
@@ -192,7 +183,7 @@ public class JottTokenizer {
             // Unknown handler
             else {
                 printErrorMsg("Unknown character, '"+buffer+"' (ASCII="+
-                        (int)buffer.charAt(0)+")", fname, line);
+                        (int)buffer.charAt(0)+")", filename, line);
                 i = -1;
             }
         }
