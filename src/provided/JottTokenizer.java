@@ -8,14 +8,14 @@ import java.io.FileNotFoundException;
 /**
  * This class is responsible for tokenizing Jott code.
  * 
- * @author Donald Burke, Thomas Ehlers, Quan Quy, Clarke Kennedy
+ * @author Donald Burke, Thomas Ehlers, Quan Quy, Clarke Kennedy, Andrew Yansick
  **/
 public class JottTokenizer {
     /**
      * Helper function which displays errors with a common format.
-     * @param message
-     * @param fileName
-     * @param lineNumber
+     * @param message Error message to be printed
+     * @param fileName Filename of file causing error
+     * @param lineNumber Line number at which error was raised
      */
     public static void printErrorMsg(String message, String fileName, int lineNumber) {
         System.err.println("Syntax Error:\n"+message+"\n"+fileName+":"+lineNumber);
