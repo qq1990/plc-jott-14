@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 /**
  * This class is responsible for tokenizing Jott code.
  * 
- * @author Donald Burke, Thomas Ehlers
+ * @author Donald Burke, Thomas Ehlers, Quan Quy
  **/
 public class JottTokenizer {
     /**
