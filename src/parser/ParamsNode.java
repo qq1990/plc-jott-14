@@ -49,20 +49,20 @@ public class ParamsNode implements JottTree {
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
     
-    public static ParamsNode parse(ArrayList<Token> tokens) {
+    public static ParamsNode parse(ArrayList<Token> tokens) throws SyntaxException {
         ArrayList<ExprNode> pars = new ArrayList<ExprNode>();
         if (tokens.size() != 0) {
-            // Handle the "error"
-            ExprNode p = ExprNode.parse(tokens);
+            ExprNode p = null;
+            try {
+                p = ExprNode.parse(tokens);
+            } catch (SyntaxException e) {}
             if (p != null) {
                 pars.add(p);
                 while (tokens.size() != 0 && tokens.get(0).getTokenType() == TokenType.COMMA) {
                     tokens.remove(0);
                     p = ExprNode.parse(tokens);
                     if (p == null) {
-                        //throw new SyntaxException()
-                        System.err.println("Syntax Error in ParamsNode");
-                        return null;
+                        throw new SyntaxException("ParamsNode");
                     }
                     pars.add(p);
                 }

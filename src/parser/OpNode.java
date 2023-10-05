@@ -43,11 +43,9 @@ public class OpNode implements ExprNode {
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
 
-    public static OpNode parse(ArrayList<Token> tokens) {
+    public static OpNode parse(ArrayList<Token> tokens) throws SyntaxException {
         if (tokens.size() == 0) {
-            //throw new SyntaxException()
-            System.err.println("Syntax Error in OpNode");
-            return null;
+            throw new SyntaxException("Syntax Error in OpNode");
         }
         Token t = tokens.get(0);
 
@@ -62,38 +60,24 @@ public class OpNode implements ExprNode {
         } else if (t.getTokenType() == TokenType.FC_HEADER) {
             l = CallNode.parse(tokens);
         } else {
-            //throw new SyntaxException()
-            System.err.println("Syntax Error in OpNode");
-            return null;
+            throw new SyntaxException("Syntax Error in OpNode");
         }
 
-        // Optional type-checking
         return OpNode.parseTail(l, tokens);
     }
 
-    public static OpNode parseTail(ExprNode l, ArrayList<Token> tokens) {
+    public static OpNode parseTail(ExprNode l, ArrayList<Token> tokens) throws SyntaxException {
         if (tokens.size() == 0) {
-            //throw new SyntaxException()
-            System.err.println("Syntax Error in OpNode_Tail");
-            return null;
+            throw new SyntaxException("Syntax Error in OpNode_Tail");
         }
         Token o = tokens.get(0);
 
-        // Optional type-checking
         if (o.getTokenType() != TokenType.MATH_OP && 
                 o.getTokenType() != TokenType.REL_OP) {
-            //throw new SyntaxException()
-            System.err.println("Syntax Error in OpNode_Tail");
-            return null;
+            throw new SyntaxException("Syntax Error in OpNode_Tail");
         }
         tokens.remove(0);
-        // Pre-check or Handle error? Optional type-checking
         ExprNode r = ExprNode.parse(tokens);
-        if (r == null) {
-            //throw new SyntaxException()
-            System.err.println("Syntax Error in OpNode_Tail");
-            return null;
-        }
         return new OpNode(o, l, r);
     }
 }

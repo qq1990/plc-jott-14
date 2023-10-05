@@ -42,25 +42,19 @@ public class CallNode implements ExprNode {
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
     
-    public static CallNode parse(ArrayList<Token> tokens) {
+    public static CallNode parse(ArrayList<Token> tokens) throws SyntaxException {
         if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.FC_HEADER) {
-            //throw new SyntaxException()
-            System.err.println("Syntax Error in CallNode");
-            return null;
+            throw new SyntaxException("Syntax Error in CallNode");
         }
         tokens.remove(0);
-        IdNode name = IdNode.parse(tokens);  // Error handling
+        IdNode name = IdNode.parse(tokens);
         if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.L_BRACKET) {
-            //throw new SyntaxException()
-            System.err.println("Syntax Error in CallNode");
-            return null;
+            throw new SyntaxException("Syntax Error in CallNode");
         }
         tokens.remove(0);
-        ParamsNode pars = ParamsNode.parse(tokens);  // Error handling
+        ParamsNode pars = ParamsNode.parse(tokens);
         if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.R_BRACKET) {
-            //throw new SyntaxException()
-            System.err.println("Syntax Error in CallNode");
-            return null;
+            throw new SyntaxException("Syntax Error in CallNode");
         }
         tokens.remove(0);
         return new CallNode(name, pars);

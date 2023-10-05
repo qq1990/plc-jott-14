@@ -40,11 +40,9 @@ public class IdNode implements ExprNode {
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
     
-    public static IdNode parse(ArrayList<Token> tokens) {
+    public static IdNode parse(ArrayList<Token> tokens) throws SyntaxException {
         if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) {
-            //throw new SyntaxException()
-            System.err.println("Syntax Error in IdNode");
-            return null;
+            throw new SyntaxException("Syntax Error in IdNode");
         }
         return new IdNode(tokens.remove(0));
     }

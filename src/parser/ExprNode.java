@@ -6,11 +6,9 @@ import src.provided.Token;
 import src.provided.TokenType;
 
 public interface ExprNode extends JottTree {
-    public static ExprNode parse(ArrayList<Token> tokens) {
+    public static ExprNode parse(ArrayList<Token> tokens) throws SyntaxException {
         if (tokens.size() == 0) {
-            //throw new SyntaxException()
-            System.err.println("Syntax Error in ExprNode");
-            return null;
+            throw new SyntaxException("Syntax Error in ExprNode");
         }
         Token t = tokens.get(0);
 
@@ -31,9 +29,7 @@ public interface ExprNode extends JottTree {
         } else if (t.getTokenType() == TokenType.FC_HEADER) {
             l = CallNode.parse(tokens);
         } else {
-            //throw new SyntaxException()
-            System.err.println("Syntax Error in ExprNode");
-            return null;
+            throw new SyntaxException("Syntax Error in ExprNode");
         }
         
         // Operations - check/try (we could start start type-checking)

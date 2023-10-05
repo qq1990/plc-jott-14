@@ -44,11 +44,9 @@ public class NumNode implements ExprNode {
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
     
-    public static NumNode parse(ArrayList<Token> tokens) {
+    public static NumNode parse(ArrayList<Token> tokens) throws SyntaxException {
         if (tokens.size() == 0) {
-            //throw new SyntaxException()
-            System.err.println("Syntax Error in NumNode");
-            return null;
+            throw new SyntaxException("Syntax Error in NumNode");
         }
 
         Token t = tokens.get(0);
@@ -58,9 +56,7 @@ public class NumNode implements ExprNode {
             t = null;
         }
         if (tokens.get(0).getTokenType() != TokenType.NUMBER) {
-            //throw new SyntaxException()
-            System.err.println("Syntax Error in NumNode");
-            return null;
+            throw new SyntaxException("Syntax Error in NumNode");
         }
         return new NumNode(t, tokens.remove(0));
     }

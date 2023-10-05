@@ -9,15 +9,19 @@ public class test {
         ArrayList<Token> tokens = JottTokenizer.tokenize("parserTestCases/custom_test.jott");
         printTokens(tokens);
         System.out.println("\n============================\n");
-        System.out.println(ExprNode.parse(tokens).convertToJott());
-        System.out.println(ExprNode.parse(tokens).convertToJott());
-        System.out.println(ExprNode.parse(tokens).convertToJott());
-        System.out.println(ExprNode.parse(tokens).convertToJott());
-        System.out.println(ExprNode.parse(tokens).convertToJott());
-        System.out.println(ExprNode.parse(tokens).convertToJott());
-        System.out.println(ParamsNode.parse(tokens).convertToJott());
-        System.out.println(ExprNode.parse(tokens).convertToJott());
-        System.out.println(ExprNode.parse(tokens).convertToJott());
+        try {
+            System.out.println(ExprNode.parse(tokens).convertToJott());
+            System.out.println(ExprNode.parse(tokens).convertToJott());
+            System.out.println(ExprNode.parse(tokens).convertToJott());
+            System.out.println(ExprNode.parse(tokens).convertToJott());
+            System.out.println(ExprNode.parse(tokens).convertToJott());
+            System.out.println(ExprNode.parse(tokens).convertToJott());
+            System.out.println(ParamsNode.parse(tokens).convertToJott());
+            System.out.println(ExprNode.parse(tokens).convertToJott());
+            System.out.println(ExprNode.parse(tokens).convertToJott());
+        } catch(SyntaxException e) {
+            System.err.println(e);
+        }
         System.out.println("\n============================\n");
         printTokens(tokens);
     }
