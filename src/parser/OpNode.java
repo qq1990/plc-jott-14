@@ -53,7 +53,7 @@ public class OpNode implements ExprNode {
 
         // Valid (left) operands - (no str/bool compare/equality?)
         ExprNode l;
-        if (t.getTokenType() == TokenType.NUMBER) {
+        if (t.getTokenType() == TokenType.NUMBER || t.getToken().equals("-")) {
             l = NumNode.parse(tokens);
         } else if (t.getTokenType() == TokenType.ID_KEYWORD &&
                 !t.getToken().equals("True") && 

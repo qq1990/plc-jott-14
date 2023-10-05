@@ -18,7 +18,6 @@ public class test {
         System.out.println(ParamsNode.parse(tokens).convertToJott());
         System.out.println(ExprNode.parse(tokens).convertToJott());
         System.out.println(ExprNode.parse(tokens).convertToJott());
-        System.out.println(ExprNode.parse(tokens).convertToJott());
         System.out.println("\n============================\n");
         printTokens(tokens);
     }

@@ -5,14 +5,18 @@ import src.provided.TokenType;
 import java.util.ArrayList;
 
 public class NumNode implements ExprNode {
-    private Token num_val;
+    private Token sign, num_val;
 
-    public NumNode(Token num) {
+    public NumNode(Token sn, Token num) {
+        sign = sn;
         num_val = num;
     }
 
     @Override
     public String convertToJott() {
+        if (sign != null) {
+            return sign.getToken()+num_val.getToken();
+        }
         return num_val.getToken();
     }
 
@@ -41,11 +45,23 @@ public class NumNode implements ExprNode {
     }
     
     public static NumNode parse(ArrayList<Token> tokens) {
-        if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.NUMBER) {
+        if (tokens.size() == 0) {
             //throw new SyntaxException()
             System.err.println("Syntax Error in NumNode");
             return null;
         }
-        return new NumNode(tokens.remove(0));
+
+        Token t = tokens.get(0);
+        if (t.getToken().equals("-")) {
+            tokens.remove(0);
+        } else {
+            t = null;
+        }
+        if (tokens.get(0).getTokenType() != TokenType.NUMBER) {
+            //throw new SyntaxException()
+            System.err.println("Syntax Error in NumNode");
+            return null;
+        }
+        return new NumNode(t, tokens.remove(0));
     }
 }
