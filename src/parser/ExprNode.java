@@ -23,7 +23,8 @@ public interface ExprNode extends JottTree {
         
         // Possible (left) operands - num, id, call (we could start type-checking)
         ExprNode l;
-        if (t.getTokenType() == TokenType.NUMBER || t.getToken().equals("-")) {
+        if (t.getTokenType() == TokenType.NUMBER 
+            || t.getToken().equals("-") || t.getToken().equals("+")) {
             l = NumNode.parse(tokens);
         } else if (t.getTokenType() == TokenType.ID_KEYWORD) {
             l = IdNode.parse(tokens);

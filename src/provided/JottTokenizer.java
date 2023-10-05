@@ -90,7 +90,8 @@ public class JottTokenizer {
             } 
             // Math Operation Handler
             else if (buffer.equals("+") || buffer.equals("-") || 
-                    buffer.equals("*") || buffer.equals("/")) {
+                    buffer.equals("*") || buffer.equals("/") ||
+                    buffer.equals("^")) {
                 tokens.add(new Token(buffer, filename, line, TokenType.MATH_OP));
             } 
             // Relational Operator and Assignment Handler

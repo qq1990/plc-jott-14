@@ -52,7 +52,7 @@ public class NumNode implements ExprNode {
         }
 
         Token t = tokens.get(0);
-        if (t.getToken().equals("-")) {
+        if (t.getToken().equals("-") || t.getToken().equals("+")) {
             tokens.remove(0);
         } else {
             t = null;
