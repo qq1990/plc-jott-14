@@ -5,18 +5,23 @@ import src.provided.Token;
 import src.provided.TokenType;
 import java.util.ArrayList;
 
-public class VarDecNode implements JottTree {
+public class AsmtNode implements JottTree {
     private Token type;
     private IdNode name;
+    private ExprNode expr;
 
-    public VarDecNode(Token type, IdNode name) {
+    public AsmtNode(Token type, IdNode name, ExprNode expr) {
         this.type = type;
         this.name = name;
+        this.expr = expr;
     }
 
     @Override
     public String convertToJott() {
-        return type.getToken() + " " + name.convertToJott() + ";";
+        if (type == null) {
+            return name.convertToJott() + " = " + expr.convertToJott() + ";";
+        }
+        return type.getToken() + " " + name.convertToJott() + " = " + expr.convertToJott() + ";";
     }
 
     @Override
@@ -43,36 +48,48 @@ public class VarDecNode implements JottTree {
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
     
-    public static VarDecNode parse(ArrayList<Token> tokens) throws SyntaxException{
+    public static AsmtNode parse(ArrayList<Token> tokens) throws SyntaxException{
         if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) {
-            throw new SyntaxException("Syntax Error in VarDecNode");
+            throw new SyntaxException("Syntax Error in AsmtNode");
         }
         Token t = tokens.get(0);
-        if (!(t.getToken().equals("Double")
+
+        Token type = null;
+        if ((t.getToken().equals("Double")
                 || t.getToken().equals("Integer")
                 || t.getToken().equals("String")
-                || t.getToken().equals("Boolean"))){
-            throw new SyntaxException("Syntax Error in VarDecNode");
+                || t.getToken().equals("Boolean"))){        
+            type = t;
+            tokens.remove(0);
         }
-        Token type = t;
-        tokens.remove(0);
 
         IdNode name = IdNode.parse(tokens);
-        if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.SEMICOLON) {
-            throw new SyntaxException("Syntax Error in VarDecNode");
+
+        if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.ASSIGN) {
+            throw new SyntaxException("Syntax Error in AsmtNode");
         }
         tokens.remove(0);
-        return new VarDecNode(type, name);
+
+        ExprNode expr = ExprNode.parse(tokens);
+
+        if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.SEMICOLON) {
+            throw new SyntaxException("Syntax Error in AsmtNode");
+        }
+        tokens.remove(0);
+
+        return new AsmtNode(type, name, expr);
     }
 
     public static void main(String[] args) throws SyntaxException{
         ArrayList<Token> tokens = new ArrayList<Token>();
         tokens.add(new Token("Double", "test", 1, TokenType.ID_KEYWORD));
         tokens.add(new Token("x", "test", 1, TokenType.ID_KEYWORD));
+        tokens.add(new Token("=", "test", 1, TokenType.ASSIGN));
+        tokens.add(new Token("1", "test", 1, TokenType.NUMBER));
         tokens.add(new Token(";", "test", 1, TokenType.SEMICOLON));
         tokens.add(new Token("x", "test", 1, TokenType.ID_KEYWORD));
-        VarDecNode v = null;
-        v = VarDecNode.parse(tokens);
+        AsmtNode v = null;
+        v = AsmtNode.parse(tokens);
         System.out.println(v.convertToJott());
     }
 }
