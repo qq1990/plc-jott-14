@@ -5,18 +5,16 @@ import src.provided.Token;
 import src.provided.TokenType;
 import java.util.ArrayList;
 
-public class VarDecNode implements JottTree {
+public class FuncReturnNode implements JottTree {
     private Token type;
-    private IdNode name;
 
-    public VarDecNode(Token type, IdNode name) {
+    public FuncReturnNode(Token type) {
         this.type = type;
-        this.name = name;
     }
 
     @Override
     public String convertToJott() {
-        return type.getToken() + " " + name.convertToJott() + ";";
+        return type.getToken();
     }
 
     @Override
@@ -43,33 +41,29 @@ public class VarDecNode implements JottTree {
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
     
-    public static VarDecNode parse(ArrayList<Token> tokens) throws SyntaxException{
+    public static FuncReturnNode parse(ArrayList<Token> tokens) throws SyntaxException{
         if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) {
-            throw new SyntaxException("Syntax Error in VarDecNode");
+            throw new SyntaxException("Syntax Error in FuncReturnNode");
         }
         Token t = tokens.get(0);
         if (!(t.getToken().equals("Double")
                 || t.getToken().equals("Integer")
+                || t.getToken().equals("Void")
                 || t.getToken().equals("String")
                 || t.getToken().equals("Boolean"))){
-            throw new SyntaxException("Syntax Error in VarDecNode");
+            throw new SyntaxException("Syntax Error in FuncReturnNode");
         }
         Token type = t;
         tokens.remove(0);
-        if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) {
-            throw new SyntaxException("Syntax Error in VarDecNode");
-        }
-        t = tokens.get(0);
-        IdNode name = IdNode.parse(tokens);
-        return new VarDecNode(type, name);
+        return new FuncReturnNode(type);
     }
 
     public static void main(String[] args) throws SyntaxException{
         ArrayList<Token> tokens = new ArrayList<Token>();
-        tokens.add(new Token("Double", "test", 1, TokenType.ID_KEYWORD));
+        tokens.add(new Token("Void", "test", 1, TokenType.ID_KEYWORD));
         tokens.add(new Token("x", "test", 1, TokenType.ID_KEYWORD));
-        VarDecNode v = null;
-        v = VarDecNode.parse(tokens);
+        FuncReturnNode v = null;
+        v = FuncReturnNode.parse(tokens);
         System.out.println(v.convertToJott());
     }
 }
