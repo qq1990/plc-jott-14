@@ -9,8 +9,6 @@ public class ElseIfNode implements BodyStmtNode {
 
     private ExprNode expr;
     private Body body;
-    private ArrayList<ElseIfNode> elseiflist;
-    private ElseNode else_node;
     
     public ElseIfNode(ExprNode expr, Body body) {
         this.expr = expr;
@@ -49,31 +47,31 @@ public class ElseIfNode implements BodyStmtNode {
 
     public static ElseIfNode parse(ArrayList<Token> tokens) throws SyntaxException {
         if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) {
-            throw new SyntaxException("Syntax Error in IfNode");
+            throw new SyntaxException("Syntax Error in ElseIfNode");
         }
         tokens.remove(0);
 
         if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.L_BRACKET) {
-            throw new SyntaxException("Syntax Error in IfNode");
+            throw new SyntaxException("Syntax Error in ElseIfNode");
         }
         tokens.remove(0);
 
         ExprNode expr = ExprNode.parse(tokens);
         
         if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.R_BRACKET) {
-            throw new SyntaxException("Syntax Error in IfNode");
+            throw new SyntaxException("Syntax Error in ElseIfNode");
         }
         tokens.remove(0);
 
         if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.L_BRACE) {
-            throw new SyntaxException("Syntax Error in IfNode");
+            throw new SyntaxException("Syntax Error in ElseIfNode");
         }
         tokens.remove(0);
 
         Body body = Body.parse(tokens);
 
         if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.R_BRACE) {
-            throw new SyntaxException("Syntax Error in IfNode");
+            throw new SyntaxException("Syntax Error in ElseIfNode");
         }
         tokens.remove(0);
 
