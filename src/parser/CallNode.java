@@ -4,7 +4,7 @@ import src.provided.Token;
 import src.provided.TokenType;
 import java.util.ArrayList;
 
-public class CallNode implements ExprNode {
+public class CallNode implements ExprNode, BodyStmtNode {
     private IdNode func_name;
     private ParamsNode params;
 

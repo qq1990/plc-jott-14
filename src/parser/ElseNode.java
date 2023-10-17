@@ -7,10 +7,10 @@ import src.provided.TokenType;
 
 public class ElseNode implements BodyStmtNode {
 
-    private ExprNode expr;
-    private Body body;
+    // private ExprNode expr;
+    private BodyNode body;
     
-    public ElseNode(Body body) {
+    public ElseNode(BodyNode body) {
         if (body != null) {
             this.body = body;
         }
@@ -18,7 +18,7 @@ public class ElseNode implements BodyStmtNode {
 
     @Override
     public String convertToJott() {
-        String s;
+        String s = "";
         if (body != null) {
             s.concat("else{"+body.convertToJott()+"}");
         }
@@ -61,7 +61,7 @@ public class ElseNode implements BodyStmtNode {
         }
         tokens.remove(0);
 
-        Body body = Body.parse(tokens);
+        BodyNode body = BodyNode.parse(tokens);
 
         if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.R_BRACE) {
             throw new SyntaxException("Syntax Error in ElseNode");

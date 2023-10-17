@@ -1,7 +1,7 @@
 package src.parser;
 
 
-import src.provided.JottTokenizer;
+// import src.provided.JottTokenizer;
 import src.provided.Token;
 import src.provided.TokenType;
 
@@ -10,9 +10,9 @@ import java.util.ArrayList;
 public class WhileNode implements BodyStmtNode {
 
     private ExprNode expr;
-    private Body body;
+    private BodyNode body;
     
-    public WhileNode(ExprNode expression, Body body) {
+    public WhileNode(ExprNode expression, BodyNode body) {
         this.expr = expression;
         this.body = body;
     }
@@ -70,7 +70,7 @@ public class WhileNode implements BodyStmtNode {
         }
         tokens.remove(0);
 
-        Body body = Body.parse(tokens);
+        BodyNode body = BodyNode.parse(tokens);
 
         if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.R_BRACE) {
             throw new SyntaxException("Syntax Error in WhileNode");

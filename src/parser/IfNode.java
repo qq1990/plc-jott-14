@@ -8,11 +8,11 @@ import src.provided.TokenType;
 public class IfNode implements BodyStmtNode {
 
     private ExprNode expr;
-    private Body body;
+    private BodyNode body;
     private ArrayList<ElseIfNode> elseiflist;
     private ElseNode else_node;
     
-    public IfNode(ExprNode expr, Body body, ArrayList<ElseIfNode> elseiflist, ElseNode else_node) {
+    public IfNode(ExprNode expr, BodyNode body, ArrayList<ElseIfNode> elseiflist, ElseNode else_node) {
         this.expr = expr;
         this.body = body;
         this.elseiflist = elseiflist;
@@ -24,10 +24,10 @@ public class IfNode implements BodyStmtNode {
         String s = "if["+expr.convertToJott()+"]{"+body.convertToJott()+"}";
 
         for(ElseIfNode node : elseiflist) {
-            s.concat(node.convertToJott);
+            s.concat(node.convertToJott());
         }
 
-        s.concat(else_node.convertToJott);
+        s.concat(else_node.convertToJott());
 
         return s;
         
@@ -57,7 +57,7 @@ public class IfNode implements BodyStmtNode {
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
 
-    public IfNode parse(ArrayList<Token> tokens) throws SyntaxException {
+    public static IfNode parse(ArrayList<Token> tokens) throws SyntaxException {
         ArrayList<ElseIfNode> nodes = new ArrayList<>();
 
         if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) {
@@ -82,18 +82,19 @@ public class IfNode implements BodyStmtNode {
         }
         tokens.remove(0);
 
-        Body body = Body.parse(tokens);
+        BodyNode body = BodyNode.parse(tokens);
 
         if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.R_BRACE) {
             throw new SyntaxException("Syntax Error in IfNode");
         }
         tokens.remove(0);
 
-        for(ElseIfNode node : elseiflist) {
-            nodes.add(node.parse(tokens));
+        ArrayList<ElseIfNode> elseiflist = new ArrayList<>();
+        while(tokens.size() > 0 && tokens.get(0).getToken().equals("elseif")) {
+            elseiflist.add(ElseIfNode.parse(tokens));
         }
 
-        ElseNode elsenode = else_node.convertToJott();
+        ElseNode elsenode = ElseNode.parse(tokens);
 
         return new IfNode(expr, body, nodes, elsenode);
         

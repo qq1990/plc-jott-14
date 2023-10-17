@@ -1,11 +1,11 @@
 package src.parser;
 
-import src.provided.JottTree;
+// import src.provided.JottTree;
 import src.provided.Token;
 import src.provided.TokenType;
 import java.util.ArrayList;
 
-public class VarDecNode implements JottTree {
+public class VarDecNode implements BodyStmtNode {
     private Token type;
     private IdNode name;
 

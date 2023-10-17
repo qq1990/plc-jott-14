@@ -8,9 +8,9 @@ import src.provided.TokenType;
 public class ElseIfNode implements BodyStmtNode {
 
     private ExprNode expr;
-    private Body body;
+    private BodyNode body;
     
-    public ElseIfNode(ExprNode expr, Body body) {
+    public ElseIfNode(ExprNode expr, BodyNode body) {
         this.expr = expr;
         this.body = body;
     }
@@ -68,7 +68,7 @@ public class ElseIfNode implements BodyStmtNode {
         }
         tokens.remove(0);
 
-        Body body = Body.parse(tokens);
+        BodyNode body = BodyNode.parse(tokens);
 
         if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.R_BRACE) {
             throw new SyntaxException("Syntax Error in ElseIfNode");

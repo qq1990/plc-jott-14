@@ -17,7 +17,7 @@ public interface BodyStmtNode extends JottTree {
             return WhileNode.parse(tokens);
         }
         else if (t.getTokenType() == TokenType.FC_HEADER){
-            FuncCallNode funcCall = FuncCallNode.parse(tokens);
+            CallNode funcCall = CallNode.parse(tokens);
             if (tokens.get(0).getTokenType() == TokenType.SEMICOLON){
                 tokens.remove(0);
                 return funcCall;
