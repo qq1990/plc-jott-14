@@ -9,9 +9,9 @@ import src.provided.TokenType;
 // Clarke Kennedy
 public class ProgramNode implements JottTree {
 
-    private ArrayList<FuncDefNode> funcDefNodes;
+    private ArrayList<FuncNode> funcDefNodes;
     
-    public ProgramNode(ArrayList<FuncDefNode> funcDefNodes) {
+    public ProgramNode(ArrayList<FuncNode> funcDefNodes) {
         this.funcDefNodes = funcDefNodes;
     }
 
@@ -19,7 +19,7 @@ public class ProgramNode implements JottTree {
     public String convertToJott() {
         String s = "";
 
-        for(FuncDefNode node : funcDefNodes) {
+        for(FuncNode node : funcDefNodes) {
             s.concat(node.convertToJott());
         }
 
@@ -51,9 +51,9 @@ public class ProgramNode implements JottTree {
     }
 
     public static ProgramNode parse(ArrayList<Token> tokens) throws SyntaxException {
-        ArrayList<FuncDefNode> funcDefNodes = new ArrayList<>();
+        ArrayList<FuncNode> funcDefNodes = new ArrayList<>();
         while(tokens.size() > 0 && tokens.get(0).getToken().equals("def")) {
-            funcDefNodes.add(FuncDefNode.parse(tokens));
+            funcDefNodes.add(FuncNode.parse(tokens));
         }
 
         return new ProgramNode(funcDefNodes);
