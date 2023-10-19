@@ -6,6 +6,7 @@ import src.provided.JottTree;
 import src.provided.Token;
 import src.provided.TokenType;
 
+// Thomas Ehlers
 public class ParamsNode implements JottTree {
     private ArrayList<ExprNode> params;
 

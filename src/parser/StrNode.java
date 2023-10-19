@@ -4,6 +4,7 @@ import src.provided.Token;
 import src.provided.TokenType;
 import java.util.ArrayList;
 
+// Thomas Ehlers
 public class StrNode implements ExprNode {
     private Token str_val;
 
