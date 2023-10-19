@@ -4,6 +4,7 @@ import src.provided.Token;
 import src.provided.TokenType;
 import java.util.ArrayList;
 
+// Thomas Ehlers
 public class OpNode implements ExprNode {
     private Token op;
     private ExprNode left, right;
