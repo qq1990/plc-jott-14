@@ -1,10 +1,13 @@
 package src.parser;
 
 import java.util.ArrayList;
+
+import src.provided.JottTokenizer;
 import src.provided.JottTree;
 import src.provided.Token;
 import src.provided.TokenType;
 
+// Thomas Ehlers
 public interface ExprNode extends JottTree {
     public static ExprNode parse(ArrayList<Token> tokens) throws SyntaxException {
         if (tokens.size() == 0) {
@@ -39,5 +42,33 @@ public interface ExprNode extends JottTree {
             return OpNode.parseTail(l, tokens);
         }
         return l;
+    }
+
+    public static void main(String[] args) {
+        ArrayList<Token> tokens = JottTokenizer.tokenize("parserTestCases/custom_test.jott");
+        printTokens(tokens);
+        System.out.println("\n============================\n");
+        try {
+            System.out.println(ExprNode.parse(tokens).convertToJott());
+            System.out.println(ExprNode.parse(tokens).convertToJott());
+            System.out.println(ExprNode.parse(tokens).convertToJott());
+            System.out.println(ExprNode.parse(tokens).convertToJott());
+            System.out.println(ExprNode.parse(tokens).convertToJott());
+            System.out.println(ExprNode.parse(tokens).convertToJott());
+            System.out.println(ParamsNode.parse(tokens).convertToJott());
+            System.out.println(ExprNode.parse(tokens).convertToJott());
+            System.out.println(ExprNode.parse(tokens).convertToJott());
+        } catch(SyntaxException e) {
+            System.err.println(e);
+        }
+        System.out.println("\n============================\n");
+        printTokens(tokens);
+    }
+
+    public static void printTokens(ArrayList<Token> tokens) {
+        for (Token t : tokens) {
+            System.out.println(t.getLineNum()+": \'"+t.getToken()+
+            "\' ["+(int) t.getToken().charAt(0)+"] ("+t.getTokenType()+")");
+        }
     }
 }

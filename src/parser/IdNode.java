@@ -4,6 +4,7 @@ import src.provided.Token;
 import src.provided.TokenType;
 import java.util.ArrayList;
 
+// Thomas Ehlers
 public class IdNode implements ExprNode {
     private Token id_name;
 
