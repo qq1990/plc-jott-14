@@ -10,7 +10,8 @@ public interface BodyStmtNode extends JottTree {
             throw new SyntaxException("Syntax Error in BodyStmtNode");
         }
         Token t = tokens.get(0);
-
+        System.out.println("Test");
+        System.out.println(t.getToken());
         if (t.getToken().equals("if")) {
             return IfNode.parse(tokens);
         } else if (t.getToken().equals("while")) {
@@ -42,7 +43,7 @@ public interface BodyStmtNode extends JottTree {
             }
         }
         else{
-            throw new SyntaxException("Syntax Error in BodyStmtNode");
+            return null;
         }
     }
 

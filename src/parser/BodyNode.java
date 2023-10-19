@@ -67,7 +67,7 @@ public class BodyNode implements JottTree {
             if (bodyStmt != null) {
                 bodyStmts.add(bodyStmt);
             } else {
-                throw new SyntaxException("Syntax Error in body node");
+                break;
             }
         }
 
