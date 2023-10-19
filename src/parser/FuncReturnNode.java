@@ -5,6 +5,7 @@ import src.provided.Token;
 import src.provided.TokenType;
 import java.util.ArrayList;
 
+// Clarke Kennedy
 public class FuncReturnNode implements JottTree {
     private Token type;
 
