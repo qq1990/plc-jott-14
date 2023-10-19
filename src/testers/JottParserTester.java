@@ -1,4 +1,4 @@
-package testers;
+package src.testers;
 
 /*
   Jott parser tester. This will test the parsing phase of the Jott
@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+
+import src.provided.*;
 
 public class JottParserTester {
     ArrayList<TestCase> testCases;
