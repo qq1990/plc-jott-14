@@ -4,6 +4,7 @@ import src.provided.Token;
 import src.provided.TokenType;
 import java.util.ArrayList;
 
+// Thomas Ehlers
 public class NumNode implements ExprNode {
     private Token sign, num_val;
 

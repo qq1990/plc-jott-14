@@ -1,20 +1,29 @@
 package src.parser;
 
-import src.provided.Token;
-import src.provided.TokenType;
 import java.util.ArrayList;
 
-// Thomas Ehlers
-public class StrNode implements ExprNode {
-    private Token str_val;
+import src.provided.JottTree;
+import src.provided.Token;
+import src.provided.TokenType;
 
-    public StrNode(Token str) {
-        str_val = str;
+// Clarke Kennedy
+public class ProgramNode implements JottTree {
+
+    private ArrayList<FuncNode> funcDefNodes;
+    
+    public ProgramNode(ArrayList<FuncNode> funcDefNodes) {
+        this.funcDefNodes = funcDefNodes;
     }
 
     @Override
     public String convertToJott() {
-        return str_val.getToken();
+        String s = "";
+
+        for(FuncNode node : funcDefNodes) {
+            s.concat(node.convertToJott());
+        }
+
+        return s;
     }
 
     @Override
@@ -40,11 +49,15 @@ public class StrNode implements ExprNode {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
-    
-    public static StrNode parse(ArrayList<Token> tokens) throws SyntaxException {
-        if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.STRING) {
-            throw new SyntaxException("Syntax Error in StrNode");
+
+    public static ProgramNode parse(ArrayList<Token> tokens) throws SyntaxException {
+        ArrayList<FuncNode> funcDefNodes = new ArrayList<>();
+        while(tokens.size() > 0 && tokens.get(0).getToken().equals("def")) {
+            funcDefNodes.add(FuncNode.parse(tokens));
         }
-        return new StrNode(tokens.remove(0));
+
+        return new ProgramNode(funcDefNodes);
+        
     }
+    
 }
