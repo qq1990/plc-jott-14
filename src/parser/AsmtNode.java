@@ -90,16 +90,4 @@ public class AsmtNode implements BodyStmtNode {
         return new AsmtNode(type, name, expr);
     }
 
-    public static void main(String[] args) throws SyntaxException{
-        ArrayList<Token> tokens = new ArrayList<Token>();
-        tokens.add(new Token("Double", "test", 1, TokenType.ID_KEYWORD));
-        tokens.add(new Token("x", "test", 1, TokenType.ID_KEYWORD));
-        tokens.add(new Token("=", "test", 1, TokenType.ASSIGN));
-        tokens.add(new Token("1", "test", 1, TokenType.NUMBER));
-        tokens.add(new Token(";", "test", 1, TokenType.SEMICOLON));
-        tokens.add(new Token("x", "test", 1, TokenType.ID_KEYWORD));
-        AsmtNode v = null;
-        v = AsmtNode.parse(tokens);
-        System.out.println(v.convertToJott());
-    }
 }

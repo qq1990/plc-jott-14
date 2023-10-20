@@ -72,14 +72,4 @@ public class VarDecNode implements BodyStmtNode {
         return new VarDecNode(type, name);
     }
 
-    public static void main(String[] args) throws SyntaxException{
-        ArrayList<Token> tokens = new ArrayList<Token>();
-        tokens.add(new Token("Double", "test", 1, TokenType.ID_KEYWORD));
-        tokens.add(new Token("x", "test", 1, TokenType.ID_KEYWORD));
-        tokens.add(new Token(";", "test", 1, TokenType.SEMICOLON));
-        tokens.add(new Token("x", "test", 1, TokenType.ID_KEYWORD));
-        VarDecNode v = null;
-        v = VarDecNode.parse(tokens);
-        System.out.println(v.convertToJott());
-    }
 }
