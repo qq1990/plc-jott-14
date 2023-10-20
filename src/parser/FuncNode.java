@@ -6,6 +6,7 @@ import src.provided.JottTree;
 import src.provided.Token;
 import src.provided.TokenType;
 
+// Donald Burke
 public class FuncNode implements JottTree{
     IdNode funcName;
     FuncParamsNode funcParams;
