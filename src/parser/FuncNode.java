@@ -58,34 +58,66 @@ public class FuncNode implements JottTree{
     }
     
     public static FuncNode parse(ArrayList<Token> tokens) throws SyntaxException {
-        if (tokens.get(0).getTokenType() != TokenType.STRING)
+        if (tokens.size() == 0) {
+            throw new SyntaxException("Syntax error in FuncNode");
+        }
+        if (!tokens.get(0).getToken().equals("def")) {
             throw new SyntaxException("Syntax error in FuncNode", tokens.get(0));
+        }
         tokens.remove(0);
 
         IdNode func_name = IdNode.parse(tokens);
-        if (tokens.get(0).getTokenType() != TokenType.L_BRACKET)
+        if (tokens.size() == 0) {
+            throw new SyntaxException("Syntax error in FuncNode");
+        }
+        if (tokens.get(0).getTokenType() != TokenType.L_BRACKET) {
             throw new SyntaxException("Syntax error in FuncNode", tokens.get(0));
+        }
         tokens.remove(0);
 
         FuncParamsNode fcp = FuncParamsNode.parse(tokens);
-        if (tokens.get(0).getTokenType() != TokenType.R_BRACKET) 
+        if (tokens.size() == 0) {
+            throw new SyntaxException("Syntax error in FuncNode");
+        }
+        if (tokens.get(0).getTokenType() != TokenType.R_BRACKET) {
             throw new SyntaxException("Syntax error in FuncNode", tokens.get(0));
+        }
         tokens.remove(0);
-        if (tokens.get(0).getTokenType() != TokenType.COLON)
+        if (tokens.size() == 0) {
+            throw new SyntaxException("Syntax error in FuncNode");
+        }
+        if (tokens.get(0).getTokenType() != TokenType.COLON) {
             throw new SyntaxException("Syntax error in FuncNode", tokens.get(0));
+        }
         tokens.remove(0);
 
         FuncReturnNode returnType = FuncReturnNode.parse(tokens);
-        if (tokens.get(0).getTokenType() != TokenType.L_BRACE)
+        if (tokens.size() == 0) {
+            throw new SyntaxException("Syntax error in FuncNode");
+        }
+        if (tokens.get(0).getTokenType() != TokenType.L_BRACE) {
             throw new SyntaxException("Syntax error in FuncNode", tokens.get(0));
+        }
         tokens.remove(0);
 
         BodyNode body = BodyNode.parse(tokens);
-        if (tokens.get(0).getTokenType() != TokenType.R_BRACE)
+        if (tokens.size() == 0) {
+            throw new SyntaxException("Syntax error in FuncNode");
+        }
+        if (tokens.get(0).getTokenType() != TokenType.R_BRACE) {
             throw new SyntaxException("Syntax error in FuncNode", tokens.get(0));
+        }
         tokens.remove(0);
 
         return new FuncNode(func_name, fcp, returnType, body);
+    }
+
+    public static void main(String[] args) throws SyntaxException {
+        ArrayList<Token> tokens = new ArrayList<Token>();
+        tokens.add(new Token("def", "test", 1, TokenType.ID_KEYWORD));
+        FuncNode v = null;
+        v = FuncNode.parse(tokens);
+        System.out.println(v.convertToJott());
     }
 
 }

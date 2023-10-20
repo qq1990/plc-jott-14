@@ -20,7 +20,7 @@ public class ProgramNode implements JottTree {
         String s = "";
 
         for(FuncNode node : funcDefNodes) {
-            s.concat(node.convertToJott());
+            s = s.concat(node.convertToJott());
         }
 
         return s;

@@ -43,7 +43,7 @@ public class FuncReturnNode implements JottTree {
     }
     
     public static FuncReturnNode parse(ArrayList<Token> tokens) throws SyntaxException{
-        if (tokens.size() == 0){
+        if (tokens.size() == 0) {
             throw new SyntaxException("Syntax Error in FuncReturnNode");
         }
         if (tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) {

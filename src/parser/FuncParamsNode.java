@@ -19,9 +19,9 @@ public class FuncParamsNode implements JottTree {
     public String convertToJott() {
         String out = "";
         if (this.paramNames.size() > 0) {
-            out += this.paramNames.get(0) + ":" + this.paramTypes.get(0);
+            out += this.paramNames.get(0).convertToJott() + ":" + this.paramTypes.get(0).getToken();
             for (int i = 1; i < this.paramNames.size(); i++) {
-                out += "," + this.paramNames.get(i) + ":" + this.paramTypes.get(i);
+                out += "," + this.paramNames.get(i).convertToJott() + ":" + this.paramTypes.get(i).getToken();
             }
         }
         return out;
@@ -54,7 +54,7 @@ public class FuncParamsNode implements JottTree {
     public static FuncParamsNode parse(ArrayList<Token> tokens) throws SyntaxException {
         ArrayList<IdNode> params = new ArrayList<IdNode>();
         ArrayList<Token> pTypes = new ArrayList<Token>();
-        if (tokens.size() > 0) {
+        if (tokens.size() > 0 && tokens.get(0).getTokenType() != TokenType.R_BRACKET) {
             IdNode param = null;
             Token t = null;
 

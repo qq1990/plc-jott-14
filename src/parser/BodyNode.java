@@ -20,6 +20,9 @@ public class BodyNode implements JottTree {
         StringBuilder jottCode = new StringBuilder();
         for (BodyStmtNode stmt : bodyStmts) {
             jottCode.append(stmt.convertToJott());
+            if (stmt instanceof CallNode) {
+                jottCode.append(";");
+            }
         }
         if (returnStmt != null) {
             jottCode.append(returnStmt.convertToJott());

@@ -33,7 +33,12 @@ public class JottTokenizer {
         try {
             Scanner myReader = new Scanner(new File(filename));
             myReader.useDelimiter("\\Z");
-            data = myReader.next();
+            if (!myReader.hasNext()){
+                data = "";
+            }
+            else {
+                data = myReader.next();
+            }
             myReader.close();
         } catch (FileNotFoundException e) {
             System.out.println("File "+filename+

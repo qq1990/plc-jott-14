@@ -21,7 +21,7 @@ public class ElseNode implements BodyStmtNode {
     public String convertToJott() {
         String s = "";
         if (body != null) {
-            s.concat("else{"+body.convertToJott()+"}");
+            s = s.concat("else{"+body.convertToJott()+"}");
         }
         
         return s;

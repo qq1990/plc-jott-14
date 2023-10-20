@@ -25,10 +25,10 @@ public class IfNode implements BodyStmtNode {
         String s = "if["+expr.convertToJott()+"]{"+body.convertToJott()+"}";
 
         for(ElseIfNode node : elseiflist) {
-            s.concat(node.convertToJott());
+            s = s.concat(node.convertToJott());
         }
 
-        s.concat(else_node.convertToJott());
+        s = s.concat(else_node.convertToJott());
 
         return s;
         

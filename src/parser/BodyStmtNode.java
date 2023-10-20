@@ -11,12 +11,13 @@ public interface BodyStmtNode extends JottTree {
             throw new SyntaxException("Syntax Error in BodyStmtNode");
         }
         Token t = tokens.get(0);
-        System.out.println("Test");
-        System.out.println(t.getToken());
         if (t.getToken().equals("if")) {
             return IfNode.parse(tokens);
         } else if (t.getToken().equals("while")) {
             return WhileNode.parse(tokens);
+        }
+        else if (t.getToken().equals("return")) {
+            return null;
         }
         else if (t.getTokenType() == TokenType.FC_HEADER){
             CallNode funcCall = CallNode.parse(tokens);
