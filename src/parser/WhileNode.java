@@ -49,32 +49,47 @@ public class WhileNode implements BodyStmtNode {
     }
 
     public static WhileNode parse(ArrayList<Token> tokens) throws SyntaxException {
-        if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) {
+        if (tokens.size() == 0){
             throw new SyntaxException("Syntax Error in WhileNode");
+        }
+        if (tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) {
+            throw new SyntaxException("Syntax Error in WhileNode", tokens.get(0));
         }
         tokens.remove(0);
 
-        if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.L_BRACKET) {
+        if (tokens.size() == 0){
             throw new SyntaxException("Syntax Error in WhileNode");
+        }
+        if (tokens.get(0).getTokenType() != TokenType.L_BRACKET) {
+            throw new SyntaxException("Syntax Error in WhileNode", tokens.get(0));
         }
         tokens.remove(0);
 
         ExprNode expr = ExprNode.parse(tokens);
         
-        if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.R_BRACKET) {
+        if (tokens.size() == 0){
             throw new SyntaxException("Syntax Error in WhileNode");
+        }
+        if (tokens.get(0).getTokenType() != TokenType.R_BRACKET) {
+            throw new SyntaxException("Syntax Error in WhileNode", tokens.get(0));
         }
         tokens.remove(0);
 
-        if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.L_BRACE) {
+        if (tokens.size() == 0){
             throw new SyntaxException("Syntax Error in WhileNode");
+        }
+        if (tokens.get(0).getTokenType() != TokenType.L_BRACE) {
+            throw new SyntaxException("Syntax Error in WhileNode", tokens.get(0));
         }
         tokens.remove(0);
 
         BodyNode body = BodyNode.parse(tokens);
 
-        if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.R_BRACE) {
+        if (tokens.size() == 0){
             throw new SyntaxException("Syntax Error in WhileNode");
+        }
+        if (tokens.get(0).getTokenType() != TokenType.R_BRACE) {
+            throw new SyntaxException("Syntax Error in WhileNode", tokens.get(0));
         }
         tokens.remove(0);
 

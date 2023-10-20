@@ -51,7 +51,7 @@ public class JottTokenizer {
             buffer = String.valueOf(data.charAt(i));
             i++;
             // Whitespace Handler
-            if (buffer.equals(" ") || buffer.equals("\r")) {
+            if (buffer.equals(" ") || buffer.equals("\r") || buffer.equals("\t")) {
                 buffer = ""; // Does nothing
             } 
             // Comment Handler

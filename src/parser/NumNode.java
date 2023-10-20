@@ -57,7 +57,7 @@ public class NumNode implements ExprNode {
             t = null;
         }
         if (tokens.get(0).getTokenType() != TokenType.NUMBER) {
-            throw new SyntaxException("Syntax Error in NumNode");
+            throw new SyntaxException("Syntax Error in NumNode", tokens.get(0));
         }
         return new NumNode(t, tokens.remove(0));
     }

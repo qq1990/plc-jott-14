@@ -42,8 +42,11 @@ public class IdNode implements ExprNode {
     }
     
     public static IdNode parse(ArrayList<Token> tokens) throws SyntaxException {
-        if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) {
+        if (tokens.size() == 0){
             throw new SyntaxException("Syntax Error in IdNode");
+        }
+        if (tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) {
+            throw new SyntaxException("Syntax Error in IdNode", tokens.get(0));
         }
         return new IdNode(tokens.remove(0));
     }

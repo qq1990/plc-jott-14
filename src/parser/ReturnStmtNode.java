@@ -55,8 +55,7 @@ public class ReturnStmtNode implements JottTree {
                 return new ReturnStmtNode(expr);
             } else {
                 // Handle error or throw SyntaxException
-                System.err.println("Syntax Error in ReturnStmtNode - Invalid Return Statement");
-                return null;
+                throw new SyntaxException("Syntax Error in ReturnStmtNode", tokens.get(0));
             }
         }
         return null; // Return null if "return" keyword is not found

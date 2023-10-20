@@ -45,22 +45,28 @@ public class VarDecNode implements BodyStmtNode {
     }
     
     public static VarDecNode parse(ArrayList<Token> tokens) throws SyntaxException{
-        if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) {
+        if (tokens.size() == 0){
             throw new SyntaxException("Syntax Error in VarDecNode");
+        }
+        if (tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) {
+            throw new SyntaxException("Syntax Error in VarDecNode", tokens.get(0));
         }
         Token t = tokens.get(0);
         if (!(t.getToken().equals("Double")
                 || t.getToken().equals("Integer")
                 || t.getToken().equals("String")
                 || t.getToken().equals("Boolean"))){
-            throw new SyntaxException("Syntax Error in VarDecNode");
+            throw new SyntaxException("Syntax Error in VarDecNode", t);
         }
         Token type = t;
         tokens.remove(0);
 
         IdNode name = IdNode.parse(tokens);
-        if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.SEMICOLON) {
+        if (tokens.size() == 0){
             throw new SyntaxException("Syntax Error in VarDecNode");
+        }
+        if (tokens.get(0).getTokenType() != TokenType.SEMICOLON) {
+            throw new SyntaxException("Syntax Error in VarDecNode", tokens.get(0));
         }
         tokens.remove(0);
         return new VarDecNode(type, name);

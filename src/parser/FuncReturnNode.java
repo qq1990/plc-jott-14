@@ -43,8 +43,11 @@ public class FuncReturnNode implements JottTree {
     }
     
     public static FuncReturnNode parse(ArrayList<Token> tokens) throws SyntaxException{
-        if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) {
+        if (tokens.size() == 0){
             throw new SyntaxException("Syntax Error in FuncReturnNode");
+        }
+        if (tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) {
+            throw new SyntaxException("Syntax Error in FuncReturnNode", tokens.get(0));
         }
         Token t = tokens.get(0);
         if (!(t.getToken().equals("Double")
@@ -52,7 +55,7 @@ public class FuncReturnNode implements JottTree {
                 || t.getToken().equals("Void")
                 || t.getToken().equals("String")
                 || t.getToken().equals("Boolean"))){
-            throw new SyntaxException("Syntax Error in FuncReturnNode");
+            throw new SyntaxException("Syntax Error in FuncReturnNode", t);
         }
         Token type = t;
         tokens.remove(0);

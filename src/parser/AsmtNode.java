@@ -50,8 +50,11 @@ public class AsmtNode implements BodyStmtNode {
     }
     
     public static AsmtNode parse(ArrayList<Token> tokens) throws SyntaxException{
-        if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) {
+        if (tokens.size() == 0){
             throw new SyntaxException("Syntax Error in AsmtNode");
+        }
+        if (tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) {
+            throw new SyntaxException("Syntax Error in AsmtNode", tokens.get(0));
         }
         Token t = tokens.get(0);
 
@@ -66,15 +69,21 @@ public class AsmtNode implements BodyStmtNode {
 
         IdNode name = IdNode.parse(tokens);
 
-        if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.ASSIGN) {
+        if (tokens.size() == 0){
             throw new SyntaxException("Syntax Error in AsmtNode");
+        }
+        if (tokens.get(0).getTokenType() != TokenType.ASSIGN) {
+            throw new SyntaxException("Syntax Error in AsmtNode", tokens.get(0));
         }
         tokens.remove(0);
 
         ExprNode expr = ExprNode.parse(tokens);
 
-        if (tokens.size() == 0 || tokens.get(0).getTokenType() != TokenType.SEMICOLON) {
+        if (tokens.size() == 0){
             throw new SyntaxException("Syntax Error in AsmtNode");
+        }
+        if (tokens.get(0).getTokenType() != TokenType.SEMICOLON) {
+            throw new SyntaxException("Syntax Error in AsmtNode", tokens.get(0));
         }
         tokens.remove(0);
 

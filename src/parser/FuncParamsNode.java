@@ -62,7 +62,7 @@ public class FuncParamsNode implements JottTree {
             params.add(param);
 
             if (tokens.get(0).getTokenType() != TokenType.COLON)
-                throw new SyntaxException("Syntax error in FuncParamsNode");
+                throw new SyntaxException("Syntax error in FuncParamsNode", tokens.get(0));
             tokens.remove(0);
 
             t = tokens.get(0);
@@ -84,7 +84,7 @@ public class FuncParamsNode implements JottTree {
                 params.add(param);
 
                 if (tokens.get(0).getTokenType() != TokenType.COLON)
-                    throw new SyntaxException("Syntax error in FuncParamsNode");
+                    throw new SyntaxException("Syntax error in FuncParamsNode", tokens.get(0));
                 tokens.remove(0);
 
                 t = tokens.get(0);

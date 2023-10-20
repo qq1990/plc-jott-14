@@ -61,7 +61,7 @@ public class OpNode implements ExprNode {
         } else if (t.getTokenType() == TokenType.FC_HEADER) {
             l = CallNode.parse(tokens);
         } else {
-            throw new SyntaxException("Syntax Error in OpNode");
+            throw new SyntaxException("Syntax Error in OpNode", t);
         }
 
         return OpNode.parseTail(l, tokens);
@@ -75,7 +75,7 @@ public class OpNode implements ExprNode {
 
         if (o.getTokenType() != TokenType.MATH_OP && 
                 o.getTokenType() != TokenType.REL_OP) {
-            throw new SyntaxException("Syntax Error in OpNode_Tail");
+            throw new SyntaxException("Syntax Error in OpNode_Tail", o);
         }
         tokens.remove(0);
         ExprNode r = ExprNode.parse(tokens);

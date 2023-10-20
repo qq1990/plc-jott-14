@@ -59,30 +59,30 @@ public class FuncNode implements JottTree{
     
     public static FuncNode parse(ArrayList<Token> tokens) throws SyntaxException {
         if (tokens.get(0).getTokenType() != TokenType.STRING)
-            throw new SyntaxException("Syntax error in FuncNode");
+            throw new SyntaxException("Syntax error in FuncNode", tokens.get(0));
         tokens.remove(0);
 
         IdNode func_name = IdNode.parse(tokens);
         if (tokens.get(0).getTokenType() != TokenType.L_BRACKET)
-            throw new SyntaxException("Syntax error in FuncNode");
+            throw new SyntaxException("Syntax error in FuncNode", tokens.get(0));
         tokens.remove(0);
 
         FuncParamsNode fcp = FuncParamsNode.parse(tokens);
         if (tokens.get(0).getTokenType() != TokenType.R_BRACKET) 
-            throw new SyntaxException("Syntax error in FuncNode");
+            throw new SyntaxException("Syntax error in FuncNode", tokens.get(0));
         tokens.remove(0);
         if (tokens.get(0).getTokenType() != TokenType.COLON)
-            throw new SyntaxException("Syntax error in FuncNode");
+            throw new SyntaxException("Syntax error in FuncNode", tokens.get(0));
         tokens.remove(0);
 
         FuncReturnNode returnType = FuncReturnNode.parse(tokens);
         if (tokens.get(0).getTokenType() != TokenType.L_BRACE)
-            throw new SyntaxException("Syntax error in FuncNode");
+            throw new SyntaxException("Syntax error in FuncNode", tokens.get(0));
         tokens.remove(0);
 
         BodyNode body = BodyNode.parse(tokens);
         if (tokens.get(0).getTokenType() != TokenType.R_BRACE)
-            throw new SyntaxException("Syntax error in FuncNode");
+            throw new SyntaxException("Syntax error in FuncNode", tokens.get(0));
         tokens.remove(0);
 
         return new FuncNode(func_name, fcp, returnType, body);

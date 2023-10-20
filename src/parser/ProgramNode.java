@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import src.provided.JottTree;
 import src.provided.Token;
-import src.provided.TokenType;
+// import src.provided.TokenType;
 
 // Clarke Kennedy
 public class ProgramNode implements JottTree {
@@ -52,7 +52,10 @@ public class ProgramNode implements JottTree {
 
     public static ProgramNode parse(ArrayList<Token> tokens) throws SyntaxException {
         ArrayList<FuncNode> funcDefNodes = new ArrayList<>();
-        while(tokens.size() > 0 && tokens.get(0).getToken().equals("def")) {
+        while(tokens.size() > 0) {
+            if(!tokens.get(0).getToken().equals("def")){
+                throw new SyntaxException("Syntax Error in ProgramNode", tokens.get(0));
+            }
             funcDefNodes.add(FuncNode.parse(tokens));
         }
 

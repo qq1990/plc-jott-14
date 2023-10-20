@@ -63,7 +63,7 @@ public class ParamsNode implements JottTree {
                     tokens.remove(0);
                     p = ExprNode.parse(tokens);
                     if (p == null) {
-                        throw new SyntaxException("ParamsNode");
+                        throw new SyntaxException("Syntax Error in ParamsNode", tokens.get(0));
                     }
                     pars.add(p);
                 }

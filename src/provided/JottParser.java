@@ -8,6 +8,7 @@ package src.provided;
  */
 
 import java.util.ArrayList;
+import src.parser.*;
 
 public class JottParser {
 
@@ -18,6 +19,11 @@ public class JottParser {
      *         or null upon an error in parsing.
      */
     public static JottTree parse(ArrayList<Token> tokens){
-		return null;
+        try {
+            return ProgramNode.parse(tokens);
+        } catch (SyntaxException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 }
