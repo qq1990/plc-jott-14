@@ -40,8 +40,7 @@ public class VarDecNode implements BodyStmtNode {
 
     @Override
     public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+        return name.validateTree();
     }
     
     public static VarDecNode parse(ArrayList<Token> tokens) throws SyntaxException{

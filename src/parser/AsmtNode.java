@@ -45,8 +45,7 @@ public class AsmtNode implements BodyStmtNode {
 
     @Override
     public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+        return name.validateTree() && expr.validateTree();
     }
     
     public static AsmtNode parse(ArrayList<Token> tokens) throws SyntaxException{
