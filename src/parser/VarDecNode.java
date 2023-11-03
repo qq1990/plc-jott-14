@@ -80,6 +80,7 @@ public class VarDecNode implements BodyStmtNode {
         }
         tokens.remove(0);
         return new VarDecNode(type, name);
+        // TODO Add to symbol table
     }
 
     public static void main(String[] args) throws SyntaxException{

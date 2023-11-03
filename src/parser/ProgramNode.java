@@ -48,8 +48,7 @@ public class ProgramNode implements JottTree {
 
     @Override
     public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+        throw new UnsupportedOperationException("Parse the tree to validate");
     }
 
     public static ProgramNode parse(ArrayList<Token> tokens) throws SyntaxException {
@@ -59,10 +58,19 @@ public class ProgramNode implements JottTree {
         ArrayList<FuncNode> funcDefNodes = new ArrayList<>();
         while(tokens.size() > 0) {
             if(!tokens.get(0).getToken().equals("def")){
-                throw new SyntaxException("Syntax Error in ProgramNode", tokens.get(0));
+                throw new SyntaxException("Syntax Error in ProgramNode, expected def keyword", tokens.get(0));
             }
+
             FuncNode node = FuncNode.parse(tokens);
-            Type[] types = new Type[node.funcParams.paramTypes.size()];
+
+            Type[] types = new Type[node.funcParams.paramTypes.size() + 1];
+            for(int i = 0; i < types.length; i++) {
+                types[i] = node.funcParams.paramTypes.get(i);
+            }
+            types[types.length - 1] = node.funcReturnType.type;
+
+            defTable.put(node.funcName.convertToJott(), types);
+
             funcDefNodes.add(node);
         }
 

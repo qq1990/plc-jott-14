@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 // Clarke Kennedy
 public class FuncReturnNode implements JottTree {
-    private Type type;
+    Type type;
 
     public FuncReturnNode(Type type) {
         this.type = type;
