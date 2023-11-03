@@ -7,17 +7,17 @@ import java.util.ArrayList;
 
 // Clarke Kennedy
 public class VarDecNode implements BodyStmtNode {
-    private Token type;
+    private Type type;
     private IdNode name;
 
-    public VarDecNode(Token type, IdNode name) {
+    public VarDecNode(Type type, IdNode name) {
         this.type = type;
         this.name = name;
     }
 
     @Override
     public String convertToJott() {
-        return type.getToken() + " " + name.convertToJott() + ";";
+        return type.name() + " " + name.convertToJott() + ";";
     }
 
     @Override
@@ -40,35 +40,58 @@ public class VarDecNode implements BodyStmtNode {
 
     @Override
     public boolean validateTree() {
+        // TODO Type checking relies on the symbol table
         return name.validateTree();
     }
     
     public static VarDecNode parse(ArrayList<Token> tokens) throws SyntaxException{
         if (tokens.size() == 0){
-            throw new SyntaxException("Syntax Error in VarDecNode");
+            throw new SyntaxException("Syntax Error in VarDecNode, reached end of file");
         }
         if (tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) {
-            throw new SyntaxException("Syntax Error in VarDecNode", tokens.get(0));
+            throw new SyntaxException("Syntax Error in VarDecNode, expected type keyword", tokens.get(0));
         }
         Token t = tokens.get(0);
-        if (!(t.getToken().equals("Double")
-                || t.getToken().equals("Integer")
-                || t.getToken().equals("String")
-                || t.getToken().equals("Boolean"))){
-            throw new SyntaxException("Syntax Error in VarDecNode", t);
+        Type type = null;
+        switch (t.getToken()) {
+            case "Double":
+                type = Type.Double;
+                tokens.remove(0);
+                break;
+            case "Integer":
+                type = Type.Integer;
+                tokens.remove(0);
+                break;
+            case "String":
+                type = Type.String;
+                tokens.remove(0);
+                break;
+            case "Boolean":
+                type = Type.Boolean;
+                tokens.remove(0);
+                break;
+            default:
+                throw new SyntaxException("Syntax Error in VarDecNode, invalid type keyword", t);
         }
-        Token type = t;
-        tokens.remove(0);
 
         IdNode name = IdNode.parse(tokens);
         if (tokens.size() == 0){
-            throw new SyntaxException("Syntax Error in VarDecNode");
+            throw new SyntaxException("Syntax Error in VarDecNode, reached end of file");
         }
         if (tokens.get(0).getTokenType() != TokenType.SEMICOLON) {
-            throw new SyntaxException("Syntax Error in VarDecNode", tokens.get(0));
+            throw new SyntaxException("Syntax Error in VarDecNode, expected semicolon", tokens.get(0));
         }
         tokens.remove(0);
         return new VarDecNode(type, name);
     }
 
+    public static void main(String[] args) throws SyntaxException{
+        ArrayList<Token> tokens = new ArrayList<Token>();
+        tokens.add(new Token("Integer", "test", 1, TokenType.ID_KEYWORD));
+        tokens.add(new Token("x", "test", 1, TokenType.ID_KEYWORD));
+        tokens.add(new Token(";", "test", 1, TokenType.SEMICOLON));
+        VarDecNode v = null;
+        v = VarDecNode.parse(tokens);
+        System.out.println(v.convertToJott());
+    }
 }

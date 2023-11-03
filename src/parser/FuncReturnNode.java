@@ -7,15 +7,15 @@ import java.util.ArrayList;
 
 // Clarke Kennedy
 public class FuncReturnNode implements JottTree {
-    private Token type;
+    private Type type;
 
-    public FuncReturnNode(Token type) {
+    public FuncReturnNode(Type type) {
         this.type = type;
     }
 
     @Override
     public String convertToJott() {
-        return type.getToken();
+        return type.name();
     }
 
     @Override
@@ -44,21 +44,37 @@ public class FuncReturnNode implements JottTree {
     
     public static FuncReturnNode parse(ArrayList<Token> tokens) throws SyntaxException{
         if (tokens.size() == 0) {
-            throw new SyntaxException("Syntax Error in FuncReturnNode");
+            throw new SyntaxException("Syntax Error in FuncReturnNode, reached end of file");
         }
         if (tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) {
-            throw new SyntaxException("Syntax Error in FuncReturnNode", tokens.get(0));
+            throw new SyntaxException("Syntax Error in FuncReturnNode, expected type keyword", tokens.get(0));
         }
         Token t = tokens.get(0);
-        if (!(t.getToken().equals("Double")
-                || t.getToken().equals("Integer")
-                || t.getToken().equals("Void")
-                || t.getToken().equals("String")
-                || t.getToken().equals("Boolean"))){
-            throw new SyntaxException("Syntax Error in FuncReturnNode", t);
+        Type type = null;
+        switch (t.getToken()) {
+            case "Double":
+                type = Type.Double;
+                tokens.remove(0);
+                break;
+            case "Integer":
+                type = Type.Integer;
+                tokens.remove(0);
+                break;
+            case "String":
+                type = Type.String;
+                tokens.remove(0);
+                break;
+            case "Boolean":
+                type = Type.Boolean;
+                tokens.remove(0);
+                break;
+            case "Void":
+                type = Type.Void;
+                tokens.remove(0);
+                break;
+            default:
+                throw new SyntaxException("Syntax Error in FuncReturnNode, invalid type keyword", t);
         }
-        Token type = t;
-        tokens.remove(0);
         return new FuncReturnNode(type);
     }
 

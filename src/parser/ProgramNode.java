@@ -1,6 +1,7 @@
 package src.parser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import src.provided.JottTree;
 import src.provided.Token;
@@ -10,6 +11,8 @@ import src.provided.Token;
 public class ProgramNode implements JottTree {
 
     private ArrayList<FuncNode> funcDefNodes;
+    public static HashMap<String, String[]> symbolTable = new HashMap<>();
+    // TODO: Add print and concat functions to symbol table
     
     public ProgramNode(ArrayList<FuncNode> funcDefNodes) {
         this.funcDefNodes = funcDefNodes;
