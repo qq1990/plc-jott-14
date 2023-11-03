@@ -54,27 +54,23 @@ public class FuncReturnNode implements JottTree {
         switch (t.getToken()) {
             case "Double":
                 type = Type.Double;
-                tokens.remove(0);
                 break;
             case "Integer":
                 type = Type.Integer;
-                tokens.remove(0);
                 break;
             case "String":
                 type = Type.String;
-                tokens.remove(0);
                 break;
             case "Boolean":
                 type = Type.Boolean;
-                tokens.remove(0);
                 break;
             case "Void":
                 type = Type.Void;
-                tokens.remove(0);
                 break;
             default:
                 throw new SyntaxException("Syntax Error in FuncReturnNode, invalid type keyword", t);
         }
+        tokens.remove(0);
         return new FuncReturnNode(type);
     }
 

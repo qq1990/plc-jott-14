@@ -59,13 +59,6 @@ public class AsmtNode implements BodyStmtNode {
         Token t = tokens.get(0);
 
         Type type = null;
-        // if ((t.getToken().equals("Double")
-        //         || t.getToken().equals("Integer")
-        //         || t.getToken().equals("String")
-        //         || t.getToken().equals("Boolean"))){        
-        //     type = t;
-        //     tokens.remove(0);
-        // }
         switch (t.getToken()) {
             case "Double":
                 type = Type.Double;

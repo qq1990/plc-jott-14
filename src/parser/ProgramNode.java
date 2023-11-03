@@ -11,8 +11,7 @@ import src.provided.Token;
 public class ProgramNode implements JottTree {
 
     private ArrayList<FuncNode> funcDefNodes;
-    public static HashMap<String, String[]> symbolTable = new HashMap<>();
-    // TODO: Add print and concat functions to symbol table
+    public static HashMap<String, Type[]> defTable = new HashMap<>();
     
     public ProgramNode(ArrayList<FuncNode> funcDefNodes) {
         this.funcDefNodes = funcDefNodes;
@@ -54,12 +53,17 @@ public class ProgramNode implements JottTree {
     }
 
     public static ProgramNode parse(ArrayList<Token> tokens) throws SyntaxException {
+        defTable.put("print", new Type[] {Type.Any, Type.String});
+        defTable.put("concat", new Type[] {Type.String, Type.String, Type.String});
+
         ArrayList<FuncNode> funcDefNodes = new ArrayList<>();
         while(tokens.size() > 0) {
             if(!tokens.get(0).getToken().equals("def")){
                 throw new SyntaxException("Syntax Error in ProgramNode", tokens.get(0));
             }
-            funcDefNodes.add(FuncNode.parse(tokens));
+            FuncNode node = FuncNode.parse(tokens);
+            Type[] types = new Type[node.funcParams.paramTypes.size()];
+            funcDefNodes.add(node);
         }
 
         return new ProgramNode(funcDefNodes);

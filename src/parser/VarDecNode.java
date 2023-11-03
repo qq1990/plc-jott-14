@@ -56,23 +56,20 @@ public class VarDecNode implements BodyStmtNode {
         switch (t.getToken()) {
             case "Double":
                 type = Type.Double;
-                tokens.remove(0);
                 break;
             case "Integer":
                 type = Type.Integer;
-                tokens.remove(0);
                 break;
             case "String":
                 type = Type.String;
-                tokens.remove(0);
                 break;
             case "Boolean":
                 type = Type.Boolean;
-                tokens.remove(0);
                 break;
             default:
                 throw new SyntaxException("Syntax Error in VarDecNode, invalid type keyword", t);
         }
+        tokens.remove(0);
 
         IdNode name = IdNode.parse(tokens);
         if (tokens.size() == 0){

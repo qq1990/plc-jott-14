@@ -9,9 +9,9 @@ import src.provided.TokenType;
 // Donald Burke
 public class FuncParamsNode implements JottTree {
     ArrayList<IdNode> paramNames;
-    ArrayList<Token> paramTypes;
+    ArrayList<Type> paramTypes;
 
-    public FuncParamsNode(ArrayList<IdNode> id, ArrayList<Token> types) {
+    public FuncParamsNode(ArrayList<IdNode> id, ArrayList<Type> types) {
         this.paramNames = id;
         this.paramTypes = types;
     }
@@ -20,9 +20,9 @@ public class FuncParamsNode implements JottTree {
     public String convertToJott() {
         String out = "";
         if (this.paramNames.size() > 0) {
-            out += this.paramNames.get(0).convertToJott() + ":" + this.paramTypes.get(0).getToken();
+            out += this.paramNames.get(0).convertToJott() + ":" + this.paramTypes.get(0).name();
             for (int i = 1; i < this.paramNames.size(); i++) {
-                out += "," + this.paramNames.get(i).convertToJott() + ":" + this.paramTypes.get(i).getToken();
+                out += "," + this.paramNames.get(i).convertToJott() + ":" + this.paramTypes.get(i).name();
             }
         }
         return out;
@@ -54,7 +54,7 @@ public class FuncParamsNode implements JottTree {
 
     public static FuncParamsNode parse(ArrayList<Token> tokens) throws SyntaxException {
         ArrayList<IdNode> params = new ArrayList<IdNode>();
-        ArrayList<Token> pTypes = new ArrayList<Token>();
+        ArrayList<Type> pTypes = new ArrayList<Type>();
         if (tokens.size() > 0 && tokens.get(0).getTokenType() != TokenType.R_BRACKET) {
             IdNode param = null;
             Token t = null;
@@ -67,15 +67,25 @@ public class FuncParamsNode implements JottTree {
             tokens.remove(0);
 
             t = tokens.get(0);
-            Token paramtype = null;
+            Type paramtype = null;
 
-            if (t.getToken().equals("Double")
-                    || t.getToken().equals("Integer")
-                    || t.getToken().equals("String")
-                    || t.getToken().equals("Boolean")) {
-                paramtype = t;
-                tokens.remove(0);
+            switch (t.getToken()) {
+                case "Double":
+                    paramtype = Type.Double;
+                    break;
+                case "Integer":
+                    paramtype = Type.Integer;
+                    break;
+                case "String":
+                    paramtype = Type.String;
+                    break;
+                case "Boolean":
+                    paramtype = Type.Boolean;
+                    break;
+                default:
+                    throw new SyntaxException("Syntax Error in FuncParamsNode, invalid type keyword", t);
             }
+            tokens.remove(0);
             pTypes.add(paramtype);
 
             while (tokens.size() != 0 && tokens.get(0).getTokenType() == TokenType.COMMA) {
@@ -91,14 +101,24 @@ public class FuncParamsNode implements JottTree {
                 t = tokens.get(0);
                 paramtype = null;
 
-                if (t.getToken().equals("Double")
-                        || t.getToken().equals("Integer")
-                        || t.getToken().equals("String")
-                        || t.getToken().equals("Boolean")) {
-                    paramtype = t;
-                    tokens.remove(0);
+                switch (t.getToken()) {
+                case "Double":
+                    paramtype = Type.Double;
+                    break;
+                case "Integer":
+                    paramtype = Type.Integer;
+                    break;
+                case "String":
+                    paramtype = Type.String;
+                    break;
+                case "Boolean":
+                    paramtype = Type.Boolean;
+                    break;
+                default:
+                    throw new SyntaxException("Syntax Error in FuncParamsNode, invalid type keyword", t);
                 }
                 pTypes.add(paramtype);
+                tokens.remove(0);
             }
         }
 
