@@ -1,6 +1,7 @@
 package src.parser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import src.provided.JottTree;
 import src.provided.Token;
@@ -12,7 +13,9 @@ public class FuncNode implements JottTree{
     FuncParamsNode funcParams;
     FuncReturnNode funcReturnType;
     BodyNode funcBody;
-
+    public static HashMap<String, Type> varTable = new HashMap<>();
+    
+    
     public FuncNode(IdNode id, FuncParamsNode params, FuncReturnNode returnType, BodyNode body) {
         this.funcName = id;
         this.funcParams = params;
@@ -59,6 +62,8 @@ public class FuncNode implements JottTree{
     }
     
     public static FuncNode parse(ArrayList<Token> tokens) throws SyntaxException {
+        varTable = new HashMap<>();
+
         if (tokens.size() == 0) {
             throw new SyntaxException("Syntax error in FuncNode");
         }
@@ -68,6 +73,7 @@ public class FuncNode implements JottTree{
         tokens.remove(0);
 
         IdNode func_name = IdNode.parse(tokens);
+
         if (tokens.size() == 0) {
             throw new SyntaxException("Syntax error in FuncNode");
         }
@@ -77,6 +83,7 @@ public class FuncNode implements JottTree{
         tokens.remove(0);
 
         FuncParamsNode fcp = FuncParamsNode.parse(tokens);
+
         if (tokens.size() == 0) {
             throw new SyntaxException("Syntax error in FuncNode");
         }
@@ -93,6 +100,7 @@ public class FuncNode implements JottTree{
         tokens.remove(0);
 
         FuncReturnNode returnType = FuncReturnNode.parse(tokens);
+
         if (tokens.size() == 0) {
             throw new SyntaxException("Syntax error in FuncNode");
         }
@@ -102,6 +110,7 @@ public class FuncNode implements JottTree{
         tokens.remove(0);
 
         BodyNode body = BodyNode.parse(tokens);
+
         if (tokens.size() == 0) {
             throw new SyntaxException("Syntax error in FuncNode");
         }

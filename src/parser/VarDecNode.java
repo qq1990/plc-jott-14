@@ -79,8 +79,11 @@ public class VarDecNode implements BodyStmtNode {
             throw new SyntaxException("Syntax Error in VarDecNode, expected semicolon", tokens.get(0));
         }
         tokens.remove(0);
-        return new VarDecNode(type, name);
-        // TODO Add to symbol table
+
+        VarDecNode varDec = new VarDecNode(type, name);
+        FuncNode.varTable.put(varDec.name.convertToJott(), varDec.type);
+
+        return varDec;
     }
 
     public static void main(String[] args) throws SyntaxException{
