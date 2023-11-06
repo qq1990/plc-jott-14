@@ -38,8 +38,7 @@ public class FuncReturnNode implements JottTree {
 
     @Override
     public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+        return true;
     }
     
     public static FuncReturnNode parse(ArrayList<Token> tokens) throws SyntaxException{

@@ -21,8 +21,8 @@ public class JottParser {
     public static JottTree parse(ArrayList<Token> tokens){
         try {
             return ProgramNode.parse(tokens);
-        } catch (SyntaxException e) {
-            System.out.println(e.getMessage());
+        } catch (SyntaxException | SemanticException e) {
+            System.err.println(e.getMessage());
             return null;
         }
     }

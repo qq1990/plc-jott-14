@@ -47,11 +47,21 @@ public class ProgramNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
-        throw new UnsupportedOperationException("Parse the tree to validate");
+    public boolean validateTree() throws SemanticException{
+        if(!defTable.containsKey("main")) {
+            throw new SemanticException("Semantic Error in ProgramNode, no main function");
+        }
+        Type[] mainTypes = defTable.get("main");
+        if(mainTypes.length != 1) {
+            throw new SemanticException("Semantic Error in ProgramNode, main function must have no parameters");
+        }
+        if(mainTypes[mainTypes.length - 1] != Type.Void) {
+            throw new SemanticException("Semantic Error in ProgramNode, main function must return void");
+        }
+        return true;
     }
 
-    public static ProgramNode parse(ArrayList<Token> tokens) throws SyntaxException {
+    public static ProgramNode parse(ArrayList<Token> tokens) throws SyntaxException, SemanticException {
         defTable.put("print", new Type[] {Type.Any, null});
         defTable.put("concat", new Type[] {Type.String, Type.String, Type.String});
         defTable.put("length", new Type[] {Type.String, Type.Integer});
@@ -75,7 +85,9 @@ public class ProgramNode implements JottTree {
             funcDefNodes.add(node);
         }
 
-        return new ProgramNode(funcDefNodes);
+        ProgramNode programNode = new ProgramNode(funcDefNodes);
+        programNode.validateTree();
+        return programNode;
         
     }
     
