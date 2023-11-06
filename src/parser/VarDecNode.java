@@ -39,8 +39,11 @@ public class VarDecNode implements BodyStmtNode {
     }
 
     @Override
-    public boolean validateTree() {
-        // TODO Type checking relies on the symbol table
+    public boolean validateTree() throws SemanticException{
+        if (FuncNode.varTable.containsKey(name.convertToJott())) {
+            throw new SemanticException("Semantic Error in VarDecNode, variable already declared: " + name.convertToJott());
+        }
+        FuncNode.varTable.put(name.convertToJott(), type);
         return name.validateTree();
     }
     

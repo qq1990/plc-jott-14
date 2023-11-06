@@ -45,7 +45,7 @@ public class AsmtNode implements BodyStmtNode {
 
     @Override
     public boolean validateTree() throws SemanticException{
-        if(type != null) {
+        if (type != null) {
             if (FuncNode.varTable.containsKey(name.convertToJott())) {
                 throw new SemanticException("Semantic Error in AsmtNode, variable already declared: " + name.convertToJott());
             }
