@@ -44,8 +44,20 @@ public class AsmtNode implements BodyStmtNode {
     }
 
     @Override
-    public boolean validateTree() {
-        // TODO Type checking relies on the symbol table
+    public boolean validateTree() throws SemanticException{
+        if(type != null) {
+            if (FuncNode.varTable.containsKey(name.convertToJott())) {
+                throw new SemanticException("Semantic Error in AsmtNode, variable already declared: " + name.convertToJott());
+            }
+            FuncNode.varTable.put(name.convertToJott(), type);
+        }
+        else if (!FuncNode.varTable.containsKey(name.convertToJott())) {
+            throw new SemanticException("Semantic Error in AsmtNode, variable not declared: " + name.convertToJott());
+        }
+        // depends on expr.getType() being implemented
+        // if (FuncNode.varTable.get(name.convertToJott()) != expr.getType()) {
+        //     throw new SemanticException("Semantic Error in AsmtNode, type mismatch: " + this.convertToJott());
+        // }
         return name.validateTree() && expr.validateTree();
     }
     

@@ -52,8 +52,9 @@ public class ProgramNode implements JottTree {
     }
 
     public static ProgramNode parse(ArrayList<Token> tokens) throws SyntaxException {
-        defTable.put("print", new Type[] {Type.Any, Type.String});
+        defTable.put("print", new Type[] {Type.Any, null});
         defTable.put("concat", new Type[] {Type.String, Type.String, Type.String});
+        defTable.put("length", new Type[] {Type.String, Type.Integer});
 
         ArrayList<FuncNode> funcDefNodes = new ArrayList<>();
         while(tokens.size() > 0) {
