@@ -56,12 +56,18 @@ public class FuncNode implements JottTree{
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree() throws SemanticException {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+        if (ProgramNode.defTable.containsKey(this.funcName.convertToJott())) {
+            // if jott says we need to allow for overload methods, then this needs to be changed
+            throw new SemanticException("Semantic Error in FuncNode, function already defined.");
+        }
+        // check if body return matches the return type?
+
+        return true;
     }
     
-    public static FuncNode parse(ArrayList<Token> tokens) throws SyntaxException {
+    public static FuncNode parse(ArrayList<Token> tokens) throws SyntaxException, SemanticException {
         varTable = new HashMap<>();
 
         if (tokens.size() == 0) {
@@ -83,6 +89,10 @@ public class FuncNode implements JottTree{
         tokens.remove(0);
 
         FuncParamsNode fcp = FuncParamsNode.parse(tokens);
+
+        for (int i = 0; i < fcp.paramNames.size(); i++) {
+            varTable.put(fcp.paramNames.get(i).convertToJott(), fcp.paramTypes.get(i));
+        }
 
         if (tokens.size() == 0) {
             throw new SyntaxException("Syntax error in FuncNode");
@@ -119,10 +129,12 @@ public class FuncNode implements JottTree{
         }
         tokens.remove(0);
 
-        return new FuncNode(func_name, fcp, returnType, body);
+        FuncNode functionNode = new FuncNode(func_name, fcp, returnType, body);
+        functionNode.validateTree();
+        return functionNode;
     }
 
-    public static void main(String[] args) throws SyntaxException {
+    public static void main(String[] args) throws SyntaxException, SemanticException {
         ArrayList<Token> tokens = new ArrayList<Token>();
         tokens.add(new Token("def", "test", 1, TokenType.ID_KEYWORD));
         FuncNode v = null;

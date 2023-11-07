@@ -47,9 +47,13 @@ public class FuncParamsNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+    public boolean validateTree() throws SemanticException {
+        for (IdNode name : this.paramNames) {
+            String nameStr = name.convertToJott();
+            if (FuncNode.varTable.containsKey(nameStr))
+                throw new SemanticException("Semantic Error in FuncParamsNode, param name already used.");
+        }
+        return true;
     }
 
     public static FuncParamsNode parse(ArrayList<Token> tokens) throws SyntaxException {

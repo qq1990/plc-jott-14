@@ -11,6 +11,9 @@ import src.provided.Token;
 public class ProgramNode implements JottTree {
 
     private ArrayList<FuncNode> funcDefNodes;
+    // Symbol table for function definitions where key is the function name and
+    // value is an arr of the parameters' data types; except for the last value
+    // which is the function's return type
     public static HashMap<String, Type[]> defTable = new HashMap<>();
     
     public ProgramNode(ArrayList<FuncNode> funcDefNodes) {
