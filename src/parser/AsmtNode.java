@@ -17,6 +17,11 @@ public class AsmtNode implements BodyStmtNode {
         this.expr = expr;
     }
 
+    // @Override
+    public Type getRetType() {
+        return null;
+    }
+
     @Override
     public String convertToJott() {
         if (type == null) {

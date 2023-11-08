@@ -15,6 +15,11 @@ public class VarDecNode implements BodyStmtNode {
         this.name = name;
     }
 
+    // @Override
+    public Type getRetType() {
+        return null;
+    }
+
     @Override
     public String convertToJott() {
         return type.name() + " " + name.convertToJott() + ";";
