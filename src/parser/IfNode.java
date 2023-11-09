@@ -70,7 +70,7 @@ public class IfNode implements BodyStmtNode {
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree() throws SemanticException {
         if(expr.validateTree() && body.validateTree()) {
             if(expr.getType() == Type.Boolean) {
                 for(int i = 0; i < elseiflist.size(); i++) {
@@ -78,7 +78,7 @@ public class IfNode implements BodyStmtNode {
                         throw new SemanticException("Semantic Error: Invalid if statement");
                     }
                 }
-                if(elsenode.validateTree()) {
+                if(else_node.validateTree()) {
                     return true;
                 }
             }
@@ -86,7 +86,7 @@ public class IfNode implements BodyStmtNode {
         throw new SemanticException("Semantic error: Invalid while statement");
     }
 
-    public static IfNode parse(ArrayList<Token> tokens) throws SyntaxException {
+    public static IfNode parse(ArrayList<Token> tokens) throws SyntaxException, SemanticException {
         ArrayList<ElseIfNode> nodes = new ArrayList<>();
 
         if (tokens.size() == 0){
@@ -126,7 +126,7 @@ public class IfNode implements BodyStmtNode {
         int x = FuncNode.varTable.size();
         BodyNode body = BodyNode.parse(tokens);
         if(FuncNode.varTable.size() > x) {
-            throw new SemanticException("Semantic error: New variable declared in while loop")
+            throw new SemanticException("Semantic error: New variable declared in while loop");
         }
 
         if (tokens.size() == 0){
@@ -150,6 +150,12 @@ public class IfNode implements BodyStmtNode {
 
         return new IfNode(expr, body, nodes, elsenode);
         
+    }
+
+    @Override
+    public boolean isReturnable() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'isReturnable'");
     }
     
 }
