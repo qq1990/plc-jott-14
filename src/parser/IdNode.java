@@ -37,8 +37,22 @@ public class IdNode implements ExprNode {
 
     @Override
     public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+        return (getName().equals("True") || getName().equals("False")) || FuncNode.varTable.containsKey(getName()); 
+    }
+
+    @Override
+    public Type getType() {
+        if (validateTree()) {
+            if (getName().equals("True") || getName().equals("False")) {
+                return Type.Boolean;
+            }
+            return FuncNode.varTable.get(getName());
+        }
+        return null;
+    }
+
+    public String getName() {
+        return id_name.getToken();
     }
     
     public static IdNode parse(ArrayList<Token> tokens) throws SyntaxException {

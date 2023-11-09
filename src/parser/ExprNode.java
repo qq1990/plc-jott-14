@@ -9,6 +9,8 @@ import src.provided.TokenType;
 
 // Thomas Ehlers
 public interface ExprNode extends JottTree {
+    public Type getType();
+
     public static ExprNode parse(ArrayList<Token> tokens) throws SyntaxException {
         if (tokens.size() == 0) {
             throw new SyntaxException("Syntax Error in ExprNode");
