@@ -40,10 +40,21 @@ public class WhileNode implements BodyStmtNode {
         throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
     }
 
+    //cannot make new variable in while loop
+    //check synbol table for the body
+    //if symbol table changes or size changes, false
+    //
     @Override
-    public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+    public boolean validateTree() throws SemanticException {
+        if(expr.validateTree() && body.validateTree()) {
+            
+        }
+        return false;
+        //throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+    }
+
+    public Type getRetType() {
+        return null;
     }
 
     public static WhileNode parse(ArrayList<Token> tokens) throws SyntaxException {

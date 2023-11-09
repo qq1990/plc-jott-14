@@ -16,6 +16,10 @@ public class ElseIfNode implements BodyStmtNode {
         this.body = body;
     }
 
+    public BodyNode getBody() {
+        return body;
+    }
+
     @Override
     public String convertToJott() {
         String s = "elseif["+expr.convertToJott()+"]{"+body.convertToJott()+"}";

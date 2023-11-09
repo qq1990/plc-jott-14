@@ -52,6 +52,23 @@ public class IfNode implements BodyStmtNode {
         throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
     }
 
+    public Type getRetType() {
+        if(else_node != null) {
+            if(else_node.getBody().getRetType() != body.getRetType()) {
+                throw new SemanticException("Semantic Error: Different return types");
+            }
+            Type type = body.getRetType();
+            for(int i = 0; i < elseiflist.size(); i++) {
+                if(elseiflist.get(i).getBody().getRetType() != type) {
+                    throw new SemanticException("Semantic Error: Different return types");
+                }
+            }
+            return type;
+        }
+        return null;
+        
+    }
+
     @Override
     public boolean validateTree() {
         // TODO Auto-generated method stub
@@ -109,8 +126,12 @@ public class IfNode implements BodyStmtNode {
         while(tokens.size() > 0 && tokens.get(0).getToken().equals("elseif")) {
             elseiflist.add(ElseIfNode.parse(tokens));
         }
-
-        ElseNode elsenode = ElseNode.parse(tokens);
+        ElseNode elsenode;
+        if(tokens.size() > 0 && tokens.get(0).getToken().equals("else")) {
+            elsenode = ElseNode.parse(tokens);
+        } else {
+            elsenode = null;
+        }
 
         return new IfNode(expr, body, nodes, elsenode);
         
