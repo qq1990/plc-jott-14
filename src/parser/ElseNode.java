@@ -50,8 +50,12 @@ public class ElseNode implements BodyStmtNode {
 
     @Override
     public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+        if(expr.validateTree() && body.validateTree()) {
+            if(expr.getType() == Type.Boolean) {
+                return true;
+            }
+        }
+        throw new SemanticException("Semantic error: Invalid else statement");
     }
 
     public static ElseNode parse(ArrayList<Token> tokens) throws SyntaxException {

@@ -40,10 +40,20 @@ public class ReturnStmtNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
-        // TODO: Implement tree validation for ReturnStmtNode
+    public boolean validateTree() throws SemanticException {
         // You can check if the expression is valid here.
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+        if (expr != null) {
+            return expr.validateTree();
+        }
+        else{
+            throw new SemanticException("Semantic Error in Return Statement Node: " + expr.convertToJott());
+        }
+        // throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+    }
+
+    public Type getRetType() {
+        // If the return statement is not the empty string, pass the type of the ExprNode; else, return null.
+        return (expr != null) ? expr.getType() : null;
     }
 
     public static ReturnStmtNode parse(ArrayList<Token> tokens) throws SyntaxException {
