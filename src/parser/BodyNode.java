@@ -64,7 +64,7 @@ public class BodyNode implements JottTree {
     public Type getRetType() {
         // If one of the body statements is returnable, pass the type of the body statement.
         for (BodyStmtNode bodyStmt : bodyStmts) {
-            if (bodyStmt.getRetType() != null) {
+            if (bodyStmt.isReturnable()) {
                 return bodyStmt.getRetType();
             }
         }
