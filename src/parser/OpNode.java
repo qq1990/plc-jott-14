@@ -40,8 +40,23 @@ public class OpNode implements ExprNode {
     
     @Override
     public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+        return (left.getType() != null && left.getType() == right.getType()) && 
+            ( //(op.getToken().equals("!=") || op.getToken().equals("==")) ||
+            (left.getType().equals(Type.Double) || left.getType().equals(Type.Integer)));
+    }
+
+    @Override
+    public Type getType() {
+        String o = op.getToken();
+        if (validateTree()) {
+            if (o.equals("+") || o.equals("-") || o.equals("*") 
+                    || o.equals("/") || o.equals("^")) {
+                return left.getType();
+            } else { // if (o.equals("==") || o.equals("!=") || o.equals("<") || o.equals(">") || o.equals("<=") || o.equals(">=")) {
+                return Type.Boolean;
+            }
+        }
+        return null;
     }
 
     public static OpNode parse(ArrayList<Token> tokens) throws SyntaxException {

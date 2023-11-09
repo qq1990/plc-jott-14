@@ -37,8 +37,12 @@ public class StrNode implements ExprNode {
 
     @Override
     public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+        return true;
+    }
+
+    @Override
+    public Type getType() {
+        return Type.String;
     }
     
     public static StrNode parse(ArrayList<Token> tokens) throws SyntaxException {

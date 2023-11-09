@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import src.provided.JottTree;
 import src.provided.Token;
 import src.provided.TokenType;
+import src.parser.SemanticException;
 
 // Thomas Ehlers
 public class ParamsNode implements JottTree {
@@ -45,9 +46,21 @@ public class ParamsNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+    public boolean validateTree() throws SemanticException {
+        for (ExprNode p : params) {
+            if (!p.validateTree()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public Type[] getTypes() {
+        Type[] types = new Type[params.size()];
+        for (int i=0; i<params.size(); i++) {
+            types[i] = params.get(i).getType();
+        }
+        return types;
     }
     
     public static ParamsNode parse(ArrayList<Token> tokens) throws SyntaxException {

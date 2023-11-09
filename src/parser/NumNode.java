@@ -41,8 +41,15 @@ public class NumNode implements ExprNode {
 
     @Override
     public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+        return true;
+    }
+    
+    @Override
+    public Type getType() {
+        if (num_val.getToken().contains(".")) {
+            return Type.Double;
+        }
+        return Type.Integer;
     }
     
     public static NumNode parse(ArrayList<Token> tokens) throws SyntaxException {

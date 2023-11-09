@@ -39,8 +39,28 @@ public class CallNode implements ExprNode, BodyStmtNode {
 
     @Override
     public boolean validateTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+        if (ProgramNode.defTable.containsKey(func_name.getName())) {
+            Type[] pTypes = ProgramNode.defTable.get(func_name.getName());
+            Type[] aTypes = params.getTypes();
+            if (aTypes.length == pTypes.length-1) {
+                for (int i=0; i<aTypes.length; i++) {
+                    if (aTypes[i] != pTypes[i]) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public Type getType() {
+        if (validateTree()) {
+            Type[] t = ProgramNode.defTable.get(func_name.getName());
+            return t[t.length-1];
+        }
+        return null;
     }
     
     public static CallNode parse(ArrayList<Token> tokens) throws SyntaxException {
