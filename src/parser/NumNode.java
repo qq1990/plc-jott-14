@@ -40,7 +40,7 @@ public class NumNode implements ExprNode {
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree() throws SemanticException {
         return true;
     }
     
@@ -50,6 +50,13 @@ public class NumNode implements ExprNode {
             return Type.Double;
         }
         return Type.Integer;
+    }
+
+    public boolean isZero() {
+        if (getType() == Type.Integer) {
+            return Integer.parseInt(num_val.getToken()) == 0;
+        }
+        return Double.parseDouble(num_val.getToken()) == 0.0;
     }
     
     public static NumNode parse(ArrayList<Token> tokens) throws SyntaxException {

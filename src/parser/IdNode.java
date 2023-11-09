@@ -36,16 +36,25 @@ public class IdNode implements ExprNode {
     }
 
     @Override
-    public boolean validateTree() {
-        return (getName().equals("True") || getName().equals("False")) || FuncNode.varTable.containsKey(getName()); 
+    public boolean validateTree() throws SemanticException {
+        return true;
+        /* Functionality needs to be implemented in their respective classes, listed below:
+        Used on left side of VarDecNode - !"True" && !"False" && !FuncNode.varTable.containsKey()
+        Used on left side of AsmtNode - !"True" && !"False" && FuncNode.varTable.containsKey()
+        Used in FuncDefNode - !"True" && !"False" && !ProgramNode.defTable.containsKey()
+        Used in FuncParams - !"True" && !"False" && !FuncNode.varTable.containsKey()
+        Used in CallNode - (!"True" && !"False") && ProgramNode.defTable.containsKey()
+        Used in ParamsNode - "True" || "False" || FuncNode.varTable.containsKey()
+        Used in ExprNode - "True" || "False" || FuncNode.varTable.containsKey()
+        */
     }
 
     @Override
     public Type getType() {
-        if (validateTree()) {
-            if (getName().equals("True") || getName().equals("False")) {
-                return Type.Boolean;
-            }
+        // Assume you are using the variable in ParamsNode/ExprNode
+        if (getName().equals("True") || getName().equals("False")) {
+            return Type.Boolean;
+        } else if (FuncNode.varTable.containsKey(getName())) {
             return FuncNode.varTable.get(getName());
         }
         return null;
