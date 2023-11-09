@@ -16,6 +16,10 @@ public class ElseNode implements BodyStmtNode {
         }
     }
 
+    public BodyNode getBody() {
+        return body;
+    }
+
     @Override
     public String convertToJott() {
         String s = "";
