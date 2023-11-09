@@ -60,9 +60,10 @@ public class IfNode implements BodyStmtNode {
             Type type = body.getRetType();
             for(int i = 0; i < elseiflist.size(); i++) {
                 if(elseiflist.get(i).getBody().getRetType() != type) {
-                throw new SemanticException("Semantic Error: Different return types");
+                    throw new SemanticException("Semantic Error: Different return types");
                 }
             }
+            return type;
         }
         return null;
         

@@ -45,12 +45,16 @@ public class WhileNode implements BodyStmtNode {
     //if symbol table changes or size changes, false
     //
     @Override
-    public boolean validateTree() {
+    public boolean validateTree() throws SemanticException {
         if(expr.validateTree() && body.validateTree()) {
-            return true;
+            
         }
         return false;
         //throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+    }
+
+    public Type getRetType() {
+        return null;
     }
 
     public static WhileNode parse(ArrayList<Token> tokens) throws SyntaxException {
