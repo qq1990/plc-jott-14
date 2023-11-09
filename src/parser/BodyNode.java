@@ -78,6 +78,24 @@ public class BodyNode implements JottTree {
         return null;
     }
 
+    public boolean isReturnable(){
+        // True if one of the body statements is returnable
+        for (BodyStmtNode bodyStmt : bodyStmts) {
+            if (bodyStmt.isReturnable()) {
+                return true;
+            }
+        }
+
+        // Return node is returnable
+        if (returnStmt != null) {
+            return true;
+        }
+
+        return false;
+
+
+    }
+
     public static BodyNode parse(ArrayList<Token> tokens) throws SyntaxException {
         ArrayList<BodyStmtNode> bodyStmts = new ArrayList<>();
         ReturnStmtNode returnStmt = null;
