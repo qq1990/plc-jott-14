@@ -46,6 +46,11 @@ public class ReturnStmtNode implements JottTree {
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
 
+    public Type getRetType() {
+        // If the return statement is not the empty string, pass the type of the ExprNode; else, return null.
+        return (expr != null) ? expr.getType() : null;
+    }
+
     public static ReturnStmtNode parse(ArrayList<Token> tokens) throws SyntaxException {
         if (tokens.size() >= 2 && tokens.get(0).getToken().equals("return")) {
             tokens.remove(0); // Remove "return" keyword
