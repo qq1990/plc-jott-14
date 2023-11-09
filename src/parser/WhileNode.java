@@ -47,10 +47,11 @@ public class WhileNode implements BodyStmtNode {
     @Override
     public boolean validateTree() throws SemanticException {
         if(expr.validateTree() && body.validateTree()) {
-            
+            if(expr.getType() == Type.Boolean) {
+                return true;
+            }
         }
-        return false;
-        //throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+        throw new SemanticException("Semantic error: Invalid while statement");
     }
 
     public Type getRetType() {
@@ -92,7 +93,11 @@ public class WhileNode implements BodyStmtNode {
         }
         tokens.remove(0);
 
+        int x = FuncNode.varTable.size();
         BodyNode body = BodyNode.parse(tokens);
+        if(FuncNode.varTable.size() > x) {
+            throw new SemanticException("Semantic error: New variable declared in while loop")
+        }
 
         if (tokens.size() == 0){
             throw new SyntaxException("Syntax Error in WhileNode");
