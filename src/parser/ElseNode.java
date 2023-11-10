@@ -56,7 +56,7 @@ public class ElseNode implements BodyStmtNode {
         throw new SemanticException("Semantic error: Invalid else statement");
     }
 
-    public static ElseNode parse(ArrayList<Token> tokens) throws SyntaxException {
+    public static ElseNode parse(ArrayList<Token> tokens) throws SyntaxException, SemanticException {
         if (tokens.size() == 0){
             throw new SyntaxException("Syntax Error in ElseNode");
         }
@@ -73,7 +73,11 @@ public class ElseNode implements BodyStmtNode {
         }
         tokens.remove(0);
 
+        int x = FuncNode.varTable.size();
         BodyNode body = BodyNode.parse(tokens);
+        if(FuncNode.varTable.size() > x) {
+            throw new SemanticException("Semantic error: New variable declared in else statement");
+        }
 
         if (tokens.size() == 0){
             throw new SyntaxException("Syntax Error in ElseNode");
@@ -89,8 +93,7 @@ public class ElseNode implements BodyStmtNode {
 
     @Override
     public Type getRetType() throws SemanticException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getRetType'");
+        return body.getRetType();
     }
 
     @Override

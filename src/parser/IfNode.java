@@ -124,7 +124,7 @@ public class IfNode implements BodyStmtNode {
         int x = FuncNode.varTable.size();
         BodyNode body = BodyNode.parse(tokens);
         if(FuncNode.varTable.size() > x) {
-            throw new SemanticException("Semantic error: New variable declared in while loop");
+            throw new SemanticException("Semantic error: New variable declared in if statement");
         }
 
         if (tokens.size() == 0){

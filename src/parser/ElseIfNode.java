@@ -54,7 +54,7 @@ public class ElseIfNode implements BodyStmtNode {
         throw new SemanticException("Semantic error: Invalid while");
     }
 
-    public static ElseIfNode parse(ArrayList<Token> tokens) throws SyntaxException {
+    public static ElseIfNode parse(ArrayList<Token> tokens) throws SyntaxException, SemanticException {
         if (tokens.size() == 0){
             throw new SyntaxException("Syntax Error in ElseIfNode");
         }
@@ -89,7 +89,11 @@ public class ElseIfNode implements BodyStmtNode {
         }
         tokens.remove(0);
 
+        int x = FuncNode.varTable.size();
         BodyNode body = BodyNode.parse(tokens);
+        if(FuncNode.varTable.size() > x) {
+            throw new SemanticException("Semantic error: New variable declared in elseif statement");
+        }
 
         if (tokens.size() == 0){
             throw new SyntaxException("Syntax Error in ElseIfNode");
