@@ -107,4 +107,9 @@ public class VarDecNode implements BodyStmtNode {
         v = VarDecNode.parse(tokens);
         System.out.println(v.convertToJott());
     }
+
+    @Override
+    public Token getToken() {
+        return name.getToken();
+    }
 }

@@ -135,4 +135,9 @@ public class WhileNode implements BodyStmtNode {
     public boolean isReturnable() {
         return false;
     }
+
+    @Override
+    public Token getToken() {
+        return body.getToken();
+    }
 }

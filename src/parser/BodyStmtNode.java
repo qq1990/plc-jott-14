@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public interface BodyStmtNode extends JottTree {
     Type getRetType();
     boolean isReturnable();
+    Token getToken();
     public static BodyStmtNode parse(ArrayList<Token> tokens) throws SyntaxException, SemanticException {
         if (tokens.size() == 0) {
             return null;

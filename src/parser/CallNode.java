@@ -70,6 +70,11 @@ public class CallNode implements ExprNode, BodyStmtNode {
     public boolean isReturnable() {
         return false;
     }
+
+    @Override
+    public Token getToken() {
+        return func_name.getToken();
+    }
     
     public static CallNode parse(ArrayList<Token> tokens) throws SyntaxException {
         if (tokens.size() == 0){

@@ -207,5 +207,10 @@ public class IfNode implements BodyStmtNode {
         }
         return false;
     }
+
+    @Override
+    public Token getToken() {
+        return body.getToken();
+    }
     
 }

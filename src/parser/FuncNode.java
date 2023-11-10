@@ -61,14 +61,18 @@ public class FuncNode implements JottTree{
         if (ProgramNode.defTable.containsKey(this.funcName.getName()) && !this.funcName.validateName()) {
             throw new SemanticException("Semantic Error in FuncNode, function already defined.", this.funcName.getToken());
         }
+        funcBody.validateTree();
+        funcParams.validateTree();
+        funcReturnType.validateTree();
+
         // check if body return matches the return type
-        if (!(this.funcBody.getRetType() == this.funcReturnType.type)) {
+        if (this.funcBody.getRetType() != this.funcReturnType.type) {
             if (!(this.funcBody.getRetType() == null && this.funcReturnType.type == Type.Void))
                 throw new SemanticException("Semantic Error in FuncNode, " +
                                                 "body returns incorrect type.", this.funcName.getToken());
         }
 
-        return funcBody.validateTree() && funcParams.validateTree() && funcReturnType.validateTree();
+        return true;
     }
     
     public static FuncNode parse(ArrayList<Token> tokens) throws SyntaxException, SemanticException {

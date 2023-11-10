@@ -8,9 +8,11 @@ import java.util.ArrayList;
 // Quan
 public class ReturnStmtNode implements JottTree {
     private ExprNode expr;
+    private Token rToken;
 
-    public ReturnStmtNode(ExprNode expr) {
+    public ReturnStmtNode(ExprNode expr, Token rToken) {
         this.expr = expr;
+        this.rToken = rToken;
     }
 
     @Override
@@ -56,15 +58,25 @@ public class ReturnStmtNode implements JottTree {
         return (expr != null) ? expr.getType() : null;
     }
 
+    public Token getToken() {
+        return rToken;
+    }
+
     public static ReturnStmtNode parse(ArrayList<Token> tokens) throws SyntaxException {
-        if (tokens.size() >= 2 && tokens.get(0).getToken().equals("return")) {
+        if (tokens.size() == 0) {
+            return null;
+        }
+        Token t = tokens.get(0);
+        if (t.getToken().equals("return")) {
             tokens.remove(0); // Remove "return" keyword
+            if (tokens.size() == 0) { throw new SyntaxException("Syntax Error in ReturnStmtNode, ran out of tokens", t); }
             ExprNode expr = ExprNode.parse(tokens);
-            if (expr != null && tokens.size() >= 1 && tokens.get(0).getTokenType() == TokenType.SEMICOLON) {
+            if (tokens.size() == 0) { throw new SyntaxException("Syntax Error in ReturnStmtNode, ran out of tokens", t); } 
+            if (tokens.get(0).getTokenType() == TokenType.SEMICOLON) {
                 tokens.remove(0); // Remove the semicolon
-                return new ReturnStmtNode(expr);
+                return new ReturnStmtNode(expr, t);
             } else {
-                throw new SyntaxException("Syntax Error in ReturnStmtNode", tokens.get(0));
+                throw new SyntaxException("Syntax Error in ReturnStmtNode, missing semicolon", t);
             }
         }
         return null; // Return null if "return" keyword is not found

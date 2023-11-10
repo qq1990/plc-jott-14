@@ -139,4 +139,9 @@ public class ElseIfNode implements BodyStmtNode {
         }
         return true;
     }
+
+    @Override
+    public Token getToken() {
+        return body.getToken();
+    }
 }

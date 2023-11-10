@@ -138,4 +138,9 @@ public class AsmtNode implements BodyStmtNode {
         v = AsmtNode.parse(tokens);
         System.out.println(v.convertToJott());
     }
+
+    @Override
+    public Token getToken() {
+        return name.getToken();
+    }
 }

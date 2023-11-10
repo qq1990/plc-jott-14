@@ -56,11 +56,23 @@ public class BodyNode implements JottTree {
 
     @Override
     public boolean validateTree() throws SemanticException {
+        Type type = null;
         for (BodyStmtNode bodyStmt : bodyStmts) {
-            return bodyStmt.validateTree();
+            bodyStmt.validateTree();
+            if (bodyStmt.getRetType() != null) {
+                if (type == null) {
+                    type = bodyStmt.getRetType();
+                } else if (type != bodyStmt.getRetType()) {
+                    throw new SemanticException("Semantic Error in BodyNode, trying to return multiple types", bodyStmt.getToken());
+                }
+            }
         }
+
         if (returnStmt != null) {
-            return returnStmt.validateTree();
+            returnStmt.validateTree();
+            if (type != null && type != returnStmt.getRetType()) {
+                throw new SemanticException("Semantic Error in BodyNode, trying to return multiple types", returnStmt.getToken());
+            }
         }
         return true;
     }
@@ -96,8 +108,13 @@ public class BodyNode implements JottTree {
         }
 
         return false;
+    }
 
-
+    public Token getToken() {
+        if (returnStmt != null) {
+            return returnStmt.getToken();
+        }
+        return null;
     }
 
     public static BodyNode parse(ArrayList<Token> tokens) throws SyntaxException, SemanticException {

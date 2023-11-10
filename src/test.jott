@@ -1,0 +1,16 @@
+def foo[x:Integer]:Double{
+    if[x > 5]{
+        return 0.5;
+    }
+    else{
+        if [True] {
+        return 5.5;
+        } else {
+            return "Hello";
+        }
+    }
+}
+
+def main[]:Void{
+    ::print[::foo[5]];
+}
