@@ -58,7 +58,7 @@ public class WhileNode implements BodyStmtNode {
         return null;
     }
 
-    public static WhileNode parse(ArrayList<Token> tokens) throws SyntaxException {
+    public static WhileNode parse(ArrayList<Token> tokens) throws SyntaxException, SemanticException {
         if (tokens.size() == 0){
             throw new SyntaxException("Syntax Error in WhileNode");
         }
@@ -96,7 +96,7 @@ public class WhileNode implements BodyStmtNode {
         int x = FuncNode.varTable.size();
         BodyNode body = BodyNode.parse(tokens);
         if(FuncNode.varTable.size() > x) {
-            throw new SemanticException("Semantic error: New variable declared in while loop")
+            throw new SemanticException("Semantic error: New variable declared in while loop");
         }
 
         if (tokens.size() == 0){
@@ -108,5 +108,11 @@ public class WhileNode implements BodyStmtNode {
         tokens.remove(0);
 
         return new WhileNode(expr, body);
+    }
+
+    @Override
+    public boolean isReturnable() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'isReturnable'");
     }
 }

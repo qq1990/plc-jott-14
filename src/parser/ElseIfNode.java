@@ -45,7 +45,7 @@ public class ElseIfNode implements BodyStmtNode {
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree() throws SemanticException {
         if(expr.validateTree() && body.validateTree()) {
             if(expr.getType() == Type.Boolean) {
                 return true;
@@ -101,5 +101,17 @@ public class ElseIfNode implements BodyStmtNode {
 
         return new ElseIfNode(expr, body);
         
+    }
+
+    @Override
+    public Type getRetType() throws SemanticException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getRetType'");
+    }
+
+    @Override
+    public boolean isReturnable() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'isReturnable'");
     }
 }
