@@ -14,15 +14,30 @@ public interface BodyStmtNode extends JottTree {
         }
         Token t = tokens.get(0);
         if (t.getToken().equals("if")) {
-            return IfNode.parse(tokens);
+            IfNode ifNode = IfNode.parse(tokens);
+            if (ifNode == null){
+                throw new SyntaxException("Error parsing If node", t);
+            }
+            return ifNode;
+            // return IfNode.parse(tokens);
         } else if (t.getToken().equals("while")) {
-            return WhileNode.parse(tokens);
+            WhileNode whileNode = WhileNode.parse(tokens);
+            if (whileNode == null){
+                throw new SyntaxException("Error parsing While node", t);
+            }
+            return whileNode;
+            // return WhileNode.parse(tokens);
         }
         else if (t.getToken().equals("return")) {
             return null;
         }
         else if (t.getTokenType() == TokenType.FC_HEADER){
             CallNode funcCall = CallNode.parse(tokens);
+            ///
+            if (funcCall == null){
+                throw new SyntaxException("Error parsing Func call", t);
+            }
+            ///
             if (tokens.get(0).getTokenType() == TokenType.SEMICOLON){
                 tokens.remove(0);
                 return funcCall;
@@ -32,8 +47,12 @@ public interface BodyStmtNode extends JottTree {
             }
         }
         else if (t.getTokenType() == TokenType.ID_KEYWORD) {
-            return AsmtNode.parse(tokens);
-            
+            AsmtNode asmtNode = AsmtNode.parse(tokens);
+            if (asmtNode == null){
+                throw new SyntaxException("Error parsing Asmt Node", t);
+            }
+            return asmtNode;
+            // return AsmtNode.parse(tokens);
         }
         else if ((t.getToken().equals("Double")
             || t.getToken().equals("Integer")
@@ -41,9 +60,19 @@ public interface BodyStmtNode extends JottTree {
             || t.getToken().equals("Boolean"))){
             // Check for function calls or assignments
             if (tokens.size() >= 3 && tokens.get(2).getTokenType() == TokenType.SEMICOLON) {
-                return VarDecNode.parse(tokens);
+                VarDecNode varDecNode = VarDecNode.parse(tokens);
+                if(varDecNode == null){
+                    throw new SyntaxException("Error parsing Var Dec", t);
+                }
+                return varDecNode;
+                // return VarDecNode.parse(tokens);
             } else {
-                return AsmtNode.parse(tokens);
+                AsmtNode asmtNode = AsmtNode.parse(tokens);
+                if (asmtNode == null){
+                    throw new SyntaxException("Error parsing Asmt Node", t);
+                }
+                return asmtNode;
+                // return AsmtNode.parse(tokens);
             }
         }
         else{
