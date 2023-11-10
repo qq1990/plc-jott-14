@@ -54,22 +54,20 @@ public class IfNode implements BodyStmtNode {
     public Type getRetType() {
         if(body.getRetType() != null) {
             Type type = body.getRetType();
-            if(else_node != null) {
-                if(else_node.getRetType() != null) {
-                    if(else_node.getRetType() == type) {
-                        for(int i = 0; i < elseiflist.size(); i++) {
-                            if(elseiflist.get(i).getRetType() != type) {
-                                return null;
-                            }
+            if(else_node != null && else_node.getRetType() != null) {
+                if(else_node.getRetType() == type) {
+                    for(int i = 0; i < elseiflist.size(); i++) {
+                        if(elseiflist.get(i).getRetType() != type) {
+                            return null; // return types don't match
                         }
-                        return type; // checked if, else, and any elif
                     }
-                    return null; // else type != if type
+                    return type; // checked if, else, and any elif
                 }
-                return type; // else has no ret type
+                return null; // else type != if type
             }
-            return type;
+            return type; // else has no ret type
         }
+
         if(else_node != null && else_node.getRetType() != null) {
             return else_node.getRetType();
         }
