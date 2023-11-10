@@ -53,12 +53,12 @@ public class ElseNode implements BodyStmtNode {
         if(body.validateTree()) {
             return true;
         }
-        throw new SemanticException("Semantic error: Invalid else statement");
+        throw new SemanticException("Semantic error: Invalid else statement", null);
     }
 
     public static ElseNode parse(ArrayList<Token> tokens) throws SyntaxException, SemanticException {
         if (tokens.size() == 0){
-            throw new SyntaxException("Syntax Error in ElseNode");
+            throw new SyntaxException("Syntax Error in ElseNode, no token", null);
         }
         if (tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) {
             throw new SyntaxException("Syntax Error in ElseNode", tokens.get(0));
@@ -66,21 +66,24 @@ public class ElseNode implements BodyStmtNode {
         tokens.remove(0);
 
         if (tokens.size() == 0){
-            throw new SyntaxException("Syntax Error in ElseNode");
+            throw new SyntaxException("Syntax Error in ElseNode, no token", null);
         }
         if (tokens.get(0).getTokenType() != TokenType.L_BRACE) {
             throw new SyntaxException("Syntax Error in ElseNode", tokens.get(0));
         }
         tokens.remove(0);
 
+        if (tokens.size() == 0){
+            throw new SyntaxException("Syntax Error in IfNode, no token", null);
+        }
         int x = FuncNode.varTable.size();
         BodyNode body = BodyNode.parse(tokens);
         if(FuncNode.varTable.size() > x) {
-            throw new SemanticException("Semantic error: New variable declared in else statement");
+            throw new SemanticException("Semantic error: New variable declared in else statement", tokens.get(0));
         }
 
         if (tokens.size() == 0){
-            throw new SyntaxException("Syntax Error in ElseNode");
+            throw new SyntaxException("Syntax Error in ElseNode, no token", null);
         }
         if (tokens.get(0).getTokenType() != TokenType.R_BRACE) {
             throw new SyntaxException("Syntax Error in ElseNode", tokens.get(0));
