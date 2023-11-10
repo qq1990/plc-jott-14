@@ -63,7 +63,8 @@ public class FuncNode implements JottTree{
         }
         // check if body return matches the return type
         if (!(this.funcBody.getRetType() == this.funcReturnType.type)) {
-            throw new SemanticException("Semantic Error in FuncNode, " +
+            if (!(this.funcBody.getRetType() == null && this.funcReturnType.type == Type.Void))
+                throw new SemanticException("Semantic Error in FuncNode, " +
                                                 "body returns incorrect type.", this.funcName.getToken());
         }
 
