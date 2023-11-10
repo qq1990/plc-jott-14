@@ -108,7 +108,7 @@ public class IfNode implements BodyStmtNode {
         ArrayList<ElseIfNode> nodes = new ArrayList<>();
 
         if (tokens.size() == 0){
-            throw new SyntaxException("Syntax Error in IfNode", null);
+            return null;
         }
         if (tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) {
             throw new SyntaxException("Syntax Error in IfNode", tokens.get(0));
@@ -116,7 +116,7 @@ public class IfNode implements BodyStmtNode {
         tokens.remove(0);
 
         if (tokens.size() == 0){
-            throw new SyntaxException("Syntax Error in IfNode", null);
+            return null;
         }
         if (tokens.get(0).getTokenType() != TokenType.L_BRACKET) {
             throw new SyntaxException("Syntax Error in IfNode", tokens.get(0));
@@ -124,12 +124,17 @@ public class IfNode implements BodyStmtNode {
         tokens.remove(0);
 
         if (tokens.size() == 0){
-            throw new SyntaxException("Syntax Error in IfNode", null);
+            return null;
         }
+
+        ArrayList<Token> storage = tokens;
         ExprNode expr = ExprNode.parse(tokens);
+        if(expr == null) {
+            throw new SyntaxException("Syntax Error in WhileNode, ran out of tokens", storage.get(storage.size()-1));
+        }
         
         if (tokens.size() == 0){
-            throw new SyntaxException("Syntax Error in IfNode", null);
+            return null;
         }
         if (tokens.get(0).getTokenType() != TokenType.R_BRACKET) {
             throw new SyntaxException("Syntax Error in IfNode", tokens.get(0));
@@ -137,7 +142,7 @@ public class IfNode implements BodyStmtNode {
         tokens.remove(0);
 
         if (tokens.size() == 0){
-            throw new SyntaxException("Syntax Error in IfNode", null);
+            return null;
         }
         if (tokens.get(0).getTokenType() != TokenType.L_BRACE) {
             throw new SyntaxException("Syntax Error in IfNode", tokens.get(0));
@@ -145,16 +150,21 @@ public class IfNode implements BodyStmtNode {
         tokens.remove(0);
 
         if (tokens.size() == 0){
-            throw new SyntaxException("Syntax Error in IfNode", null);
+            return null;
         }
+
+        ArrayList<Token> storage2 = tokens;
         int x = FuncNode.varTable.size();
         BodyNode body = BodyNode.parse(tokens);
+        if(body == null) {
+            throw new SyntaxException("Syntax Error in WhileNode, ran out of tokens", storage.get(storage2.size()-1));
+        }
         if(FuncNode.varTable.size() > x) {
             throw new SemanticException("Semantic error: New variable declared in if statement", tokens.get(0));
         }
 
         if (tokens.size() == 0){
-            throw new SyntaxException("Syntax Error in IfNode", null);
+            return null;
         }
         if (tokens.get(0).getTokenType() != TokenType.R_BRACE) {
             throw new SyntaxException("Syntax Error in IfNode", tokens.get(0));

@@ -57,7 +57,7 @@ public class FuncNode implements JottTree{
 
     @Override
     public boolean validateTree() throws SemanticException {
-        // TODO Auto-generated method stub
+        // check if function name already in defTable (already defined)
         if (ProgramNode.defTable.containsKey(this.funcName.getName())) {
             throw new SemanticException("Semantic Error in FuncNode, function already defined.", this.funcName.getToken());
         }
