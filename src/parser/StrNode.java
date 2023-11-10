@@ -47,10 +47,10 @@ public class StrNode implements ExprNode {
     
     public static StrNode parse(ArrayList<Token> tokens) throws SyntaxException {
         if (tokens.size() == 0){
-            throw new SyntaxException("Syntax Error in StrNode");
+            return null;
         }
         if (tokens.get(0).getTokenType() != TokenType.STRING) {
-            throw new SyntaxException("Syntax Error in StrNode", tokens.get(0));
+            throw new SyntaxException("Syntax Error in StrNode, invalid string", tokens.get(0));
         }
         return new StrNode(tokens.remove(0));
     }

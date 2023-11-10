@@ -13,7 +13,7 @@ public interface ExprNode extends JottTree {
 
     public static ExprNode parse(ArrayList<Token> tokens) throws SyntaxException {
         if (tokens.size() == 0) {
-            throw new SyntaxException("Syntax Error in ExprNode");
+            return null;
         }
         Token t = tokens.get(0);
 
@@ -24,7 +24,7 @@ public interface ExprNode extends JottTree {
             return IdNode.parse(tokens);
         }
         
-        // Possible (left) operands - num, id, call (we could start type-checking)
+        // Possible (left) operands - num, id, call
         ExprNode l;
         if (t.getTokenType() == TokenType.NUMBER 
             || t.getToken().equals("-") || t.getToken().equals("+")) {
@@ -34,7 +34,7 @@ public interface ExprNode extends JottTree {
         } else if (t.getTokenType() == TokenType.FC_HEADER) {
             l = CallNode.parse(tokens);
         } else {
-            throw new SyntaxException("Syntax Error in ExprNode", t);
+            throw new SyntaxException("Syntax Error in ExprNode, invalid start of expression", t);
         }
         
         // Operations - check/try (we could start start type-checking)
