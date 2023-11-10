@@ -41,14 +41,8 @@ public class ReturnStmtNode implements JottTree {
 
     @Override
     public boolean validateTree() throws SemanticException {
-        // You can check if the expression is valid here.
-        if (expr != null) {
-            return expr.validateTree();
-        }
-        else{
-            throw new SemanticException("Semantic Error in Return Statement Node: " + expr.convertToJott());
-        }
-        // throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+        // Check if the expression is valid here.
+        return expr.validateTree();
     }
 
     public Type getRetType() {

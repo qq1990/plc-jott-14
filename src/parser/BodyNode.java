@@ -61,7 +61,7 @@ public class BodyNode implements JottTree {
         throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
 
-    public Type getRetType() {
+    public Type getRetType() throws SemanticException {
         // If one of the body statements is returnable, pass the type of the body statement.
         for (BodyStmtNode bodyStmt : bodyStmts) {
             if (bodyStmt.isReturnable()) {
@@ -96,7 +96,7 @@ public class BodyNode implements JottTree {
 
     }
 
-    public static BodyNode parse(ArrayList<Token> tokens) throws SyntaxException {
+    public static BodyNode parse(ArrayList<Token> tokens) throws SyntaxException, SemanticException {
         ArrayList<BodyStmtNode> bodyStmts = new ArrayList<>();
         ReturnStmtNode returnStmt = null;
 
