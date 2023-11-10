@@ -64,7 +64,7 @@ public class IdNode implements ExprNode {
             throw new SemanticException("Syntax Error in IdNode, id/keyword cannot use reserved keywords: "+id_name.getToken(), id_name);
         }
 
-        if (getName().charAt(0) == getName().toLowerCase().charAt(0)) {
+        if (getName().charAt(0) != getName().toLowerCase().charAt(0)) {
             throw new SemanticException("Syntax Error in IdNode, id/keyword must start with lowercase letter: "+id_name.getToken(), id_name);
         }
         return true;

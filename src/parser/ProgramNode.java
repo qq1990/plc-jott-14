@@ -26,7 +26,7 @@ public class ProgramNode implements JottTree {
         String s = "";
 
         for(FuncNode node : funcDefNodes) {
-            s = s.concat(node.convertToJott())+"\n";
+            s = s.concat(node.convertToJott())+"\n\n";
         }
 
         return s;
@@ -90,7 +90,7 @@ public class ProgramNode implements JottTree {
             }
             types[types.length - 1] = node.funcReturnType.type;
 
-            defTable.put(node.funcName.convertToJott(), types);
+            defTable.put(node.funcName.getName(), types);
 
             funcDefNodes.add(node);
         }

@@ -57,9 +57,7 @@ public class AsmtNode implements BodyStmtNode {
             if (FuncNode.varTable.containsKey(name.convertToJott())) {
                 throw new SemanticException("Semantic Error in AsmtNode, variable already declared: " + name.convertToJott(), name.getToken());
             }
-            if (!name.validateName()){
-                throw new SemanticException("Semantic Error in AsmtNode, variable name must start with lowercase letter: " + name.convertToJott(), name.getToken());
-            }
+            name.validateName();
             FuncNode.varTable.put(name.convertToJott(), new VarInfo(type, true));
         }
         else if (!FuncNode.varTable.containsKey(name.convertToJott())) {
@@ -68,7 +66,7 @@ public class AsmtNode implements BodyStmtNode {
         if (FuncNode.varTable.get(name.convertToJott()).type != expr.getType()) {
             throw new SemanticException("Semantic Error in AsmtNode, type mismatch: " + this.convertToJott(), name.getToken());
         }
-        return name.validateTree() && expr.validateTree();
+        return expr.validateTree();
     }
     
     public static AsmtNode parse(ArrayList<Token> tokens) throws SyntaxException{
