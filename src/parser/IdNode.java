@@ -64,7 +64,7 @@ public class IdNode implements ExprNode {
         if (getName().equals("True") || getName().equals("False")) {
             return Type.Boolean;
         } else if (FuncNode.varTable.containsKey(getName())) {
-            return FuncNode.varTable.get(getName());
+            return FuncNode.varTable.get(getName()).type;
         }
         return null;
     }

@@ -60,12 +60,12 @@ public class AsmtNode implements BodyStmtNode {
             if (!name.validateName()){
                 throw new SemanticException("Semantic Error in AsmtNode, variable name must start with lowercase letter: " + name.convertToJott(), name.getToken());
             }
-            FuncNode.varTable.put(name.convertToJott(), type);
+            FuncNode.varTable.put(name.convertToJott(), new VarInfo(type, true));
         }
         else if (!FuncNode.varTable.containsKey(name.convertToJott())) {
             throw new SemanticException("Semantic Error in AsmtNode, variable not declared: " + name.convertToJott(), name.getToken());
         }
-        if (FuncNode.varTable.get(name.convertToJott()) != expr.getType()) {
+        if (FuncNode.varTable.get(name.convertToJott()).type != expr.getType()) {
             throw new SemanticException("Semantic Error in AsmtNode, type mismatch: " + this.convertToJott(), name.getToken());
         }
         return name.validateTree() && expr.validateTree();

@@ -13,7 +13,7 @@ public class FuncNode implements JottTree{
     FuncParamsNode funcParams;
     FuncReturnNode funcReturnType;
     BodyNode funcBody;
-    public static HashMap<String, Type> varTable = new HashMap<>();
+    public static HashMap<String, VarInfo> varTable = new HashMap<>();
     
     
     public FuncNode(IdNode id, FuncParamsNode params, FuncReturnNode returnType, BodyNode body) {
@@ -94,7 +94,7 @@ public class FuncNode implements JottTree{
         FuncParamsNode fcp = FuncParamsNode.parse(tokens);
 
         for (int i = 0; i < fcp.paramNames.size(); i++) {
-            varTable.put(fcp.paramNames.get(i).convertToJott(), fcp.paramTypes.get(i));
+            varTable.put(fcp.paramNames.get(i).convertToJott(), new VarInfo(fcp.paramTypes.get(i), true));
         }
 
         if (tokens.size() == 0) {

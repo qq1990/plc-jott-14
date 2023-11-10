@@ -54,7 +54,7 @@ public class VarDecNode implements BodyStmtNode {
         if (!name.validateName()){
             throw new SemanticException("Semantic Error in VarDecNode, variable name must start with lowercase letter: " + name.convertToJott(), name.getToken());
         }
-        FuncNode.varTable.put(name.convertToJott(), type);
+        FuncNode.varTable.put(name.convertToJott(), new VarInfo(type, false));
         return name.validateTree();
     }
     
@@ -97,10 +97,7 @@ public class VarDecNode implements BodyStmtNode {
         }
         tokens.remove(0);
 
-        VarDecNode varDec = new VarDecNode(type, name);
-        FuncNode.varTable.put(varDec.name.convertToJott(), varDec.type);
-
-        return varDec;
+        return new VarDecNode(type, name);
     }
 
     public static void main(String[] args) throws SyntaxException{
