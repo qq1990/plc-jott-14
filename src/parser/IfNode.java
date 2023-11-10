@@ -189,7 +189,7 @@ public class IfNode implements BodyStmtNode {
     @Override
     public boolean isReturnable() {
         if(else_node != null) {
-            if(else_node.getBody().getRetType() == null || else_node.getBody().getRetType() == Type.Void) {
+            if(else_node.getRetType() == null || else_node.getRetType() == Type.Void) {
                 return false;
             }
 
@@ -198,7 +198,7 @@ public class IfNode implements BodyStmtNode {
             }
 
             for(int i = 0; i < elseiflist.size(); i++) {
-                if(elseiflist.get(i).getBody().getRetType()== null || elseiflist.get(i).getBody().getRetType() == Type.Void) {
+                if(elseiflist.get(i).getRetType()== null || elseiflist.get(i).getRetType() == Type.Void) {
                     return false;
                 }
             }
