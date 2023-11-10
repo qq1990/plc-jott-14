@@ -114,7 +114,7 @@ public class ElseIfNode implements BodyStmtNode {
     }
 
     @Override
-    public Type getRetType() throws SemanticException {
+    public Type getRetType() {
         return body.getRetType();
     }
 

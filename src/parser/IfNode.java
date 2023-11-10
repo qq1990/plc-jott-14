@@ -52,17 +52,26 @@ public class IfNode implements BodyStmtNode {
     }
 
     public Type getRetType() {
-        if(else_node != null) {
-            if(else_node.getBody().getRetType() != body.getRetType()) {
-                return null;
-            }
+        if(body.getRetType() != null) {
             Type type = body.getRetType();
-            for(int i = 0; i < elseiflist.size(); i++) {
-                if(elseiflist.get(i).getBody().getRetType() != type) {
-                    return null;
+            if(else_node != null) {
+                if(else_node.getRetType() != null) {
+                    if(else_node.getRetType() == type) {
+                        for(int i = 0; i < elseiflist.size(); i++) {
+                            if(elseiflist.get(i).getRetType() != type) {
+                                return null;
+                            }
+                        }
+                        return type; // checked if, else, and any elif
+                    }
+                    return null; // else type != if type
                 }
+                return type; // else has no ret type
             }
             return type;
+        }
+        if(else_node != null && else_node.getRetType() != null) {
+            return else_node.getRetType();
         }
         return null;
     }
@@ -162,9 +171,13 @@ public class IfNode implements BodyStmtNode {
             if(else_node.getBody().getRetType() == null || else_node.getBody().getRetType() == Type.Void) {
                 return false;
             }
-            Type type = body.getRetType();
+
+            else if(body.getRetType() == null || body.getRetType() == Type.Void) {
+                return false;
+            }
+
             for(int i = 0; i < elseiflist.size(); i++) {
-                if(elseiflist.get(i).getBody().getRetType() != type) {
+                if(elseiflist.get(i).getBody().getRetType()== null || elseiflist.get(i).getBody().getRetType() == Type.Void) {
                     return false;
                 }
             }
