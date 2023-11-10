@@ -43,13 +43,17 @@ public class IdNode implements ExprNode {
         }
         throw new SemanticException("Semantic Exception in IdNode, invalid id/keyword", id_name);
         /* Functionality needs to be implemented in their respective classes, listed below:
-        Used on left side of VarDecNode - !"True" && !"False" && !FuncNode.varTable.containsKey()
-        Used on left side of AsmtNode - !"True" && !"False" && FuncNode.varTable.containsKey()
-        Used in FuncDefNode - !"True" && !"False" && !ProgramNode.defTable.containsKey()
-        Used in FuncParams - !"True" && !"False" && !FuncNode.varTable.containsKey()
+        Used on left side of VarDecNode - (!"True" && !"False") && !FuncNode.varTable.containsKey() && startsW/LowerCase
+        Used on left side of AsmtNode - (!"True" && !"False") && [FuncNode.varTable.containsKey()] && startsW/LowerCase
+        Used in FuncDefNode - (!"True" && !"False") && !ProgramNode.defTable.containsKey() && startsW/LowerCase
+        Used in FuncParams - (!"True" && !"False") && !FuncNode.varTable.containsKey() && startsW/LowerCase
         Used in CallNode - (!"True" && !"False") && ProgramNode.defTable.containsKey()
         Used in ExprNode - "True" || "False" || FuncNode.varTable.containsKey()
         */
+    }
+
+    public boolean validateName() {
+        return getName().charAt(0) == getName().toLowerCase().charAt(0);
     }
 
     @Override
