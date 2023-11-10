@@ -52,26 +52,39 @@ public class IfNode implements BodyStmtNode {
     }
 
     public Type getRetType() {
-        if(body.getRetType() != null) {
+        if(body.getRetType() != null) { 
             Type type = body.getRetType();
+            for(int i = 0; i < elseiflist.size(); i++) {
+                if(elseiflist.get(i).getRetType() != type && elseiflist.get(i).getRetType() != null) {
+                    return null; // return types don't match
+                }
+            }
             if(else_node != null && else_node.getRetType() != null) {
                 if(else_node.getRetType() == type) {
-                    for(int i = 0; i < elseiflist.size(); i++) {
-                        if(elseiflist.get(i).getRetType() != type) {
-                            return null; // return types don't match
-                        }
-                    }
                     return type; // checked if, else, and any elif
                 }
                 return null; // else type != if type
             }
             return type; // else has no ret type
         }
-
-        if(else_node != null && else_node.getRetType() != null) {
-            return else_node.getRetType();
+        if(elseiflist.size() > 0) {
+            Type check = elseiflist.get(0).getRetType();
+            for(int i = 1; i < elseiflist.size(); i++) {
+                if(elseiflist.get(i).getRetType() != check) {
+                    return null; // return types don't match
+                }
+            }
+            if(else_node != null && else_node.getRetType() != null) {
+                if(else_node.getRetType() != check) {
+                    return null; // return types don't match between elif and else
+                }
+            }
+            return check; // checked if, else, and any elif
         }
-        return null;
+        if(else_node != null && else_node.getRetType() != null) {
+            return else_node.getRetType(); // if had no return type but else does
+        }
+        return null; // no return type
     }
 
     @Override

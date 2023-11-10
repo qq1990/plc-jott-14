@@ -58,11 +58,14 @@ public class FuncNode implements JottTree{
     @Override
     public boolean validateTree() throws SemanticException {
         // TODO Auto-generated method stub
-        if (ProgramNode.defTable.containsKey(this.funcName.convertToJott())) {
-            // if jott says we need to allow for overload methods, then this needs to be changed
-            throw new SemanticException("Semantic Error in FuncNode, function already defined.");
+        if (ProgramNode.defTable.containsKey(this.funcName.getName())) {
+            throw new SemanticException("Semantic Error in FuncNode, function already defined.", this.funcName.getToken());
         }
-        // check if body return matches the return type?
+        // check if body return matches the return type
+        if (!(this.funcBody.getRetType() == this.funcReturnType.type)) {
+            throw new SemanticException("Semantic Error in FuncNode, " +
+                                                "body returns incorrect type.", this.funcName.getToken());
+        }
 
         return true;
     }
