@@ -26,7 +26,7 @@ public class ProgramNode implements JottTree {
         String s = "";
 
         for(FuncNode node : funcDefNodes) {
-            s = s.concat(node.convertToJott());
+            s = s.concat(node.convertToJott())+"\n\n";
         }
 
         return s;
@@ -72,7 +72,7 @@ public class ProgramNode implements JottTree {
     }
 
     public static ProgramNode parse(ArrayList<Token> tokens) throws SyntaxException, SemanticException {
-        defTable.put("print", new Type[] {Type.Any, null});
+        defTable.put("print", new Type[] {Type.Any, Type.Void});
         defTable.put("concat", new Type[] {Type.String, Type.String, Type.String});
         defTable.put("length", new Type[] {Type.String, Type.Integer});
 
@@ -90,7 +90,7 @@ public class ProgramNode implements JottTree {
             }
             types[types.length - 1] = node.funcReturnType.type;
 
-            defTable.put(node.funcName.convertToJott(), types);
+            defTable.put(node.funcName.getName(), types);
 
             funcDefNodes.add(node);
         }

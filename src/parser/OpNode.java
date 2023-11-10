@@ -41,14 +41,12 @@ public class OpNode implements ExprNode {
     @Override
     public boolean validateTree() throws SemanticException {
         //if (right.getClass() == OpNode.class) { throw new SemanticException("Semantic Error in OpNode, cannot chain operations", op); }
-        if (!left.validateTree()) { throw new SemanticException("Semantic Error in OpNode, invalid left child", op); }
-        if (!right.validateTree()) { throw new SemanticException("Semantic Error in OpNode, invalid right child", op); }
-        if (left.getType() == null) { throw new SemanticException("Semantic Error in OpNode, invalidly typed left operand", op); }
-        if (right.getType() == null) { throw new SemanticException("Semantic Error in OpNode, invalidly typed right operand", op); }
-        if (!(left.getType() == Type.Integer || left.getType() == Type.Double)) { throw new SemanticException("Semantic Error in OpNode, left operand has invalid type for operation", op); }
-        if (!(right.getType() == Type.Integer || right.getType() == Type.Double)) { throw new SemanticException("Semantic Error in OpNode, right operand has invalid type for operation", op); }
-        if (left.getType() != right.getType()) { throw new SemanticException("Semantic Error in OpNode, type mismatch", op); }
-        if (op.getToken().equals("/") && ((NumNode) right).isZero()) { throw new SemanticException("Semantic Error in OpNode, divide by 0", op); }
+        left.validateTree();
+        right.validateTree();
+        if (!(left.getType() == Type.Integer || left.getType() == Type.Double)) { throw new SemanticException("Semantic Error in OpNode, left operand has invalid type for operation: "+left.getType().name(), op); }
+        if (!(right.getType() == Type.Integer || right.getType() == Type.Double)) { throw new SemanticException("Semantic Error in OpNode, right operand has invalid type for operation: "+right.getType().name(), op); }
+        if (left.getType() != right.getType()) { throw new SemanticException("Semantic Error in OpNode, type mismatch: "+left.getType().name()+op.getToken()+right.getType().name(), op); }
+        if (op.getToken().equals("/") && ((NumNode) right).isZero()) { throw new SemanticException("Semantic Error in OpNode, divide by 0: "+left.getType().name()+op.getToken()+right.getType().name(), op); }
         return true;
     }
 

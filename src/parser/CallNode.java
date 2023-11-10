@@ -45,7 +45,7 @@ public class CallNode implements ExprNode, BodyStmtNode {
         Type[] aTypes = params.getTypes();
         if (aTypes.length == pTypes.length-1) { throw new SemanticException("Semantic Exception in CallNode, parameter number mismatch", func_name.getToken()); }
         for (int i=0; i<aTypes.length; i++) {
-            if (aTypes[i] != pTypes[i]) {
+            if (aTypes[i] != pTypes[i] || (pTypes[i] == Type.Any && aTypes[i] != Type.Void)) {
                 throw new SemanticException("Semantic Exception in CallNode, parameter type mismatch", func_name.getToken());
             }
         }
