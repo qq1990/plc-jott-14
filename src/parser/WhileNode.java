@@ -82,7 +82,7 @@ public class WhileNode implements BodyStmtNode {
         ExprNode expr = ExprNode.parse(tokens);
         if(expr == null) {
             throw new SyntaxException("Syntax Error in WhileNode, ran out of tokens", null);
-        
+        }
         if (tokens.size() == 0){
             throw new SyntaxException("Syntax Error in WhileNode, no token", null);
         }
