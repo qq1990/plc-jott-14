@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import src.provided.JottTree;
 import src.provided.Token;
 import src.provided.TokenType;
-import src.parser.SemanticException;
 
 // Thomas Ehlers
 public class ParamsNode implements JottTree {
@@ -49,7 +48,7 @@ public class ParamsNode implements JottTree {
     public boolean validateTree() throws SemanticException {
         for (ExprNode p : params) {
             if (!p.validateTree()) {
-                return false;
+                throw new SemanticException("Semantic Exception in ParamsNode");
             }
         }
         return true;
