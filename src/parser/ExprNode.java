@@ -34,7 +34,7 @@ public interface ExprNode extends JottTree {
         } else if (t.getTokenType() == TokenType.FC_HEADER) {
             l = CallNode.parse(tokens);
         } else {
-            throw new SyntaxException("Syntax Error in ExprNode, invalid start of expression", t);
+            throw new SyntaxException("Syntax Error in ExprNode, invalid start of expression " + t.getToken(), t);
         }
         
         // Operations - check/try (we could start start type-checking)

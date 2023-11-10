@@ -62,7 +62,7 @@ public class ParamsNode implements JottTree {
     
     public static ParamsNode parse(ArrayList<Token> tokens) throws SyntaxException {
         ArrayList<ExprNode> pars = new ArrayList<ExprNode>();
-        if (tokens.size() != 0) {
+        if (tokens.size() != 0 && tokens.get(0).getTokenType() != TokenType.R_BRACKET) {
             ExprNode p = ExprNode.parse(tokens);
             pars.add(p);
             while (tokens.size() != 0 && tokens.get(0).getTokenType() == TokenType.COMMA) {

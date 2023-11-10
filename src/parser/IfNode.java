@@ -27,7 +27,7 @@ public class IfNode implements BodyStmtNode {
             s = s.concat(node.convertToJott());
         }
 
-        s = s.concat(else_node.convertToJott());
+        if(else_node != null) s = s.concat(else_node.convertToJott());
 
         return s;
         
@@ -96,12 +96,13 @@ public class IfNode implements BodyStmtNode {
                         throw new SemanticException("Semantic Error: Invalid if statement", null);
                     }
                 }
-                if(else_node.validateTree()) {
-                    return true;
+                if(else_node != null) {
+                    else_node.validateTree();
                 }
             }
         }
-        throw new SemanticException("Semantic error: Invalid while statement", null);
+        // throw new SemanticException("Semantic error: Invalid while statement", null);
+        return true;
     }
 
     public static IfNode parse(ArrayList<Token> tokens) throws SyntaxException, SemanticException {

@@ -22,7 +22,7 @@ def main[]:Void{
 
     while[x>0]{
         ::foo[x];
-        print[::bar[y]];
+        ::print[::bar[y]];
         x=x-1;
         y=y+1.1;
     }
