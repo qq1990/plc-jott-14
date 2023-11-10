@@ -159,7 +159,7 @@ public class IfNode implements BodyStmtNode {
     @Override
     public boolean isReturnable() {
         if(else_node != null) {
-            if(else_node.getBody().getRetType() != body.getRetType()) {
+            if(else_node.getBody().getRetType() == null || else_node.getBody().getRetType() == Type.Void) {
                 return false;
             }
             Type type = body.getRetType();
