@@ -39,18 +39,22 @@ public class OpNode implements ExprNode {
     }
     
     @Override
-    public boolean validateTree() {
-        return (left.getType() != null && left.getType() == right.getType()) && 
-            ( //(op.getToken().equals("!=") || op.getToken().equals("==")) ||
-            (left.getType().equals(Type.Double) || left.getType().equals(Type.Integer)));
+    public boolean validateTree() throws SemanticException {
+        if (!left.validateTree()) { throw new SemanticException("Semantic Error in Opnode, invalid left child"); }
+        if (!right.validateTree()) { throw new SemanticException("Semantic Error in Opnode, invalid right child"); }
+        if (left.getType() == null) { throw new SemanticException("Semantic Error in Opnode, invalidly typed left child"); }
+        if (right.getType() == null) { throw new SemanticException("Semantic Error in Opnode, invalidly typed right child"); }
+        if (left.getType() == right.getType()) { throw new SemanticException("Semantic Error in Opnode, type mismatch"); }
+        if (!(left.getType().equals(Type.Double) || left.getType().equals(Type.Integer))) { throw new SemanticException("Semantic Error in Opnode, invalid type"); }
+        if (op.getToken().equals("/") && ((NumNode) right).isZero()) { throw new SemanticException("Semantic Error in Opnode, divide by 0"); };
+        return true;
     }
 
     @Override
     public Type getType() {
         String o = op.getToken();
-        if (validateTree()) {
-            if (o.equals("+") || o.equals("-") || o.equals("*") 
-                    || o.equals("/") || o.equals("^")) {
+        if (left.getType() != null && left.getType() == right.getType()) {
+            if (o.equals("+") || o.equals("-") || o.equals("*") || o.equals("/") || o.equals("^")) {
                 return left.getType();
             } else { // if (o.equals("==") || o.equals("!=") || o.equals("<") || o.equals(">") || o.equals("<=") || o.equals(">=")) {
                 return Type.Boolean;

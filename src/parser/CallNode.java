@@ -38,29 +38,41 @@ public class CallNode implements ExprNode, BodyStmtNode {
     }
 
     @Override
-    public boolean validateTree() {
+    public boolean validateTree() throws SemanticException {
         if (ProgramNode.defTable.containsKey(func_name.getName())) {
+            if (!params.validateTree()) { throw new SemanticException("Semantic Exception in CallNode, invalid parameters"); }
             Type[] pTypes = ProgramNode.defTable.get(func_name.getName());
             Type[] aTypes = params.getTypes();
             if (aTypes.length == pTypes.length-1) {
                 for (int i=0; i<aTypes.length; i++) {
                     if (aTypes[i] != pTypes[i]) {
-                        return false;
+                        throw new SemanticException("Semantic Exception in CallNode, parameter type mismatch");
                     }
                 }
                 return true;
             }
+            throw new SemanticException("Semantic Exception in CallNode, parameter number mismatch");
         }
-        return false;
+        throw new SemanticException("Semantic Exception in CallNode, could not find function");
     }
 
     @Override
     public Type getType() {
-        if (validateTree()) {
+        if (ProgramNode.defTable.containsKey(func_name.getName())) {
             Type[] t = ProgramNode.defTable.get(func_name.getName());
             return t[t.length-1];
         }
         return null;
+    }
+
+    @Override
+    public Type getRetType() throws SemanticException {
+        return null;
+    }
+
+    @Override
+    public boolean isReturnable() {
+        return false;
     }
     
     public static CallNode parse(ArrayList<Token> tokens) throws SyntaxException {

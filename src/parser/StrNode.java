@@ -36,7 +36,7 @@ public class StrNode implements ExprNode {
     }
 
     @Override
-    public boolean validateTree() throws SemanticException {
+    public boolean validateTree() { //throws SemanticException {
         return true;
     }
 
