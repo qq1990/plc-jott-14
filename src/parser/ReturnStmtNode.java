@@ -41,14 +41,14 @@ public class ReturnStmtNode implements JottTree {
 
     @Override
     public boolean validateTree() throws SemanticException {
-        // You can check if the expression is valid here.
+        // If there is expression, validate
         if (expr != null) {
             return expr.validateTree();
         }
+        // else it's empty, always legit
         else{
-            throw new SemanticException("Semantic Error in Return Statement Node: " + expr.convertToJott());
+            return true;
         }
-        // throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
     }
 
     public Type getRetType() {
@@ -64,7 +64,6 @@ public class ReturnStmtNode implements JottTree {
                 tokens.remove(0); // Remove the semicolon
                 return new ReturnStmtNode(expr);
             } else {
-                // Handle error or throw SyntaxException
                 throw new SyntaxException("Syntax Error in ReturnStmtNode", tokens.get(0));
             }
         }

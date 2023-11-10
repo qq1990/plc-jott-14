@@ -55,13 +55,17 @@ public class BodyNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
-        // TODO: Implement tree validation for BodyNode
-        // You can check if the body statements and return statement are valid here.
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+    public boolean validateTree() throws SemanticException {
+        for (BodyStmtNode bodyStmt : bodyStmts) {
+            return bodyStmt.validateTree();
+        }
+        if (returnStmt != null) {
+            return returnStmt.validateTree();
+        }
+        return true;
     }
 
-    public Type getRetType() {
+    public Type getRetType() throws SemanticException {
         // If one of the body statements is returnable, pass the type of the body statement.
         for (BodyStmtNode bodyStmt : bodyStmts) {
             if (bodyStmt.isReturnable()) {
@@ -78,7 +82,7 @@ public class BodyNode implements JottTree {
         return null;
     }
 
-    public boolean isReturnable(){
+    public boolean isReturnable() throws SemanticException{
         // True if one of the body statements is returnable
         for (BodyStmtNode bodyStmt : bodyStmts) {
             if (bodyStmt.isReturnable()) {
@@ -96,7 +100,7 @@ public class BodyNode implements JottTree {
 
     }
 
-    public static BodyNode parse(ArrayList<Token> tokens) throws SyntaxException {
+    public static BodyNode parse(ArrayList<Token> tokens) throws SyntaxException, SemanticException {
         ArrayList<BodyStmtNode> bodyStmts = new ArrayList<>();
         ReturnStmtNode returnStmt = null;
 
