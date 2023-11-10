@@ -62,10 +62,9 @@ public class AsmtNode implements BodyStmtNode {
         else if (!FuncNode.varTable.containsKey(name.convertToJott())) {
             throw new SemanticException("Semantic Error in AsmtNode, variable not declared: " + name.convertToJott(), name.getToken());
         }
-        // depends on expr.getType() being implemented
-        // if (FuncNode.varTable.get(name.convertToJott()) != expr.getType()) {
-        //     throw new SemanticException("Semantic Error in AsmtNode, type mismatch: " + this.convertToJott());
-        // }
+        if (FuncNode.varTable.get(name.convertToJott()) != expr.getType()) {
+            throw new SemanticException("Semantic Error in AsmtNode, type mismatch: " + this.convertToJott(), name.getToken());
+        }
         return name.validateTree() && expr.validateTree();
     }
     
