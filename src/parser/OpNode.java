@@ -40,15 +40,15 @@ public class OpNode implements ExprNode {
     
     @Override
     public boolean validateTree() throws SemanticException {
-        //if (right.getClass() == OpNode.class) { throw new SemanticException("Semantic Error in OpNode, cannot chain operations"); }
-        if (!left.validateTree()) { throw new SemanticException("Semantic Error in OpNode, invalid left child"); }
-        if (!right.validateTree()) { throw new SemanticException("Semantic Error in OpNode, invalid right child"); }
-        if (left.getType() == null) { throw new SemanticException("Semantic Error in OpNode, invalidly typed left operand"); }
-        if (right.getType() == null) { throw new SemanticException("Semantic Error in OpNode, invalidly typed right operand"); }
-        if (!(left.getType() == Type.Integer || left.getType() == Type.Double)) { throw new SemanticException("Semantic Error in OpNode, left operand has invalid type for operation"); }
-        if (!(right.getType() == Type.Integer || right.getType() == Type.Double)) { throw new SemanticException("Semantic Error in OpNode, right operand has invalid type for operation"); }
-        if (left.getType() != right.getType()) { throw new SemanticException("Semantic Error in OpNode, type mismatch"); }
-        if (op.getToken().equals("/") && ((NumNode) right).isZero()) { throw new SemanticException("Semantic Error in OpNode, divide by 0"); }
+        //if (right.getClass() == OpNode.class) { throw new SemanticException("Semantic Error in OpNode, cannot chain operations", op); }
+        if (!left.validateTree()) { throw new SemanticException("Semantic Error in OpNode, invalid left child", op); }
+        if (!right.validateTree()) { throw new SemanticException("Semantic Error in OpNode, invalid right child", op); }
+        if (left.getType() == null) { throw new SemanticException("Semantic Error in OpNode, invalidly typed left operand", op); }
+        if (right.getType() == null) { throw new SemanticException("Semantic Error in OpNode, invalidly typed right operand", op); }
+        if (!(left.getType() == Type.Integer || left.getType() == Type.Double)) { throw new SemanticException("Semantic Error in OpNode, left operand has invalid type for operation", op); }
+        if (!(right.getType() == Type.Integer || right.getType() == Type.Double)) { throw new SemanticException("Semantic Error in OpNode, right operand has invalid type for operation", op); }
+        if (left.getType() != right.getType()) { throw new SemanticException("Semantic Error in OpNode, type mismatch", op); }
+        if (op.getToken().equals("/") && ((NumNode) right).isZero()) { throw new SemanticException("Semantic Error in OpNode, divide by 0", op); }
         return true;
     }
 
@@ -67,11 +67,11 @@ public class OpNode implements ExprNode {
 
     public static OpNode parse(ArrayList<Token> tokens) throws SyntaxException {
         if (tokens.size() == 0) {
-            throw new SyntaxException("Syntax Error in OpNode");
+            return null;
         }
         Token t = tokens.get(0);
 
-        // Valid (left) operands - (no str/bool compare/equality?)
+        // Valid (left) operands - num, id (not bool), call
         ExprNode l;
         if (t.getTokenType() == TokenType.NUMBER || t.getToken().equals("-")) {
             l = NumNode.parse(tokens);
@@ -84,23 +84,25 @@ public class OpNode implements ExprNode {
         } else {
             throw new SyntaxException("Syntax Error in OpNode", t);
         }
-
+        
+        if (tokens.size() == 0) { throw new SyntaxException("Syntax Error in OpNode, ran out of tokens", t); }
         return OpNode.parseTail(l, tokens);
     }
 
     public static OpNode parseTail(ExprNode l, ArrayList<Token> tokens) throws SyntaxException {
         if (tokens.size() == 0) {
-            throw new SyntaxException("Syntax Error in OpNode_Tail");
+            throw null;
         }
         Token o = tokens.get(0);
 
         if (o.getTokenType() != TokenType.MATH_OP && 
                 o.getTokenType() != TokenType.REL_OP) {
-            throw new SyntaxException("Syntax Error in OpNode_Tail", o);
+            throw new SyntaxException("Syntax Error in OpNode_Tail, invalid operation", o);
         }
         tokens.remove(0);
+        if (tokens.size() == 0) { throw new SyntaxException("Syntax Error in OpNode_Tail, ran out of tokens", o); }
         ExprNode r = ExprNode.parse(tokens);
-        if (r.getClass() == OpNode.class) { throw new SyntaxException("Syntax Error in OpNode, cannot chain operations"); }
+        if (r.getClass() == OpNode.class) { throw new SyntaxException("Syntax Error in OpNode_Tail, cannot chain operations", o); }
         return new OpNode(o, l, r);
     }
 }
