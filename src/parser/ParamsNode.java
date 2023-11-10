@@ -47,9 +47,7 @@ public class ParamsNode implements JottTree {
     @Override
     public boolean validateTree() throws SemanticException {
         for (ExprNode p : params) {
-            if (!p.validateTree()) {
-                throw new SemanticException("Semantic Exception in ParamsNode");
-            }
+            p.validateTree();
         }
         return true;
     }
@@ -65,20 +63,13 @@ public class ParamsNode implements JottTree {
     public static ParamsNode parse(ArrayList<Token> tokens) throws SyntaxException {
         ArrayList<ExprNode> pars = new ArrayList<ExprNode>();
         if (tokens.size() != 0) {
-            ExprNode p = null;
-            try {
+            ExprNode p = ExprNode.parse(tokens);
+            pars.add(p);
+            while (tokens.size() != 0 && tokens.get(0).getTokenType() == TokenType.COMMA) {
+                Token t = tokens.remove(0);
+                if (tokens.size() == 0) { throw new SyntaxException("Syntax Error in ParamsNode, ran out of tokens", t); }
                 p = ExprNode.parse(tokens);
-            } catch (SyntaxException e) {}
-            if (p != null) {
                 pars.add(p);
-                while (tokens.size() != 0 && tokens.get(0).getTokenType() == TokenType.COMMA) {
-                    tokens.remove(0);
-                    p = ExprNode.parse(tokens);
-                    if (p == null) {
-                        throw new SyntaxException("Syntax Error in ParamsNode", tokens.get(0));
-                    }
-                    pars.add(p);
-                }
             }
         }
         return new ParamsNode(pars);
