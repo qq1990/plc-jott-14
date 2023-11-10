@@ -8,9 +8,9 @@ import java.util.ArrayList;
 public interface BodyStmtNode extends JottTree {
     Type getRetType() throws SemanticException;
     boolean isReturnable();
-    public static BodyStmtNode parse(ArrayList<Token> tokens) throws SyntaxException {
+    public static BodyStmtNode parse(ArrayList<Token> tokens) throws SyntaxException, SemanticException {
         if (tokens.size() == 0) {
-            throw new SyntaxException("Syntax Error in BodyStmtNode");
+            return null;
         }
         Token t = tokens.get(0);
         if (t.getToken().equals("if")) {
@@ -28,7 +28,7 @@ public interface BodyStmtNode extends JottTree {
                 return funcCall;
             }
             else{
-                throw new SyntaxException("Error parsing function call");
+                throw new SyntaxException("Error parsing function call", tokens.get(0));
             }
         }
         else if (t.getTokenType() == TokenType.ID_KEYWORD) {
