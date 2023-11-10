@@ -77,7 +77,7 @@ public class CallNode implements ExprNode, BodyStmtNode {
     
     public static CallNode parse(ArrayList<Token> tokens) throws SyntaxException {
         if (tokens.size() == 0){
-            throw new SyntaxException("Syntax Error in CallNode");
+            return null;
         }
         if (tokens.get(0).getTokenType() != TokenType.FC_HEADER) {
             throw new SyntaxException("Syntax Error in CallNode", tokens.get(0));
@@ -85,7 +85,7 @@ public class CallNode implements ExprNode, BodyStmtNode {
         tokens.remove(0);
         IdNode name = IdNode.parse(tokens);
         if (tokens.size() == 0){
-            throw new SyntaxException("Syntax Error in CallNode");
+            return null;
         }
         if (tokens.get(0).getTokenType() != TokenType.L_BRACKET) {
             throw new SyntaxException("Syntax Error in CallNode", tokens.get(0));
@@ -93,7 +93,7 @@ public class CallNode implements ExprNode, BodyStmtNode {
         tokens.remove(0);
         ParamsNode pars = ParamsNode.parse(tokens);
         if (tokens.size() == 0){
-            throw new SyntaxException("Syntax Error in CallNode");
+            return null;
         }
         if (tokens.get(0).getTokenType() != TokenType.R_BRACKET) {
             throw new SyntaxException("Syntax Error in CallNode", tokens.get(0));
