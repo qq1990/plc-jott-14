@@ -61,7 +61,7 @@ public class NumNode implements ExprNode {
     
     public static NumNode parse(ArrayList<Token> tokens) throws SyntaxException {
         if (tokens.size() == 0) {
-            throw new SyntaxException("Syntax Error in NumNode");
+            return null;
         }
 
         Token t = tokens.get(0);
@@ -70,8 +70,10 @@ public class NumNode implements ExprNode {
         } else {
             t = null;
         }
-        if (tokens.get(0).getTokenType() != TokenType.NUMBER) {
-            throw new SyntaxException("Syntax Error in NumNode", tokens.get(0));
+        if (tokens.size() == 0) {
+            throw new SyntaxException("Syntax Error in NumNode, ran out of tokens", t);
+        } else if (tokens.get(0).getTokenType() != TokenType.NUMBER) {
+            throw new SyntaxException("Syntax Error in NumNode, invalid number", tokens.get(0));
         }
         return new NumNode(t, tokens.remove(0));
     }

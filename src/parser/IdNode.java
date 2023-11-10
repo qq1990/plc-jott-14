@@ -41,7 +41,7 @@ public class IdNode implements ExprNode {
         if (getName().equals("True") || getName().equals("False") || FuncNode.varTable.containsKey(getName())) {
             return true;
         }
-        throw new SemanticException("Semantic Exception in IdNode");
+        throw new SemanticException("Semantic Exception in IdNode, invalid id/keyword", id_name);
         /* Functionality needs to be implemented in their respective classes, listed below:
         Used on left side of VarDecNode - !"True" && !"False" && !FuncNode.varTable.containsKey()
         Used on left side of AsmtNode - !"True" && !"False" && FuncNode.varTable.containsKey()
@@ -63,16 +63,20 @@ public class IdNode implements ExprNode {
         return null;
     }
 
+    public Token getToken() {
+        return id_name;
+    }
+
     public String getName() {
         return id_name.getToken();
     }
     
     public static IdNode parse(ArrayList<Token> tokens) throws SyntaxException {
         if (tokens.size() == 0) {
-            throw new SyntaxException("Syntax Error in IdNode");
+            return null;
         }
         if (tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) {
-            throw new SyntaxException("Syntax Error in IdNode", tokens.get(0));
+            throw new SyntaxException("Syntax Error in IdNode, not an id/keyword", tokens.get(0));
         }
         return new IdNode(tokens.remove(0));
     }

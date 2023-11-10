@@ -73,7 +73,7 @@ public class IfNode implements BodyStmtNode {
             if(expr.getType() == Type.Boolean) {
                 for(int i = 0; i < elseiflist.size(); i++) {
                     if(elseiflist.get(i).validateTree() == false) {
-                        throw new SemanticException("Semantic Error: Invalid if statement");
+                        throw new SemanticException("Semantic Error: Invalid if statement", null);
                     }
                 }
                 if(else_node.validateTree()) {
@@ -81,14 +81,14 @@ public class IfNode implements BodyStmtNode {
                 }
             }
         }
-        throw new SemanticException("Semantic error: Invalid while statement");
+        throw new SemanticException("Semantic error: Invalid while statement", null);
     }
 
     public static IfNode parse(ArrayList<Token> tokens) throws SyntaxException, SemanticException {
         ArrayList<ElseIfNode> nodes = new ArrayList<>();
 
         if (tokens.size() == 0){
-            throw new SyntaxException("Syntax Error in IfNode");
+            throw new SyntaxException("Syntax Error in IfNode", null);
         }
         if (tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) {
             throw new SyntaxException("Syntax Error in IfNode", tokens.get(0));
@@ -96,17 +96,20 @@ public class IfNode implements BodyStmtNode {
         tokens.remove(0);
 
         if (tokens.size() == 0){
-            throw new SyntaxException("Syntax Error in IfNode");
+            throw new SyntaxException("Syntax Error in IfNode", null);
         }
         if (tokens.get(0).getTokenType() != TokenType.L_BRACKET) {
             throw new SyntaxException("Syntax Error in IfNode", tokens.get(0));
         }
         tokens.remove(0);
 
+        if (tokens.size() == 0){
+            throw new SyntaxException("Syntax Error in IfNode", null);
+        }
         ExprNode expr = ExprNode.parse(tokens);
         
         if (tokens.size() == 0){
-            throw new SyntaxException("Syntax Error in IfNode");
+            throw new SyntaxException("Syntax Error in IfNode", null);
         }
         if (tokens.get(0).getTokenType() != TokenType.R_BRACKET) {
             throw new SyntaxException("Syntax Error in IfNode", tokens.get(0));
@@ -114,21 +117,24 @@ public class IfNode implements BodyStmtNode {
         tokens.remove(0);
 
         if (tokens.size() == 0){
-            throw new SyntaxException("Syntax Error in IfNode");
+            throw new SyntaxException("Syntax Error in IfNode", null);
         }
         if (tokens.get(0).getTokenType() != TokenType.L_BRACE) {
             throw new SyntaxException("Syntax Error in IfNode", tokens.get(0));
         }
         tokens.remove(0);
 
+        if (tokens.size() == 0){
+            throw new SyntaxException("Syntax Error in IfNode", null);
+        }
         int x = FuncNode.varTable.size();
         BodyNode body = BodyNode.parse(tokens);
         if(FuncNode.varTable.size() > x) {
-            throw new SemanticException("Semantic error: New variable declared in if statement");
+            throw new SemanticException("Semantic error: New variable declared in if statement", tokens.get(0));
         }
 
         if (tokens.size() == 0){
-            throw new SyntaxException("Syntax Error in IfNode");
+            throw new SyntaxException("Syntax Error in IfNode", null);
         }
         if (tokens.get(0).getTokenType() != TokenType.R_BRACE) {
             throw new SyntaxException("Syntax Error in IfNode", tokens.get(0));
@@ -153,7 +159,7 @@ public class IfNode implements BodyStmtNode {
     @Override
     public boolean isReturnable() {
         if(else_node != null) {
-            if(else_node.getBody().getRetType() != body.getRetType()) {
+            if(else_node.getBody().getRetType() == null || else_node.getBody().getRetType() == Type.Void) {
                 return false;
             }
             Type type = body.getRetType();

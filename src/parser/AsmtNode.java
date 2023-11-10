@@ -17,9 +17,12 @@ public class AsmtNode implements BodyStmtNode {
         this.expr = expr;
     }
 
-    // @Override
     public Type getRetType() {
         return null;
+    }
+
+    public boolean isReturnable() {
+        return false;
     }
 
     @Override
@@ -52,12 +55,12 @@ public class AsmtNode implements BodyStmtNode {
     public boolean validateTree() throws SemanticException{
         if (type != null) {
             if (FuncNode.varTable.containsKey(name.convertToJott())) {
-                throw new SemanticException("Semantic Error in AsmtNode, variable already declared: " + name.convertToJott());
+                throw new SemanticException("Semantic Error in AsmtNode, variable already declared: " + name.convertToJott(), name.getToken());
             }
             FuncNode.varTable.put(name.convertToJott(), type);
         }
         else if (!FuncNode.varTable.containsKey(name.convertToJott())) {
-            throw new SemanticException("Semantic Error in AsmtNode, variable not declared: " + name.convertToJott());
+            throw new SemanticException("Semantic Error in AsmtNode, variable not declared: " + name.convertToJott(), name.getToken());
         }
         // depends on expr.getType() being implemented
         // if (FuncNode.varTable.get(name.convertToJott()) != expr.getType()) {
@@ -68,7 +71,7 @@ public class AsmtNode implements BodyStmtNode {
     
     public static AsmtNode parse(ArrayList<Token> tokens) throws SyntaxException{
         if (tokens.size() == 0){
-            throw new SyntaxException("Syntax Error in AsmtNode, reached end of file");
+            return null;
         }
         if (tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) {
             throw new SyntaxException("Syntax Error in AsmtNode, expected id or keyword", tokens.get(0));
@@ -96,19 +99,24 @@ public class AsmtNode implements BodyStmtNode {
         }
 
         IdNode name = IdNode.parse(tokens);
-
-        if (tokens.size() == 0){
-            throw new SyntaxException("Syntax Error in AsmtNode, reached end of file");
+        if(name == null) {
+            throw new SyntaxException("Syntax Error in AsmtNode, reached end of file", t);
         }
-        if (tokens.get(0).getTokenType() != TokenType.ASSIGN) {
+        if (tokens.size() == 0){
+            return null;
+        }
+        t = tokens.get(0);
+        if (t.getTokenType() != TokenType.ASSIGN) {
             throw new SyntaxException("Syntax Error in AsmtNode, expected assignment operator", tokens.get(0));
         }
         tokens.remove(0);
 
         ExprNode expr = ExprNode.parse(tokens);
-
+        if(expr == null) {
+            throw new SyntaxException("Syntax Error in AsmtNode, reached end of file", t);
+        }
         if (tokens.size() == 0){
-            throw new SyntaxException("Syntax Error in AsmtNode, reached end of file");
+            return null;
         }
         if (tokens.get(0).getTokenType() != TokenType.SEMICOLON) {
             throw new SyntaxException("Syntax Error in AsmtNode, expected semicolon", tokens.get(0));

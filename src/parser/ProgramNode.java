@@ -6,6 +6,7 @@ import java.util.HashMap;
 import src.provided.JottTree;
 import src.provided.Token;
 // import src.provided.TokenType;
+import src.provided.TokenType;
 
 // Clarke Kennedy
 public class ProgramNode implements JottTree {
@@ -52,14 +53,20 @@ public class ProgramNode implements JottTree {
     @Override
     public boolean validateTree() throws SemanticException{
         if(!defTable.containsKey("main")) {
-            throw new SemanticException("Semantic Error in ProgramNode, no main function");
+            throw new SemanticException("Semantic Error in ProgramNode, no main function", new Token("", "", 0, TokenType.ID_KEYWORD));
         }
         Type[] mainTypes = defTable.get("main");
+        FuncNode mainNode = null;
+        for (FuncNode node : funcDefNodes) {
+            if (node.funcName.convertToJott().equals("main")) {
+                mainNode = node;
+            }
+        }
         if(mainTypes.length != 1) {
-            throw new SemanticException("Semantic Error in ProgramNode, main function must have no parameters");
+            throw new SemanticException("Semantic Error in ProgramNode, main function must have no parameters", mainNode.funcName.getToken());
         }
         if(mainTypes[mainTypes.length - 1] != Type.Void) {
-            throw new SemanticException("Semantic Error in ProgramNode, main function must return void");
+            throw new SemanticException("Semantic Error in ProgramNode, main function must return void", mainNode.funcName.getToken());
         }
         return true;
     }
