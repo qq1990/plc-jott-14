@@ -51,9 +51,7 @@ public class VarDecNode implements BodyStmtNode {
         if (FuncNode.varTable.containsKey(name.convertToJott())) {
             throw new SemanticException("Semantic Error in VarDecNode, variable already declared: " + name.convertToJott(), name.getToken());
         }
-        if (!name.validateName()){
-            throw new SemanticException("Semantic Error in VarDecNode, variable name must start with lowercase letter: " + name.convertToJott(), name.getToken());
-        }
+        name.validateName();
         FuncNode.varTable.put(name.convertToJott(), new VarInfo(type, false));
         return name.validateTree();
     }

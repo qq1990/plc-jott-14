@@ -53,6 +53,7 @@ public class AsmtNode implements BodyStmtNode {
 
     @Override
     public boolean validateTree() throws SemanticException{
+        expr.validateTree();
         if (type != null) {
             if (FuncNode.varTable.containsKey(name.convertToJott())) {
                 throw new SemanticException("Semantic Error in AsmtNode, variable already declared: " + name.convertToJott(), name.getToken());
@@ -64,9 +65,9 @@ public class AsmtNode implements BodyStmtNode {
             throw new SemanticException("Semantic Error in AsmtNode, variable not declared: " + name.convertToJott(), name.getToken());
         }
         if (FuncNode.varTable.get(name.convertToJott()).type != expr.getType()) {
-            throw new SemanticException("Semantic Error in AsmtNode, type mismatch: " + this.convertToJott(), name.getToken());
+            throw new SemanticException("Semantic Error in AsmtNode, type mismatch: " + FuncNode.varTable.get(name.convertToJott()).type.name() + " and " + expr.getType(), name.getToken());
         }
-        return expr.validateTree();
+        return true;
     }
     
     public static AsmtNode parse(ArrayList<Token> tokens) throws SyntaxException{
