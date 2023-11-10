@@ -7,7 +7,7 @@ import java.util.ArrayList;
 // Quan
 public interface BodyStmtNode extends JottTree {
     Type getRetType() throws SemanticException;
-    boolean isReturnable();
+    boolean isReturnable() throws SemanticException;
     public static BodyStmtNode parse(ArrayList<Token> tokens) throws SyntaxException, SemanticException {
         if (tokens.size() == 0) {
             return null;
@@ -28,7 +28,7 @@ public interface BodyStmtNode extends JottTree {
                 return funcCall;
             }
             else{
-                throw new SyntaxException("Error parsing function call", tokens.get(0));
+                throw new SyntaxException("Missing semicolon in function call", tokens.get(0));
             }
         }
         else if (t.getTokenType() == TokenType.ID_KEYWORD) {

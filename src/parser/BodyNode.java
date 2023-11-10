@@ -78,7 +78,7 @@ public class BodyNode implements JottTree {
         return null;
     }
 
-    public boolean isReturnable(){
+    public boolean isReturnable() throws SemanticException{
         // True if one of the body statements is returnable
         for (BodyStmtNode bodyStmt : bodyStmts) {
             if (bodyStmt.isReturnable()) {
