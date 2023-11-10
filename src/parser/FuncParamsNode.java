@@ -50,7 +50,7 @@ public class FuncParamsNode implements JottTree {
     public boolean validateTree() throws SemanticException {
         for (IdNode name : this.paramNames) {
             String nameStr = name.getName();
-            if (FuncNode.varTable.containsKey(nameStr))
+            if (FuncNode.varTable.containsKey(nameStr) && !name.validateName())
                 throw new SemanticException("Semantic Error in FuncParamsNode, param name already used.", name.getToken());
         }
         return true;
