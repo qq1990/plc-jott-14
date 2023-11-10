@@ -68,7 +68,7 @@ public class FuncNode implements JottTree{
                                                 "body returns incorrect type.", this.funcName.getToken());
         }
 
-        return true;
+        return funcBody.validateTree() && funcParams.validateTree() && funcReturnType.validateTree();
     }
     
     public static FuncNode parse(ArrayList<Token> tokens) throws SyntaxException, SemanticException {
