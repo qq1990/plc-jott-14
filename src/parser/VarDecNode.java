@@ -15,9 +15,12 @@ public class VarDecNode implements BodyStmtNode {
         this.name = name;
     }
 
-    // @Override
     public Type getRetType() {
         return null;
+    }
+
+    public boolean isReturnable() {
+        return false;
     }
 
     @Override
@@ -46,7 +49,7 @@ public class VarDecNode implements BodyStmtNode {
     @Override
     public boolean validateTree() throws SemanticException{
         if (FuncNode.varTable.containsKey(name.convertToJott())) {
-            throw new SemanticException("Semantic Error in VarDecNode, variable already declared: " + name.convertToJott());
+            throw new SemanticException("Semantic Error in VarDecNode, variable already declared: " + name.convertToJott(), name.getToken());
         }
         FuncNode.varTable.put(name.convertToJott(), type);
         return name.validateTree();
@@ -54,7 +57,7 @@ public class VarDecNode implements BodyStmtNode {
     
     public static VarDecNode parse(ArrayList<Token> tokens) throws SyntaxException{
         if (tokens.size() == 0){
-            throw new SyntaxException("Syntax Error in VarDecNode, reached end of file");
+            return null;
         }
         if (tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) {
             throw new SyntaxException("Syntax Error in VarDecNode, expected type keyword", tokens.get(0));
@@ -80,8 +83,11 @@ public class VarDecNode implements BodyStmtNode {
         tokens.remove(0);
 
         IdNode name = IdNode.parse(tokens);
+        if (name == null) {
+            throw new SyntaxException("Syntax Error in VarDecNode, reached end of file", t);
+        }
         if (tokens.size() == 0){
-            throw new SyntaxException("Syntax Error in VarDecNode, reached end of file");
+            return null;
         }
         if (tokens.get(0).getTokenType() != TokenType.SEMICOLON) {
             throw new SyntaxException("Syntax Error in VarDecNode, expected semicolon", tokens.get(0));

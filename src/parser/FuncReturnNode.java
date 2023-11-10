@@ -43,7 +43,7 @@ public class FuncReturnNode implements JottTree {
     
     public static FuncReturnNode parse(ArrayList<Token> tokens) throws SyntaxException{
         if (tokens.size() == 0) {
-            throw new SyntaxException("Syntax Error in FuncReturnNode, reached end of file");
+            return null;
         }
         if (tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) {
             throw new SyntaxException("Syntax Error in FuncReturnNode, expected type keyword", tokens.get(0));
