@@ -55,10 +55,14 @@ public class BodyNode implements JottTree {
     }
 
     @Override
-    public boolean validateTree() {
-        // TODO: Implement tree validation for BodyNode
-        // You can check if the body statements and return statement are valid here.
-        throw new UnsupportedOperationException("Unimplemented method 'validateTree'");
+    public boolean validateTree() throws SemanticException {
+        for (BodyStmtNode bodyStmt : bodyStmts) {
+            return bodyStmt.validateTree();
+        }
+        if (returnStmt != null) {
+            return returnStmt.validateTree();
+        }
+        return false;
     }
 
     public Type getRetType() throws SemanticException {
