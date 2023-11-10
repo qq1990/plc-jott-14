@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import src.provided.Token;
 import src.provided.TokenType;
-
 // Andrew Yansick
 public class IfNode implements BodyStmtNode {
 
@@ -66,7 +65,6 @@ public class IfNode implements BodyStmtNode {
             return type;
         }
         return null;
-        
     }
 
     @Override
@@ -154,8 +152,19 @@ public class IfNode implements BodyStmtNode {
 
     @Override
     public boolean isReturnable() {
-        // TODO Auto-generated method stubs
-        throw new UnsupportedOperationException("Unimplemented method 'isReturnable'");
+        if(else_node != null) {
+            if(else_node.getBody().getRetType() != body.getRetType()) {
+                return false;
+            }
+            Type type = body.getRetType();
+            for(int i = 0; i < elseiflist.size(); i++) {
+                if(elseiflist.get(i).getBody().getRetType() != type) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
     }
     
 }

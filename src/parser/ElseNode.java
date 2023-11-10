@@ -95,7 +95,9 @@ public class ElseNode implements BodyStmtNode {
 
     @Override
     public boolean isReturnable() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isReturnable'");
+        if(body.getRetType() == Type.Void || body.getRetType() == null) {
+            return false;
+        }
+        return true;
     }
 }

@@ -112,7 +112,6 @@ public class WhileNode implements BodyStmtNode {
 
     @Override
     public boolean isReturnable() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isReturnable'");
+        return false;
     }
 }

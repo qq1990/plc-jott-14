@@ -105,13 +105,14 @@ public class ElseIfNode implements BodyStmtNode {
 
     @Override
     public Type getRetType() throws SemanticException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getRetType'");
+        return body.getRetType();
     }
 
     @Override
     public boolean isReturnable() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isReturnable'");
+        if(body.getRetType() == Type.Void || body.getRetType() == null) {
+            return false;
+        }
+        return true;
     }
 }
