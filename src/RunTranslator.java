@@ -35,16 +35,18 @@ public class RunTranslator {
         ArrayList<Token> tokens = JottTokenizer.tokenize(file);
         if (tokens != null) {
             JottTree root = JottParser.parse(tokens);
-            System.out.println("Translating " + file + " ...");
-            
-            if (langChoice == 0)
-                root.convertToJott();
-            else if (langChoice == 1)
-                root.convertToPython();
-            else if (langChoice == 2)
-                root.convertToC();
-            else if (langChoice == 3)
-                root.convertToJava("");     // empty param for now
+            if (!(root == null)) {
+                System.out.println("Translating " + file + " ...");
+
+                if (langChoice == 0)
+                    System.out.println(root.convertToJott());
+                else if (langChoice == 1)
+                    System.out.println(root.convertToPython());
+                else if (langChoice == 2)
+                    System.out.println(root.convertToC());
+                else if (langChoice == 3)
+                    System.out.println(root.convertToJava(""));     // empty param for now
+            } else { System.out.println("Parse failed."); }
         }
     }
 }
