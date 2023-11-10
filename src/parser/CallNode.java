@@ -39,21 +39,17 @@ public class CallNode implements ExprNode, BodyStmtNode {
 
     @Override
     public boolean validateTree() throws SemanticException {
-        if (ProgramNode.defTable.containsKey(func_name.getName())) {
-            if (!params.validateTree()) { throw new SemanticException("Semantic Exception in CallNode, invalid parameters"); }
-            Type[] pTypes = ProgramNode.defTable.get(func_name.getName());
-            Type[] aTypes = params.getTypes();
-            if (aTypes.length == pTypes.length-1) {
-                for (int i=0; i<aTypes.length; i++) {
-                    if (aTypes[i] != pTypes[i]) {
-                        throw new SemanticException("Semantic Exception in CallNode, parameter type mismatch");
-                    }
-                }
-                return true;
+        if (!ProgramNode.defTable.containsKey(func_name.getName())) { throw new SemanticException("Semantic Exception in CallNode, could not find function", func_name.getToken()); }
+        params.validateTree();
+        Type[] pTypes = ProgramNode.defTable.get(func_name.getName());
+        Type[] aTypes = params.getTypes();
+        if (aTypes.length == pTypes.length-1) { throw new SemanticException("Semantic Exception in CallNode, parameter number mismatch", func_name.getToken()); }
+        for (int i=0; i<aTypes.length; i++) {
+            if (aTypes[i] != pTypes[i]) {
+                throw new SemanticException("Semantic Exception in CallNode, parameter type mismatch", func_name.getToken());
             }
-            throw new SemanticException("Semantic Exception in CallNode, parameter number mismatch");
         }
-        throw new SemanticException("Semantic Exception in CallNode, could not find function");
+        return true;
     }
 
     @Override
