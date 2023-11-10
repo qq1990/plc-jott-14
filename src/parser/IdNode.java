@@ -38,18 +38,18 @@ public class IdNode implements ExprNode {
     @Override
     public boolean validateTree() throws SemanticException {
         // Assume you are using the variable in ExprNode
-        if (getName().equals("True") || getName().equals("False") || FuncNode.varTable.containsKey(getName())) {
-            return true;
-        }
-        throw new SemanticException("Semantic Exception in IdNode, invalid id/keyword", id_name);
+        if (getName().equals("True") || getName().equals("False")) { return true; }
+        if (!FuncNode.varTable.containsKey(getName())) { throw new SemanticException("Semantic Exception in IdNode, invalid id/keyword", id_name); }
+        if (!FuncNode.varTable.get(getName()).initialized) { throw new SemanticException("Semantic Exception in IdNode, uninitialized id/keyword", id_name); }
+        return true;
         /* Functionality needs to be implemented in their respective classes, listed below:
-        Used on left side of VarDecNode - (!"True" && !"False") && !FuncNode.varTable.containsKey() && startsW/LowerCase
+        Used on left side of VarDecNode - !FuncNode.varTable.containsKey && validateName (!"True" && !"False")
         Used on left side of AsmtNode - 
-            +Dec/Init- (!"True" && !"False") && !FuncNode.varTable.containsKey() && startsW/LowerCase
-            +Update- (!"True" && !"False") && FuncNode.varTable.containsKey() && (startsW/LowerCase)
-        Used in FuncDefNode - (!"True" && !"False") && !ProgramNode.defTable.containsKey() && startsW/LowerCase
-        Used in FuncParams - (!"True" && !"False") && !FuncNode.varTable.containsKey() && startsW/LowerCase
-        Used in CallNode - (!"True" && !"False") && ProgramNode.defTable.containsKey()
+            +Dec/Init- !FuncNode.varTable.containsKey && validateName (!"True" && !"False")
+            +Update- FuncNode.varTable.containsKey (validateName (!"True" && !"False"))
+        Used in FuncDefNode - !ProgramNode.defTable.containsKey && startsW/LowerCase
+        Used in FuncParams - !FuncNode.varTable.containsKey && validateName (!"True" && !"False")
+        Used in CallNode - ProgramNode.defTable.containsKey (!"True" && !"False")
         Used in ExprNode - "True" || "False" || FuncNode.varTable.containsKey()
         */
     }

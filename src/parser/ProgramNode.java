@@ -85,7 +85,7 @@ public class ProgramNode implements JottTree {
             FuncNode node = FuncNode.parse(tokens);
 
             Type[] types = new Type[node.funcParams.paramTypes.size() + 1];
-            for(int i = 0; i < types.length; i++) {
+            for(int i = 0; i < types.length - 1; i++) {
                 types[i] = node.funcParams.paramTypes.get(i);
             }
             types[types.length - 1] = node.funcReturnType.type;
