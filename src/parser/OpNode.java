@@ -40,13 +40,15 @@ public class OpNode implements ExprNode {
     
     @Override
     public boolean validateTree() throws SemanticException {
-        if (!left.validateTree()) { throw new SemanticException("Semantic Error in Opnode, invalid left child"); }
-        if (!right.validateTree()) { throw new SemanticException("Semantic Error in Opnode, invalid right child"); }
-        if (left.getType() == null) { throw new SemanticException("Semantic Error in Opnode, invalidly typed left child"); }
-        if (right.getType() == null) { throw new SemanticException("Semantic Error in Opnode, invalidly typed right child"); }
-        if (left.getType() == right.getType()) { throw new SemanticException("Semantic Error in Opnode, type mismatch"); }
-        if (!(left.getType().equals(Type.Double) || left.getType().equals(Type.Integer))) { throw new SemanticException("Semantic Error in Opnode, invalid type"); }
-        if (op.getToken().equals("/") && ((NumNode) right).isZero()) { throw new SemanticException("Semantic Error in Opnode, divide by 0"); };
+        //if (right.getClass() == OpNode.class) { throw new SemanticException("Semantic Error in OpNode, cannot chain operations"); }
+        if (!left.validateTree()) { throw new SemanticException("Semantic Error in OpNode, invalid left child"); }
+        if (!right.validateTree()) { throw new SemanticException("Semantic Error in OpNode, invalid right child"); }
+        if (left.getType() == null) { throw new SemanticException("Semantic Error in OpNode, invalidly typed left operand"); }
+        if (right.getType() == null) { throw new SemanticException("Semantic Error in OpNode, invalidly typed right operand"); }
+        if (!(left.getType() == Type.Integer || left.getType() == Type.Double)) { throw new SemanticException("Semantic Error in OpNode, left operand has invalid type for operation"); }
+        if (!(right.getType() == Type.Integer || right.getType() == Type.Double)) { throw new SemanticException("Semantic Error in OpNode, right operand has invalid type for operation"); }
+        if (left.getType() != right.getType()) { throw new SemanticException("Semantic Error in OpNode, type mismatch"); }
+        if (op.getToken().equals("/") && ((NumNode) right).isZero()) { throw new SemanticException("Semantic Error in OpNode, divide by 0"); }
         return true;
     }
 
@@ -98,6 +100,7 @@ public class OpNode implements ExprNode {
         }
         tokens.remove(0);
         ExprNode r = ExprNode.parse(tokens);
+        if (r.getClass() == OpNode.class) { throw new SyntaxException("Syntax Error in OpNode, cannot chain operations"); }
         return new OpNode(o, l, r);
     }
 }

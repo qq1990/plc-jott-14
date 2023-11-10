@@ -66,7 +66,7 @@ public class CallNode implements ExprNode, BodyStmtNode {
     }
 
     @Override
-    public Type getRetType() throws SemanticException {
+    public Type getRetType() {
         return null;
     }
 
