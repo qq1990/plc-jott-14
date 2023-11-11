@@ -26,7 +26,7 @@ public class ProgramNode implements JottTree {
         String s = "";
 
         for(FuncNode node : funcDefNodes) {
-            s = s.concat(node.convertToJott())+"\n\n";
+            s = s.concat(node.convertToJott())+"\n";
         }
 
         return s;
@@ -58,15 +58,15 @@ public class ProgramNode implements JottTree {
         Type[] mainTypes = defTable.get("main");
         FuncNode mainNode = null;
         for (FuncNode node : funcDefNodes) {
-            if (node.funcName.getName().equals("main")) {
+            if (node.getName().equals("main")) {
                 mainNode = node;
             }
         }
         if(mainTypes.length != 1) {
-            throw new SemanticException("Semantic Error in ProgramNode, main function must have no parameters", mainNode.funcName.getToken());
+            throw new SemanticException("Semantic Error in ProgramNode, main function must have no parameters", mainNode.getToken());
         }
         if(mainTypes[mainTypes.length - 1] != Type.Void) {
-            throw new SemanticException("Semantic Error in ProgramNode, main function must return void", mainNode.funcName.getToken());
+            throw new SemanticException("Semantic Error in ProgramNode, main function must return void", mainNode.getToken());
         }
         return true;
     }
@@ -82,16 +82,16 @@ public class ProgramNode implements JottTree {
             if(!tokens.get(0).getToken().equals("def")) {
                 throw new SyntaxException("Syntax Error in ProgramNode, expected def keyword", tokens.get(0));
             }
-            
+
             FuncNode node = FuncNode.parse(tokens);
 
-            Type[] types = new Type[node.funcParams.paramTypes.size() + 1];
+            Type[] types = new Type[node.getParamTypes().size() + 1];
             for(int i = 0; i < types.length - 1; i++) {
-                types[i] = node.funcParams.paramTypes.get(i);
+                types[i] = node.getParamTypes().get(i);
             }
-            types[types.length - 1] = node.funcReturnType.type;
+            types[types.length - 1] = node.getRetType();
 
-            defTable.put(node.funcName.getName(), types);
+            defTable.put(node.getName(), types);
 
             funcDefNodes.add(node);
         }

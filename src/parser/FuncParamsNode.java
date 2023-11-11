@@ -22,7 +22,7 @@ public class FuncParamsNode implements JottTree {
         if (this.paramNames.size() > 0) {
             out += this.paramNames.get(0).convertToJott() + ":" + this.paramTypes.get(0).name();
             for (int i = 1; i < this.paramNames.size(); i++) {
-                out += "," + this.paramNames.get(i).convertToJott() + ":" + this.paramTypes.get(i).name();
+                out += ", " + this.paramNames.get(i).convertToJott() + ":" + this.paramTypes.get(i).name();
             }
         }
         return out;
@@ -50,8 +50,8 @@ public class FuncParamsNode implements JottTree {
     public boolean validateTree() throws SemanticException {
         for (IdNode name : this.paramNames) {
             String nameStr = name.getName();
-            if (FuncNode.varTable.containsKey(nameStr) && !name.validateName())
-                throw new SemanticException("Semantic Error in FuncParamsNode, param name already used.", name.getToken());
+            if (FuncNode.varTable.containsKey(nameStr)) { throw new SemanticException("Semantic Error in FuncParamsNode, param name already used.", name.getToken()); }
+            name.validateName();
         }
         return true;
     }
@@ -60,17 +60,17 @@ public class FuncParamsNode implements JottTree {
         ArrayList<IdNode> params = new ArrayList<IdNode>();
         ArrayList<Type> pTypes = new ArrayList<Type>();
         if (tokens.size() > 0 && tokens.get(0).getTokenType() != TokenType.R_BRACKET) {
-            IdNode param = null;
-            Token t = null;
-
-            param = IdNode.parse(tokens);
+            IdNode param = IdNode.parse(tokens);
             params.add(param);
+            if (tokens.size() == 0) { throw new SyntaxException("Syntax error in FuncParamsNode, ran out of tokens before ':'.", param.getToken()); }
 
-            if (tokens.get(0).getTokenType() != TokenType.COLON)
-                throw new SyntaxException("Syntax error in FuncParamsNode", tokens.get(0));
+            if (tokens.get(0).getTokenType() != TokenType.COLON) {
+                throw new SyntaxException("Syntax error in FuncParamsNode, expected ':'.", tokens.get(0));
+            }
             tokens.remove(0);
 
-            t = tokens.get(0);
+            if (tokens.size() == 0) { throw new SyntaxException("Syntax error in FuncParamsNode, ran out of tokens before type.", param.getToken()); }
+            Token t = tokens.get(0);
             Type paramtype = null;
 
             switch (t.getToken()) {
@@ -87,21 +87,25 @@ public class FuncParamsNode implements JottTree {
                     paramtype = Type.Boolean;
                     break;
                 default:
-                    throw new SyntaxException("Syntax Error in FuncParamsNode, invalid type keyword", t);
+                    throw new SyntaxException("Syntax Error in FuncParamsNode, invalid type keyword.", t);
             }
             tokens.remove(0);
             pTypes.add(paramtype);
 
             while (tokens.size() != 0 && tokens.get(0).getTokenType() == TokenType.COMMA) {
-                tokens.remove(0); // eat comma
+                t = tokens.remove(0); // eat comma
+                if (tokens.size() == 0) { throw new SyntaxException("Syntax error in FuncParamsNode, ran out of tokens before parameter name.", t); }
                 // repeat the stuff above the while loop
                 param = IdNode.parse(tokens);
                 params.add(param);
+                if (tokens.size() == 0) { throw new SyntaxException("Syntax error in FuncParamsNode, ran out of tokens", param.getToken()); }
 
-                if (tokens.get(0).getTokenType() != TokenType.COLON)
-                    throw new SyntaxException("Syntax error in FuncParamsNode", tokens.get(0));
+                if (tokens.get(0).getTokenType() != TokenType.COLON) {
+                    throw new SyntaxException("Syntax error in FuncParamsNode, expected ':'.", tokens.get(0));
+                }
                 tokens.remove(0);
 
+                if (tokens.size() == 0) { throw new SyntaxException("Syntax error in FuncParamsNode, ran out of tokens before type.", param.getToken()); }
                 t = tokens.get(0);
                 paramtype = null;
 
@@ -119,7 +123,7 @@ public class FuncParamsNode implements JottTree {
                     paramtype = Type.Boolean;
                     break;
                 default:
-                    throw new SyntaxException("Syntax Error in FuncParamsNode, invalid type keyword", t);
+                    throw new SyntaxException("Syntax Error in FuncParamsNode, invalid type keyword.", t);
                 }
                 pTypes.add(paramtype);
                 tokens.remove(0);

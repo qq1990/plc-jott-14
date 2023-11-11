@@ -18,7 +18,7 @@ public class WhileNode implements BodyStmtNode {
 
     @Override
     public String convertToJott() {
-        return "while["+expr.convertToJott()+"]{"+body.convertToJott()+"}";
+        return "while["+expr.convertToJott()+"]{\n"+body.convertToJott()+"}";
         
     }
 
@@ -46,16 +46,16 @@ public class WhileNode implements BodyStmtNode {
     //
     @Override
     public boolean validateTree() throws SemanticException {
-        if(expr.validateTree() && body.validateTree()) {
-            if(expr.getType() == Type.Boolean) {
-                return true;
-            }
+        expr.validateTree(); 
+        body.validateTree();
+        if(expr.getType() == Type.Boolean) {
+            return true;
         }
-        throw new SemanticException("Semantic error: Invalid while statement", null);
+        throw new SemanticException("Semantic error in WhileNode, condition must be a boolean expression.", null);
     }
 
     public Type getRetType() {
-        return null;
+        return body.getRetType();
     }
 
     public static WhileNode parse(ArrayList<Token> tokens) throws SyntaxException, SemanticException {
