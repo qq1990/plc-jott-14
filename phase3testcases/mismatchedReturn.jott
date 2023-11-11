@@ -7,5 +7,5 @@ def foo[y:Integer]:Double{
 
 def main[]:Void{
     Integer x = ::foo[5];
-	print[x];
+	::print[x];
 }
