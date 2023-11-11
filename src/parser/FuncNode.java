@@ -64,79 +64,71 @@ public class FuncNode implements JottTree{
         funcBody.validateTree();
         funcParams.validateTree();
         funcReturnType.validateTree();
-
-        // check if body return matches the return type
-        if (this.funcBody.getRetType() != this.funcReturnType.type) {
-            if (!(this.funcBody.getRetType() == null && this.funcReturnType.type == Type.Void))
-                throw new SemanticException("Semantic Error in FuncNode, " +
-                                                "body returns incorrect type.", this.funcName.getToken());
+        
+        if (this.funcReturnType.type == Type.Void) { // Check if Void function tries returning
+            if (this.funcBody.getRetType() != null) {
+                throw new SemanticException("Semantic Error in FuncNode, Void functions should not return anything.", this.funcName.getToken());
+            }
+        } else { // Check if body return matches the return type
+            if (this.funcBody.isReturnable() && this.funcBody.getRetType() != this.funcReturnType.type) {
+                throw new SemanticException("Semantic Error in FuncNode, body returns incorrect type.", this.funcName.getToken());
+            }
         }
 
         return true;
     }
     
     public static FuncNode parse(ArrayList<Token> tokens) throws SyntaxException, SemanticException {
+        if (tokens.size() == 0) {
+            return null;
+        }
+        
+        if (!tokens.get(0).getToken().equals("def")) { throw new SyntaxException("Syntax error in FuncNode, expected def keyword.", tokens.get(0)); }
         varTable = new HashMap<>();
-
-        if (tokens.size() == 0) {
-            return null;
-        }
-        if (!tokens.get(0).getToken().equals("def")) {
-            throw new SyntaxException("Syntax error in FuncNode", tokens.get(0));
-        }
-        tokens.remove(0);
-
+        Token t = tokens.remove(0);
+        if (tokens.size() == 0) { throw new SyntaxException("Syntax error in FuncNode, ran out of tokens before parsing name.", t); }
         IdNode func_name = IdNode.parse(tokens);
-
-        if (tokens.size() == 0) {
-            return null;
-        }
+        if (tokens.size() == 0) { throw new SyntaxException("Syntax error in FuncNode, ran out of tokens before parsing '['.", t); }
         if (tokens.get(0).getTokenType() != TokenType.L_BRACKET) {
-            throw new SyntaxException("Syntax error in FuncNode", tokens.get(0));
+            throw new SyntaxException("Syntax error in FuncNode, expected '['.", tokens.get(0));
         }
         tokens.remove(0);
 
+        if (tokens.size() == 0) { throw new SyntaxException("Syntax error in FuncNode, ran out of tokens before parsing parameters.", t); }
         FuncParamsNode fcp = FuncParamsNode.parse(tokens);
-
         for (int i = 0; i < fcp.paramNames.size(); i++) {
             varTable.put(fcp.paramNames.get(i).convertToJott(), new VarInfo(fcp.paramTypes.get(i), true));
         }
-
-        if (tokens.size() == 0) {
-            return null;
-        }
+        
+        if (tokens.size() == 0) { throw new SyntaxException("Syntax error in FuncNode, ran out of tokens before parsing ']'.", t); }
         if (tokens.get(0).getTokenType() != TokenType.R_BRACKET) {
-            throw new SyntaxException("Syntax error in FuncNode", tokens.get(0));
+            throw new SyntaxException("Syntax error in FuncNode, expected ']'.", tokens.get(0));
         }
         tokens.remove(0);
-        if (tokens.size() == 0) {
-            return null;
-        }
+        if (tokens.size() == 0) { throw new SyntaxException("Syntax error in FuncNode, ran out of tokens, before parsing ':'.", t); }
         if (tokens.get(0).getTokenType() != TokenType.COLON) {
-            throw new SyntaxException("Syntax error in FuncNode", tokens.get(0));
+            throw new SyntaxException("Syntax error in FuncNode, expected ':'.", tokens.get(0));
         }
         tokens.remove(0);
 
+        if (tokens.size() == 0) { throw new SyntaxException("Syntax error in FuncNode, ran out of tokens before parsing return type.", t); }
         FuncReturnNode returnType = FuncReturnNode.parse(tokens);
 
-        if (tokens.size() == 0) {
-            return null;
-        }
+        if (tokens.size() == 0) { throw new SyntaxException("Syntax error in FuncNode, ran out of tokens before parsing '{'.", t); }
         if (tokens.get(0).getTokenType() != TokenType.L_BRACE) {
-            throw new SyntaxException("Syntax error in FuncNode", tokens.get(0));
+            throw new SyntaxException("Syntax error in FuncNode, expected '{'.", tokens.get(0));
         }
         tokens.remove(0);
 
+        if (tokens.size() == 0) { throw new SyntaxException("Syntax error in FuncNode, ran out of tokens before parsing body.", t); }
         BodyNode body = BodyNode.parse(tokens);
 
-        if (tokens.size() == 0) {
-            return null;
-        }
+        if (tokens.size() == 0) { throw new SyntaxException("Syntax error in FuncNode, ran out of tokens before parsing '}'.", t); }
         if (tokens.get(0).getTokenType() != TokenType.R_BRACE) {
-            throw new SyntaxException("Syntax error in FuncNode", tokens.get(0));
+            throw new SyntaxException("Syntax error in FuncNode, expected '}'.", tokens.get(0));
         }
         tokens.remove(0);
-
+        
         FuncNode functionNode = new FuncNode(func_name, fcp, returnType, body);
         functionNode.validateTree();
         return functionNode;

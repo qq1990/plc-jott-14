@@ -58,7 +58,7 @@ public class ProgramNode implements JottTree {
         Type[] mainTypes = defTable.get("main");
         FuncNode mainNode = null;
         for (FuncNode node : funcDefNodes) {
-            if (node.funcName.convertToJott().equals("main")) {
+            if (node.funcName.getName().equals("main")) {
                 mainNode = node;
             }
         }
@@ -72,16 +72,17 @@ public class ProgramNode implements JottTree {
     }
 
     public static ProgramNode parse(ArrayList<Token> tokens) throws SyntaxException, SemanticException {
+        defTable = new HashMap<>();
         defTable.put("print", new Type[] {Type.Any, Type.Void});
         defTable.put("concat", new Type[] {Type.String, Type.String, Type.String});
         defTable.put("length", new Type[] {Type.String, Type.Integer});
 
         ArrayList<FuncNode> funcDefNodes = new ArrayList<>();
         while(tokens.size() > 0) {
-            if(!tokens.get(0).getToken().equals("def")){
+            if(!tokens.get(0).getToken().equals("def")) {
                 throw new SyntaxException("Syntax Error in ProgramNode, expected def keyword", tokens.get(0));
             }
-
+            
             FuncNode node = FuncNode.parse(tokens);
 
             Type[] types = new Type[node.funcParams.paramTypes.size() + 1];
