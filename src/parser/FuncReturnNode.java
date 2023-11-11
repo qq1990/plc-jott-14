@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 // Clarke Kennedy
 public class FuncReturnNode implements JottTree {
-    Type type;
+    private Type type;
 
     public FuncReturnNode(Type type) {
         this.type = type;
@@ -46,7 +46,7 @@ public class FuncReturnNode implements JottTree {
             return null;
         }
         if (tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) {
-            throw new SyntaxException("Syntax Error in FuncReturnNode, expected type keyword", tokens.get(0));
+            throw new SyntaxException("Syntax Error in FuncReturnNode, expected type keyword.", tokens.get(0));
         }
         Token t = tokens.get(0);
         Type type = null;
@@ -67,10 +67,14 @@ public class FuncReturnNode implements JottTree {
                 type = Type.Void;
                 break;
             default:
-                throw new SyntaxException("Syntax Error in FuncReturnNode, invalid type keyword", t);
+                throw new SyntaxException("Syntax Error in FuncReturnNode, invalid type keyword.", t);
         }
         tokens.remove(0);
         return new FuncReturnNode(type);
+    }
+
+    public Type getType() {
+        return type;
     }
 
     public static void main(String[] args) throws SyntaxException{

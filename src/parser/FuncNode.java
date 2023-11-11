@@ -66,12 +66,14 @@ public class FuncNode implements JottTree{
         funcReturnType.validateTree();
         funcBody.validateTree();
         
-        if (funcReturnType.type == Type.Void) { // Check if Void function tries returning
+        if (funcReturnType.getType() == Type.Void) { // Check if Void function tries returning
             if (funcBody.getRetType() != null) {
                 throw new SemanticException("Semantic Error in FuncNode, Void functions should not return anything.", funcName.getToken());
             }
-        } else { // Check if body return matches the return type
-            if (funcBody.isReturnable() && funcBody.getRetType() != funcReturnType.type) {
+        } else { // Check if body returns, and returns the correct type
+            if (!funcBody.isReturnable()) {
+                throw new SemanticException("Semantic Error in FuncNode, non-Void functions must return.", funcName.getToken());
+            } else if (funcBody.getRetType() != funcReturnType.getType()) {
                 throw new SemanticException("Semantic Error in FuncNode, body returns incorrect type.", funcName.getToken());
             }
         }
@@ -148,7 +150,7 @@ public class FuncNode implements JottTree{
     }
 
     public Type getRetType() {
-        return funcReturnType.type;
+        return funcReturnType.getType();
     }
 
     public static void main(String[] args) throws SyntaxException, SemanticException {

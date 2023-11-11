@@ -59,7 +59,7 @@ public class WhileNode implements BodyStmtNode {
     }
 
     public static WhileNode parse(ArrayList<Token> tokens) throws SyntaxException, SemanticException {
-        if (tokens.size() == 0){
+        if (tokens.size() == 0) {
             return null;
         }
 
