@@ -61,9 +61,6 @@ public class FuncNode implements JottTree{
         if (ProgramNode.defTable.containsKey(funcName.getName()) ) {
             throw new SemanticException("Semantic Error in FuncNode, function already defined.", funcName.getToken());
         }
-        funcName.validateName();
-        funcParams.validateTree();
-        funcReturnType.validateTree();
         funcBody.validateTree();
         
         if (funcReturnType.getType() == Type.Void) { // Check if Void function tries returning
@@ -71,11 +68,18 @@ public class FuncNode implements JottTree{
                 throw new SemanticException("Semantic Error in FuncNode, Void functions should not return anything.", funcName.getToken());
             }
         } else { // Check if body returns, and returns the correct type
+            if (funcBody.getRetType() != null && funcBody.getRetType() != funcReturnType.getType()) {
+                throw new SemanticException("Semantic Error in FuncNode, body returns incorrect type.", funcName.getToken());
+            } else if (!funcBody.isReturnable()) {
+                throw new SemanticException("Semantic Error in FuncNode, non-Void functions must return.", funcName.getToken());
+            }
+            /*
             if (!funcBody.isReturnable()) {
                 throw new SemanticException("Semantic Error in FuncNode, non-Void functions must return.", funcName.getToken());
             } else if (funcBody.getRetType() != funcReturnType.getType()) {
                 throw new SemanticException("Semantic Error in FuncNode, body returns incorrect type.", funcName.getToken());
             }
+            */
         }
 
         return true;
@@ -89,8 +93,11 @@ public class FuncNode implements JottTree{
         if (!tokens.get(0).getToken().equals("def")) { throw new SyntaxException("Syntax error in FuncNode, expected def keyword.", tokens.get(0)); }
         varTable = new HashMap<>();
         Token t = tokens.remove(0);
+
         if (tokens.size() == 0) { throw new SyntaxException("Syntax error in FuncNode, ran out of tokens before parsing name.", t); }
         IdNode func_name = IdNode.parse(tokens);
+        func_name.validateName();
+
         if (tokens.size() == 0) { throw new SyntaxException("Syntax error in FuncNode, ran out of tokens before parsing '['.", t); }
         if (tokens.get(0).getTokenType() != TokenType.L_BRACKET) {
             throw new SyntaxException("Syntax error in FuncNode, expected '['.", tokens.get(0));
@@ -99,9 +106,7 @@ public class FuncNode implements JottTree{
 
         if (tokens.size() == 0) { throw new SyntaxException("Syntax error in FuncNode, ran out of tokens before parsing parameters.", t); }
         FuncParamsNode fcp = FuncParamsNode.parse(tokens);
-        for (int i = 0; i < fcp.paramNames.size(); i++) {
-            varTable.put(fcp.paramNames.get(i).getName(), new VarInfo(fcp.paramTypes.get(i), true));
-        }
+        fcp.validateTree();
         
         if (tokens.size() == 0) { throw new SyntaxException("Syntax error in FuncNode, ran out of tokens before parsing ']'.", t); }
         if (tokens.get(0).getTokenType() != TokenType.R_BRACKET) {
@@ -116,6 +121,7 @@ public class FuncNode implements JottTree{
 
         if (tokens.size() == 0) { throw new SyntaxException("Syntax error in FuncNode, ran out of tokens before parsing return type.", t); }
         FuncReturnNode returnType = FuncReturnNode.parse(tokens);
+        returnType.validateTree();
 
         if (tokens.size() == 0) { throw new SyntaxException("Syntax error in FuncNode, ran out of tokens before parsing '{'.", t); }
         if (tokens.get(0).getTokenType() != TokenType.L_BRACE) {

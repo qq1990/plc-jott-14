@@ -1,0 +1,16 @@
+#this will fail phase 3 for no return
+#the loop does not have to run.
+
+def foo[a:Integer,a:Integer]:Integer{
+	Integer b = 0;
+	while[x<10]{
+		::print[x];
+		return x;
+	}
+	return 5;
+}
+
+def main[]:Void{
+    Integer y = ::foo[5,4];
+}
+
