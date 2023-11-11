@@ -1,7 +1,7 @@
 package src;
 
 import java.util.ArrayList;
-import java.util.Scanner;
+// import java.util.Scanner;
 
 import src.provided.JottParser;
 import src.provided.JottTokenizer;
