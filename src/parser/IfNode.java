@@ -106,71 +106,53 @@ public class IfNode implements BodyStmtNode {
     }
 
     public static IfNode parse(ArrayList<Token> tokens) throws SyntaxException, SemanticException {
-        ArrayList<ElseIfNode> nodes = new ArrayList<>();
-
-        if (tokens.size() == 0){
+        if (tokens.size() == 0) {
             return null;
-        }
-        if (tokens.get(0).getTokenType() != TokenType.ID_KEYWORD) {
-            throw new SyntaxException("Syntax Error in IfNode", tokens.get(0));
-        }
-        tokens.remove(0);
-
-        if (tokens.size() == 0){
-            return null;
-        }
-        if (tokens.get(0).getTokenType() != TokenType.L_BRACKET) {
-            throw new SyntaxException("Syntax Error in IfNode", tokens.get(0));
-        }
-        tokens.remove(0);
-
-        if (tokens.size() == 0){
-            return null;
-        }
-
-        ArrayList<Token> storage = tokens;
-        ExprNode expr = ExprNode.parse(tokens);
-        if(expr == null) {
-            throw new SyntaxException("Syntax Error in WhileNode, ran out of tokens", storage.get(storage.size()-1));
         }
         
-        if (tokens.size() == 0){
-            return null;
+        ArrayList<ElseIfNode> nodes = new ArrayList<>();
+        if (!tokens.get(0).getToken().equals("if")) {
+            throw new SyntaxException("Syntax Error in IfNode, expected if keyword.", tokens.get(0));
         }
+        Token t = tokens.remove(0);
+
+        if (tokens.size() == 0){ throw new SyntaxException("Syntax Error in IfNode, ran out of tokens before '['.", t); }
+        if (tokens.get(0).getTokenType() != TokenType.L_BRACKET) {
+            throw new SyntaxException("Syntax Error in IfNode, expected '['.", tokens.get(0));
+        }
+        t = tokens.remove(0);
+
+        if (tokens.size() == 0){ throw new SyntaxException("Syntax Error in IfNode, ran out of tokens before condition.", t); }
+        ExprNode expr = ExprNode.parse(tokens);
+        if(expr == null) {
+            throw new SyntaxException("Syntax Error in IfNode, ran out of tokens", t);
+        }
+        
+        if (tokens.size() == 0){ throw new SyntaxException("Syntax Error in IfNode, ran out of tokens before ']'.", t); }
         if (tokens.get(0).getTokenType() != TokenType.R_BRACKET) {
-            throw new SyntaxException("Syntax Error in IfNode", tokens.get(0));
+            throw new SyntaxException("Syntax Error in IfNode, expected ']'.", tokens.get(0));
         }
-        tokens.remove(0);
+        t = tokens.remove(0);
 
-        if (tokens.size() == 0){
-            return null;
-        }
+        if (tokens.size() == 0){ throw new SyntaxException("Syntax Error in IfNode, ran out of tokens before '{'.", t); }
         if (tokens.get(0).getTokenType() != TokenType.L_BRACE) {
-            throw new SyntaxException("Syntax Error in IfNode", tokens.get(0));
+            throw new SyntaxException("Syntax Error in IfNode, expected '{'.", tokens.get(0));
         }
-        tokens.remove(0);
+        t = tokens.remove(0);
 
-        if (tokens.size() == 0){
-            return null;
-        }
-
-        ArrayList<Token> storage2 = tokens;
+        if (tokens.size() == 0){ throw new SyntaxException("Syntax Error in IfNode, ran out of tokens before body.", t); }
         int x = FuncNode.varTable.size();
         BodyNode body = BodyNode.parse(tokens);
-        if(body == null) {
-            throw new SyntaxException("Syntax Error in WhileNode, ran out of tokens", storage.get(storage2.size()-1));
-        }
-        if(FuncNode.varTable.size() > x) {
-            throw new SemanticException("Semantic error: New variable declared in if statement", tokens.get(0));
-        }
 
-        if (tokens.size() == 0){
-            return null;
-        }
+        if (tokens.size() == 0){ throw new SyntaxException("Syntax Error in IfNode, ran out of tokens before '}'.", t); }
         if (tokens.get(0).getTokenType() != TokenType.R_BRACE) {
-            throw new SyntaxException("Syntax Error in IfNode", tokens.get(0));
+            throw new SyntaxException("Syntax Error in IfNode, expected '}'.", tokens.get(0));
         }
         tokens.remove(0);
+
+        if(FuncNode.varTable.size() > x) {
+            throw new SemanticException("Semantic error: New variable declared in if statement", t);
+        }
 
         ArrayList<ElseIfNode> elseiflist = new ArrayList<>();
         while(tokens.size() > 0 && tokens.get(0).getToken().equals("elseif")) {

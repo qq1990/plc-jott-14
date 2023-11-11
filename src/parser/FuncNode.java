@@ -73,13 +73,6 @@ public class FuncNode implements JottTree{
             } else if (!funcBody.isReturnable()) {
                 throw new SemanticException("Semantic Error in FuncNode, non-Void functions must return.", funcName.getToken());
             }
-            /*
-            if (!funcBody.isReturnable()) {
-                throw new SemanticException("Semantic Error in FuncNode, non-Void functions must return.", funcName.getToken());
-            } else if (funcBody.getRetType() != funcReturnType.getType()) {
-                throw new SemanticException("Semantic Error in FuncNode, body returns incorrect type.", funcName.getToken());
-            }
-            */
         }
 
         return true;
@@ -140,6 +133,13 @@ public class FuncNode implements JottTree{
 
         FuncNode functionNode = new FuncNode(func_name, fcp, returnType, body);
         functionNode.validateTree();
+
+        Type[] types = new Type[functionNode.getParamTypes().size() + 1];
+        for(int i = 0; i < types.length - 1; i++) {
+            types[i] = functionNode.getParamTypes().get(i);
+        }
+        types[types.length - 1] = functionNode.getRetType();
+        ProgramNode.defTable.put(functionNode.getName(), types);
         return functionNode;
     }
 
@@ -151,11 +151,11 @@ public class FuncNode implements JottTree{
         return funcName.getToken();
     }
 
-    public ArrayList<Type> getParamTypes() {
-        return funcParams.paramTypes;
+    private ArrayList<Type> getParamTypes() {
+        return funcParams.getParamTypes();
     }
 
-    public Type getRetType() {
+    private Type getRetType() {
         return funcReturnType.getType();
     }
 

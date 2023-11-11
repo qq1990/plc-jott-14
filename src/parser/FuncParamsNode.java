@@ -8,8 +8,8 @@ import src.provided.TokenType;
 
 // Donald Burke
 public class FuncParamsNode implements JottTree {
-    ArrayList<IdNode> paramNames;
-    ArrayList<Type> paramTypes;
+    private ArrayList<IdNode> paramNames;
+    private ArrayList<Type> paramTypes;
 
     public FuncParamsNode(ArrayList<IdNode> id, ArrayList<Type> types) {
         this.paramNames = id;
@@ -134,4 +134,7 @@ public class FuncParamsNode implements JottTree {
         return new FuncParamsNode(params, pTypes);
     }
     
+    public ArrayList<Type> getParamTypes() {
+        return paramTypes;
+    }
 }
