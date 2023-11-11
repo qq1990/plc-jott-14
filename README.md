@@ -5,10 +5,8 @@ src - the top level folder of the project
     src/provided - provided files, including the updated JottTokenizer.java and JottParser.java files.
     src/parser - parser files, including all nodes and SyntaxException.java files.
 
-To compile (in "provided" folder):
-javac JottTokenizer.java Token.java TokenType.java JottTree.java JottParser.java ../testers/JottTokenizerTester.java ../parser/*.java
+To compile (in src directory):
+javac RunTranslator.java
 
-To run (in working directory that has test cases):
-java src.testers.JottTokenizerTester
-
-java src.testers.JottParserTester
+To run (in src directory) (the 0 argument denotes "translate to Jott"):
+java RunTranslator [filename] 0
