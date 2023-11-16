@@ -23,20 +23,26 @@ public class NumNode implements ExprNode {
 
     @Override
     public String convertToJava(String className) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
+        if (sign != null) {
+            return sign.getToken()+num_val.getToken();
+        }
+        return num_val.getToken();
     }
 
     @Override
     public String convertToC() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToC'");
+        if (sign != null) {
+            return sign.getToken()+num_val.getToken();
+        }
+        return num_val.getToken();
     }
 
     @Override
     public String convertToPython() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
+        if (sign != null) {
+            return sign.getToken()+num_val.getToken();
+        }
+        return num_val.getToken();
     }
 
     @Override

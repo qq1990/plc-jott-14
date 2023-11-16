@@ -21,8 +21,14 @@ public class CallNode implements ExprNode, BodyStmtNode {
 
     @Override
     public String convertToJava(String className) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
+        if (func_name.getName().equals("print")) {
+            return "System.out.println("+params.convertToJava(className)+")";
+        } else if (func_name.getName().equals("concat")) {
+            return params.convertToJava(className).replace(',','+');
+        } else if (func_name.getName().equals("length")) {
+            return params.convertToJava(className).replace(',','+')+".length()";
+        }
+        return func_name.convertToJava(className)+"("+params.convertToJava(className)+")";
     }
 
     @Override
@@ -33,8 +39,12 @@ public class CallNode implements ExprNode, BodyStmtNode {
 
     @Override
     public String convertToPython() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
+        if (func_name.getName().equals("concat")) {
+            return params.convertToPython().replace(',','+');
+        } else if (func_name.getName().equals("length")) {
+            return "len("+params.convertToPython()+")";
+        }
+        return func_name.convertToPython()+"("+params.convertToPython()+")";
     }
 
     @Override
