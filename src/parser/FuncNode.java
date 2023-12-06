@@ -39,8 +39,13 @@ public class FuncNode implements JottTree{
 
     @Override
     public String convertToJava(String className) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
+        String out = "public static " + this.funcReturnType.convertToJava(className);
+        if (this.funcName.getName().equals("main")) 
+            out += "void main(String args[]){\n\t";
+        else
+            out += this.funcName.convertToJava(className) 
+                    + this.funcParams.convertToJava(className) + "{\n\t";
+        return out;
     }
 
     @Override
@@ -51,8 +56,9 @@ public class FuncNode implements JottTree{
 
     @Override
     public String convertToPython() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
+        String out = "def ";
+        out += this.funcName.convertToPython() + this.funcParams.convertToPython() + ":\n\t";
+        return out;
     }
 
     @Override

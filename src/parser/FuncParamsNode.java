@@ -30,8 +30,13 @@ public class FuncParamsNode implements JottTree {
 
     @Override
     public String convertToJava(String className) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
+        String out = "(";
+        for (int i = 0; i < this.paramNames.size() - 1; i++) {
+            out += this.paramTypes.get(i).toString() + this.paramNames.get(i).convertToJava(className) + ",";
+        }
+        out += this.paramTypes.get(this.paramNames.size() - 1).toString() 
+                + this.paramNames.get(this.paramNames.size() - 1).convertToJava(className) + ")";
+        return out;
     }
 
     @Override
@@ -42,8 +47,12 @@ public class FuncParamsNode implements JottTree {
 
     @Override
     public String convertToPython() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
+        String out = "(";
+        for (int i = 0; i < this.paramNames.size() - 1; i++) {
+            out += this.paramNames.get(i).convertToPython() + ",";
+        }
+        out += this.paramNames.get(this.paramNames.size() - 1) + ")";
+        return out;
     }
 
     @Override
