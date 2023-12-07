@@ -32,18 +32,44 @@ public class BodyNode implements JottTree {
 
     @Override
     public String convertToJava(String className) {
-        // TODO: Implement Java code generation for BodyNode
-        // You'll need to convert the body statements and return statement to Java code.
-        // Make sure to handle both cases where the body statements are present or not.
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
+        
+
+        StringBuilder javaCode = new StringBuilder();
+
+        // Convert body statements to Java
+        for (BodyStmtNode bodyStmt : bodyStmts) {
+            javaCode.append(bodyStmt.convertToJava(className));
+            if (bodyStmt instanceof CallNode) {
+                javaCode.append(";\n");
+            }
+        }
+
+        // Convert return statement to Java
+        if (returnStmt != null) {
+            javaCode.append(returnStmt.convertToJava(className));
+        }
+
+        return javaCode.toString();
     }
 
     @Override
     public String convertToC() {
-        // TODO: Implement C code generation for BodyNode
-        // You'll need to convert the body statements and return statement to C code.
-        // Make sure to handle both cases where the body statements are present or not.
-        throw new UnsupportedOperationException("Unimplemented method 'convertToC'");
+        StringBuilder cCode = new StringBuilder();
+
+        // Convert body statements to C
+        for (BodyStmtNode bodyStmt : bodyStmts) {
+            cCode.append(bodyStmt.convertToC());
+            if (bodyStmt instanceof CallNode) {
+                cCode.append(";\n");
+            }
+        }
+
+        // Convert return statement to C
+        if (returnStmt != null) {
+            cCode.append(returnStmt.convertToC());
+        }
+
+        return cCode.toString();
     }
 
     @Override
@@ -53,6 +79,22 @@ public class BodyNode implements JottTree {
         // Make sure to handle both cases where the body statements are present or not.
         throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
     }
+
+    // @Override
+    // public String convertToPython(int indentLevel) {
+    //     StringBuilder pythonCode = new StringBuilder();
+    //     String indent = "    " * indentLevel; // Assuming 4 spaces per indentation level
+
+    //     for (BodyStmtNode stmt : bodyStmts) {
+    //         pythonCode.append(indent);
+    //         pythonCode.append(stmt.convertToPython(indentLevel));
+    //     }
+    //     if (returnStmt != null) {
+    //         pythonCode.append(indent);
+    //         pythonCode.append(returnStmt.convertToPython(indentLevel));
+    //     }
+    //     return pythonCode.toString();
+    // }
 
     @Override
     public boolean validateTree() throws SemanticException {

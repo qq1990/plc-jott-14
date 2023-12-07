@@ -22,23 +22,20 @@ public class ReturnStmtNode implements JottTree {
 
     @Override
     public String convertToJava(String className) {
-        // TODO: Implement Java code generation for ReturnStmtNode
-        // You'll need to convert the expression to Java code.
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
+        // Convert the expression to Java code
+        return "return " + expr.convertToJott() + ";";
     }
 
     @Override
     public String convertToC() {
-        // TODO: Implement C code generation for ReturnStmtNode
-        // You'll need to convert the expression to C code.
-        throw new UnsupportedOperationException("Unimplemented method 'convertToC'");
+        // Convert the expression to C code
+        return "return " + expr.convertToJott() + ";";
     }
 
     @Override
     public String convertToPython() {
-        // TODO: Implement Python code generation for ReturnStmtNode
-        // You'll need to convert the expression to Python code.
-        throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
+        // Convert the expression to Python code
+        return "return " + expr.convertToJott();
     }
 
     @Override
