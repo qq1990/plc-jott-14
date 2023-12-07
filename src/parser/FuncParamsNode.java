@@ -41,8 +41,38 @@ public class FuncParamsNode implements JottTree {
 
     @Override
     public String convertToC() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToC'");
+        String out = "(";
+        if (this.paramNames.isEmpty())
+            out += "void)";
+        else {
+            // loop to check all but last argument type and translate
+            for (int i = 0; i < this.paramNames.size() - 1; i++) {
+                String thisType = this.paramTypes.get(i).name();
+                if (thisType.equals("Void"))
+                    out += "void " + this.paramNames.get(i).convertToC() + ",";
+                else if (thisType.equals("Boolean"))
+                    out += "bool " + this.paramNames.get(i).convertToC() + ",";
+                else if (thisType.equals("Integer"))
+                    out += "int" + this.paramNames.get(i).convertToC() + ",";
+                else if (thisType.equals("String"))
+                    out += "char[] " + this.paramNames.get(i).convertToC() + ",";
+                else if (thisType.equals("Double"))
+                    out += "double " + this.paramNames.get(i).convertToC() + ",";
+            }
+            // check last argument type and translate
+            String thisType = this.paramTypes.get(this.paramNames.size() - 1).name();
+                if (thisType.equals("Void"))
+                    out += "void " + this.paramNames.get(this.paramNames.size() - 1).convertToC() + ")";
+                else if (thisType.equals("Boolean"))
+                    out += "bool " + this.paramNames.get(this.paramNames.size() - 1).convertToC() + ")";
+                else if (thisType.equals("Integer"))
+                    out += "int" + this.paramNames.get(this.paramNames.size() - 1).convertToC() + ")";
+                else if (thisType.equals("String"))
+                    out += "char[] " + this.paramNames.get(this.paramNames.size() - 1).convertToC() + ")";
+                else if (thisType.equals("Double"))
+                    out += "double " + this.paramNames.get(this.paramNames.size() - 1).convertToC() + ")";
+        }
+        return out;
     }
 
     @Override
