@@ -43,9 +43,13 @@ public class ElseIfNode implements BodyStmtNode {
     @Override
     public String convertToPython(int depth) {
         String str = "";
-        for(int i = 0; i < depth+1; i++) {
-            
+        for(int i = 0; i < depth; i++) {
+            str = str + "\t";
         }
+        str = str + "elif " + expr.convertToPython(depth) + ":\n";
+        
+        str = str + body.convertToPython(depth+1);
+        return str;
     }
 
     @Override

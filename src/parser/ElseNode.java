@@ -47,13 +47,11 @@ public class ElseNode implements BodyStmtNode {
     @Override
     public String convertToPython(int depth) {
         String str = "";
-        for(int i = 0; i < depth+1; i++) {
+        for(int i = 0; i < depth; i++) {
             str = str + "\t";
         }
         str = str + "else:\n";
-        for(int i = 0; i < depth+2; i++) {
-            str = str + "\t";
-        }
+        
         str = str + body.convertToPython(depth+1);
         return str;        
     }
