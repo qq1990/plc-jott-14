@@ -49,6 +49,8 @@ public class IdNode implements ExprNode {
             return "double";
         } else if (getName().equals("Integer")) {
             return "int";
+        } else if (getName().equals("String")) {
+            return "char *";
         } else if (getName().equals("Boolean")) {
             return "bool";
         } else if (getName().equals("Void")) {
@@ -58,7 +60,7 @@ public class IdNode implements ExprNode {
     }
 
     @Override
-    public String convertToPython() {
+    public String convertToPython(int depth) {
         if (getName().equals("elseif")) {
             return "elif";
         } else if (getName().equals("Double") || getName().equals("Integer") 

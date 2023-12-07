@@ -53,14 +53,14 @@ public class FuncNode implements JottTree{
         String out = "";
         out += this.funcReturnType.convertToC() + " " + this.funcName.convertToC()
                 + this.funcParams.convertToC() + "{\n\t";
-        
+
         return out;
     }
 
     @Override
-    public String convertToPython() {
+    public String convertToPython(int depth) {
         String out = "def ";
-        out += this.funcName.convertToPython() + this.funcParams.convertToPython() + ":\n\t";
+        out += this.funcName.convertToPython(depth + 1) + this.funcParams.convertToPython(depth + 1) + ":\n\t";
         return out;
     }
 

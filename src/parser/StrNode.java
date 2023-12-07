@@ -28,7 +28,7 @@ public class StrNode implements ExprNode {
     }
 
     @Override
-    public String convertToPython() {
+    public String convertToPython(int depth) {
         return str_val.getToken();
     }
 

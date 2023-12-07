@@ -67,13 +67,13 @@ public class CallNode implements ExprNode, BodyStmtNode {
     }
 
     @Override
-    public String convertToPython() {
+    public String convertToPython(int depth) {
         if (func_name.getName().equals("concat")) {
-            return params.convertToPython().replace(',','+');
+            return params.convertToPython(depth).replace(',','+');
         } else if (func_name.getName().equals("length")) {
-            return "len("+params.convertToPython()+")";
+            return "len("+params.convertToPython(depth)+")";
         }
-        return func_name.convertToPython()+"("+params.convertToPython()+")";
+        return func_name.convertToPython(depth)+"("+params.convertToPython(depth)+")";
     }
 
     @Override
