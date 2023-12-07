@@ -51,12 +51,12 @@ public class ParamsNode implements JottTree {
     }
 
     @Override
-    public String convertToPython() {
+    public String convertToPython(int depth) {
         String out = "";
         if (params.size() > 0) {
-            out = params.get(0).convertToPython();
+            out = params.get(0).convertToPython(depth);
             for (int i=1; i<params.size(); i++) {
-                out += ","+params.get(i).convertToPython();
+                out += ","+params.get(i).convertToPython(depth);
             }
         }
         return out;

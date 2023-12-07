@@ -37,11 +37,11 @@ public class OpNode implements ExprNode {
     }
 
     @Override
-    public String convertToPython() {
+    public String convertToPython(int depth) {
         if (op.getToken().equals("^")) {
-            return "pow("+left.convertToPython()+","+right.convertToPython()+")";
+            return "pow("+left.convertToPython(depth)+","+right.convertToPython(depth)+")";
         }
-        return left.convertToPython()+op.getToken()+right.convertToPython();
+        return left.convertToPython(depth)+op.getToken()+right.convertToPython(depth);
     }
     
     @Override

@@ -38,7 +38,7 @@ public class NumNode implements ExprNode {
     }
 
     @Override
-    public String convertToPython() {
+    public String convertToPython(int depth) {
         if (sign != null) {
             return sign.getToken()+num_val.getToken();
         }
