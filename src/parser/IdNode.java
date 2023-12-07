@@ -19,20 +19,53 @@ public class IdNode implements ExprNode {
 
     @Override
     public String convertToJava(String className) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
+        if (getName().equals("True")) {
+            return "true";
+        } else if (getName().equals("False")) {
+            return "false";
+        } else if (getName().equals("elseif")) {
+            return "else if";
+        } else if (getName().equals("Double")) {
+            return "double";
+        } else if (getName().equals("Integer")) {
+            return "int";
+        } else if (getName().equals("Boolean")) {
+            return "bool";
+        } else if (getName().equals("Void")) {
+            return "void";
+        }
+        return getName();
     }
 
     @Override
     public String convertToC() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToC'");
+        if (getName().equals("True")) {
+            return "true";
+        } else if (getName().equals("False")) {
+            return "false";
+        } else if (getName().equals("elseif")) {
+            return "else if";
+        } else if (getName().equals("Double")) {
+            return "double";
+        } else if (getName().equals("Integer")) {
+            return "int";
+        } else if (getName().equals("Boolean")) {
+            return "bool";
+        } else if (getName().equals("Void")) {
+            return "void";
+        }
+        return getName();
     }
 
     @Override
     public String convertToPython() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
+        if (getName().equals("elseif")) {
+            return "elif";
+        } else if (getName().equals("Double") || getName().equals("Integer") 
+                || getName().equals("Boolean") || getName().equals("Void") || getName().equals("String")) {
+            return "";
+        }
+        return getName();
     }
 
     @Override

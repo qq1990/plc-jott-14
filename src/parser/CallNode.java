@@ -21,20 +21,59 @@ public class CallNode implements ExprNode, BodyStmtNode {
 
     @Override
     public String convertToJava(String className) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
+        if (func_name.getName().equals("print")) {
+            return "System.out.println("+params.convertToJava(className)+")";
+        } else if (func_name.getName().equals("concat")) {
+            return "("+params.convertToJava(className).replace(',','+')+")";
+        } else if (func_name.getName().equals("length")) {
+            return "("+params.convertToJava(className)+").length()";
+        }
+        return func_name.convertToJava(className)+"("+params.convertToJava(className)+")";
     }
 
     @Override
     public String convertToC() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToC'");
+        if (func_name.getName().equals("print")) {
+            String printString = "printf(\"";
+            switch (params.getTypes()[0]) {
+                case Boolean:
+                case Integer:
+                    printString += "%d";
+                    break;
+                case Double:
+                    printString += "%f";
+                    break;
+                case String:
+                    printString += "%s";
+                    break;
+                default:
+                    break;
+            }
+            return printString+"\", "+params.convertToC()+")";
+        } else if (func_name.getName().equals("concat")) {
+            return "concat("+params.convertToC()+")"; // TODO add concat and libraries
+            /*
+             * char * concat(char * s1, char * s2) {
+             *      char * result = (char *) malloc((strlen(s1)+strlen(s2)+1)*sizeof(char));
+             *      strcpy(result, s1);
+             *      strcat(result, s2);
+             *      return result;
+             * }
+             */
+        } else if (func_name.getName().equals("length")) {
+            return "strlen("+params.convertToC()+")";
+        }
+        return func_name.convertToC()+"("+params.convertToC()+")";
     }
 
     @Override
     public String convertToPython() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
+        if (func_name.getName().equals("concat")) {
+            return params.convertToPython().replace(',','+');
+        } else if (func_name.getName().equals("length")) {
+            return "len("+params.convertToPython()+")";
+        }
+        return func_name.convertToPython()+"("+params.convertToPython()+")";
     }
 
     @Override

@@ -22,20 +22,26 @@ public class OpNode implements ExprNode {
 
     @Override
     public String convertToJava(String className) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
+        if (op.getToken().equals("^")) {
+            return "Math.pow("+left.convertToJava(className)+","+right.convertToJava(className)+")";
+        }
+        return left.convertToJava(className)+op.getToken()+right.convertToJava(className);
     }
 
     @Override
     public String convertToC() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToC'");
+        if (op.getToken().equals("^")) {
+            return "Math.pow("+left.convertToC()+","+right.convertToC()+")";
+        }
+        return left.convertToC()+op.getToken()+right.convertToC();
     }
 
     @Override
     public String convertToPython() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
+        if (op.getToken().equals("^")) {
+            return "pow("+left.convertToPython()+","+right.convertToPython()+")";
+        }
+        return left.convertToPython()+op.getToken()+right.convertToPython();
     }
     
     @Override

@@ -7,29 +7,21 @@ import java.util.ArrayList;
 // Quan
 public interface BodyStmtNode extends JottTree {
     Type getRetType();
+
     boolean isReturnable();
+
     Token getToken();
+
     public static BodyStmtNode parse(ArrayList<Token> tokens) throws SyntaxException, SemanticException {
         if (tokens.size() == 0) {
             return null;
         }
         Token t = tokens.get(0);
         if (t.getToken().equals("if")) {
-            IfNode ifNode = IfNode.parse(tokens);
-            if (ifNode == null){
-                throw new SyntaxException("Error parsing If node", t);
-            }
-            return ifNode;
-            // return IfNode.parse(tokens);
+            return IfNode.parse(tokens);
         } else if (t.getToken().equals("while")) {
-            WhileNode whileNode = WhileNode.parse(tokens);
-            if (whileNode == null){
-                throw new SyntaxException("Error parsing While node", t);
-            }
-            return whileNode;
-            // return WhileNode.parse(tokens);
-        }
-        else if (t.getToken().equals("return")) {
+            return WhileNode.parse(tokens);
+        } else if (t.getToken().equals("return")) {
             return null;
         }
         else if (t.getTokenType() == TokenType.FC_HEADER){

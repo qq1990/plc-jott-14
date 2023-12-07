@@ -39,20 +39,29 @@ public class FuncNode implements JottTree{
 
     @Override
     public String convertToJava(String className) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
+        String out = "public static " + this.funcReturnType.convertToJava(className);
+        if (this.funcName.getName().equals("main")) 
+            out += "void main(String args[]){\n\t";
+        else
+            out += this.funcName.convertToJava(className) 
+                    + this.funcParams.convertToJava(className) + "{\n\t";
+        return out;
     }
 
     @Override
     public String convertToC() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToC'");
+        String out = "";
+        out += this.funcReturnType.convertToC() + " " + this.funcName.convertToC()
+                + this.funcParams.convertToC() + "{\n\t";
+        
+        return out;
     }
 
     @Override
     public String convertToPython() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
+        String out = "def ";
+        out += this.funcName.convertToPython() + this.funcParams.convertToPython() + ":\n\t";
+        return out;
     }
 
     @Override
@@ -73,13 +82,6 @@ public class FuncNode implements JottTree{
             } else if (!funcBody.isReturnable()) {
                 throw new SemanticException("Semantic Error in FuncNode, non-Void functions must return.", funcName.getToken());
             }
-            /*
-            if (!funcBody.isReturnable()) {
-                throw new SemanticException("Semantic Error in FuncNode, non-Void functions must return.", funcName.getToken());
-            } else if (funcBody.getRetType() != funcReturnType.getType()) {
-                throw new SemanticException("Semantic Error in FuncNode, body returns incorrect type.", funcName.getToken());
-            }
-            */
         }
 
         return true;
@@ -140,6 +142,13 @@ public class FuncNode implements JottTree{
 
         FuncNode functionNode = new FuncNode(func_name, fcp, returnType, body);
         functionNode.validateTree();
+
+        Type[] types = new Type[functionNode.getParamTypes().size() + 1];
+        for(int i = 0; i < types.length - 1; i++) {
+            types[i] = functionNode.getParamTypes().get(i);
+        }
+        types[types.length - 1] = functionNode.getRetType();
+        ProgramNode.defTable.put(functionNode.getName(), types);
         return functionNode;
     }
 
@@ -151,11 +160,11 @@ public class FuncNode implements JottTree{
         return funcName.getToken();
     }
 
-    public ArrayList<Type> getParamTypes() {
-        return funcParams.paramTypes;
+    private ArrayList<Type> getParamTypes() {
+        return funcParams.getParamTypes();
     }
 
-    public Type getRetType() {
+    private Type getRetType() {
         return funcReturnType.getType();
     }
 

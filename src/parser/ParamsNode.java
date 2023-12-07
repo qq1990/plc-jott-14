@@ -28,20 +28,38 @@ public class ParamsNode implements JottTree {
 
     @Override
     public String convertToJava(String className) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
+        String out = "";
+        if (params.size() > 0) {
+            out = params.get(0).convertToJava(className);
+            for (int i=1; i<params.size(); i++) {
+                out += ","+params.get(i).convertToJava(className);
+            }
+        }
+        return out;
     }
 
     @Override
     public String convertToC() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToC'");
+        String out = "";
+        if (params.size() > 0) {
+            out = params.get(0).convertToC();
+            for (int i=1; i<params.size(); i++) {
+                out += ","+params.get(i).convertToC();
+            }
+        }
+        return out;
     }
 
     @Override
     public String convertToPython() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
+        String out = "";
+        if (params.size() > 0) {
+            out = params.get(0).convertToPython();
+            for (int i=1; i<params.size(); i++) {
+                out += ","+params.get(i).convertToPython();
+            }
+        }
+        return out;
     }
 
     @Override
