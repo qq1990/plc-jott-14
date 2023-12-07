@@ -24,20 +24,30 @@ public class WhileNode implements BodyStmtNode {
 
     @Override
     public String convertToJava(String className) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
+        String str = "while (" + expr.convertToJava(className) + ") {\n\t" + 
+        body.convertToJava(className) + "\n}";
+        return str;
     }
 
     @Override
     public String convertToC() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToC'");
+        String str = "while (" + expr.convertToC() + ") {\n\t" + 
+        body.convertToC() + "\n}";
+        return str;
     }
 
     @Override
-    public String convertToPython() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
+    public String convertToPython(int depth) {
+        String str = "";
+        for(int i = 0; i < depth+1; i++) {
+            str = str + "\t";
+        }
+        str = str + "while " + expr.convertToPython(depth) + ":\n";
+        for(int i = 0; i < depth+2; i++) {
+            str = str + "\t";
+        }
+        str = str + body.convertToPython(depth+1);
+        return str;
     }
 
     //cannot make new variable in while loop
