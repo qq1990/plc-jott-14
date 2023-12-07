@@ -1,6 +1,8 @@
 package src.parser;
 
 import java.util.ArrayList;
+import java.util.Collections;
+
 import src.provided.JottTree;
 import src.provided.Token;
 // import src.provided.TokenType;
@@ -72,29 +74,30 @@ public class BodyNode implements JottTree {
         return cCode.toString();
     }
 
-    @Override
-    public String convertToPython() {
-        // TODO: Implement Python code generation for BodyNode
-        // You'll need to convert the body statements and return statement to Python code.
-        // Make sure to handle both cases where the body statements are present or not.
-        throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
-    }
-
     // @Override
-    // public String convertToPython(int indentLevel) {
-    //     StringBuilder pythonCode = new StringBuilder();
-    //     String indent = "    " * indentLevel; // Assuming 4 spaces per indentation level
-
-    //     for (BodyStmtNode stmt : bodyStmts) {
-    //         pythonCode.append(indent);
-    //         pythonCode.append(stmt.convertToPython(indentLevel));
-    //     }
-    //     if (returnStmt != null) {
-    //         pythonCode.append(indent);
-    //         pythonCode.append(returnStmt.convertToPython(indentLevel));
-    //     }
-    //     return pythonCode.toString();
+    // public String convertToPython() {
+    //     // TODO: Implement Python code generation for BodyNode
+    //     // You'll need to convert the body statements and return statement to Python code.
+    //     // Make sure to handle both cases where the body statements are present or not.
+    //     throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
     // }
+
+    @Override
+    public String convertToPython(int indentLevel) {
+        StringBuilder pythonCode = new StringBuilder();
+  
+        String indent = String.join("", Collections.nCopies(indentLevel, " "));
+
+        for (BodyStmtNode stmt : bodyStmts) {
+            pythonCode.append(indent);
+            pythonCode.append(stmt.convertToPython(indentLevel));
+        }
+        if (returnStmt != null) {
+            pythonCode.append(indent);
+            pythonCode.append(returnStmt.convertToPython(indentLevel));
+        }
+        return pythonCode.toString();
+    }
 
     @Override
     public boolean validateTree() throws SemanticException {
