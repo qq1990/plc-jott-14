@@ -1,14 +1,11 @@
-
-
 import java.util.ArrayList;
-// import java.util.Scanner;
 
 import src.provided.JottParser;
 import src.provided.JottTokenizer;
 import src.provided.JottTree;
 import src.provided.Token;
 
-// Donald Burke
+// Donald Burke + others
 public class RunTranslator {
 
     public static void main(String[] args) {

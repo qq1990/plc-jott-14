@@ -76,12 +76,12 @@ public class FuncParamsNode implements JottTree {
     }
 
     @Override
-    public String convertToPython() {
+    public String convertToPython(int depth) {
         String out = "(";
         for (int i = 0; i < this.paramNames.size() - 1; i++) {
-            out += this.paramNames.get(i).convertToPython() + ",";
+            out += this.paramNames.get(i).convertToPython(depth + 1) + ",";
         }
-        out += this.paramNames.get(this.paramNames.size() - 1) + ")";
+        out += this.paramNames.get(this.paramNames.size() - 1).convertToPython(depth + 1) + ")";
         return out;
     }
 
