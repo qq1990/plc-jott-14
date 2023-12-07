@@ -4,6 +4,7 @@ import src.provided.JottTree;
 import src.provided.Token;
 import src.provided.TokenType;
 import java.util.ArrayList;
+import java.util.Collections;
 
 // Quan
 public class ReturnStmtNode implements JottTree {
@@ -23,19 +24,25 @@ public class ReturnStmtNode implements JottTree {
     @Override
     public String convertToJava(String className) {
         // Convert the expression to Java code
-        return "return " + expr.convertToJott() + ";";
+        return "return " + expr.convertToJava(className) + ";";
     }
 
     @Override
     public String convertToC() {
         // Convert the expression to C code
-        return "return " + expr.convertToJott() + ";";
+        return "return " + expr.convertToC() + ";";
     }
 
     @Override
-    public String convertToPython() {
+    public String convertToPython(int indentLevel) {
+        StringBuilder pythonCode = new StringBuilder();
+        String indent = String.join("", Collections.nCopies(indentLevel, " "));
+        pythonCode.append(indent);
+        pythonCode.append("return ");
+        pythonCode.append(expr.convertToPython(indentLevel));
         // Convert the expression to Python code
-        return "return " + expr.convertToJott();
+        return pythonCode.toString();
+        // return "return " + expr.convertToJott();
     }
 
     @Override
