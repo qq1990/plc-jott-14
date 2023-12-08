@@ -6,7 +6,7 @@ src - the top level folder of the project
     src/parser - parser files, including all nodes and SyntaxException.java files.
 
 To compile (in src directory):
-javac RunTranslator.java
+javac Jott.java
 
-To run (in src directory) (the 0 argument denotes "translate to Jott"):
-java RunTranslator [filename] 0
+To run (in src directory):
+java Jott (input file) (output file) (language)
