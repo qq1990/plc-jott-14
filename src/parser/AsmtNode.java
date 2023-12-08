@@ -81,8 +81,7 @@ public class AsmtNode implements BodyStmtNode {
 
     @Override
     public String convertToPython(int depth) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
+        return name.convertToPython(depth) + " = " + expr.convertToPython(depth);
     }
 
     @Override

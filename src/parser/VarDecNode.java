@@ -70,8 +70,7 @@ public class VarDecNode implements BodyStmtNode {
 
     @Override
     public String convertToPython(int depth) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
+        return name.convertToPython(depth) + " = None";
     }
 
     @Override
