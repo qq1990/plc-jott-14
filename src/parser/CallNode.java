@@ -51,15 +51,7 @@ public class CallNode implements ExprNode, BodyStmtNode {
             }
             return printString+"\", "+params.convertToC()+")";
         } else if (func_name.getName().equals("concat")) {
-            return "concat("+params.convertToC()+")"; // TODO add concat and libraries
-            /*
-             * char * concat(char * s1, char * s2) {
-             *      char * result = (char *) malloc((strlen(s1)+strlen(s2)+1)*sizeof(char));
-             *      strcpy(result, s1);
-             *      strcat(result, s2);
-             *      return result;
-             * }
-             */
+            return "concat("+params.convertToC()+")";
         } else if (func_name.getName().equals("length")) {
             return "strlen("+params.convertToC()+")";
         }

@@ -44,7 +44,12 @@ public class ProgramNode implements JottTree {
 
     @Override
     public String convertToC() {
-        String s = "include <stdio.h>\ninclude <string.h>\ninclude <stdlib.h>\n";
+        String s = "#include <stdio.h>\n#include <string.h>\n#include <stdlib.h>\n#include <math.h>\n\n" +
+        "char* concat(char* s1, char* s2) {\n" +
+        "\tchar* result = (char*) malloc((strlen(s1)+strlen(s2)+1)*sizeof(char));\n" + 
+        "\tstrcpy(result, s1);\n" + 
+        "\tstrcat(result, s2);\n" + 
+        "\treturn result;\n}";
         for(FuncNode node : funcDefNodes) {
             s = s.concat(node.convertToC())+"\n";
         }
@@ -57,6 +62,7 @@ public class ProgramNode implements JottTree {
         for(FuncNode node : funcDefNodes) {
             s = s.concat(node.convertToPython(depth))+"\n";
         }
+        s = s.concat("if __name__ == \'__main__\'':\n\tmain()");
         return s;
     }
 
