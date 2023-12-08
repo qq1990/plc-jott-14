@@ -16,35 +16,36 @@ public class Jott {
     }
 
     public static void main(String[] args) {
-        // Scanner scanner = new Scanner(System.in);
-        // System.out.println("Welcome to the Jott Translator\n");
-        // System.out.println("Enter filename to begin:");
-        // String filename = scanner.nextLine();
+        /*
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Welcome to the Jott Translator\n");
+        System.out.println("Enter filename to begin:");
+        String filename = scanner.nextLine();
         
-        // System.out.println("Which language would you like to translate to?:");
-        // System.out.println("0: Jott\n" + "1: Python\n" + "2: C\n" + "3: Java");
-        // int choice = scanner.nextInt();
-        // while (choice > 3 || choice < 0) {
-        //     System.out.println("Invalid language choice\n");
-        //     System.out.println("Which language would you like to translate to?:");
-        //     System.out.println("0: Jott\n" + "1: Python\n" + "2: C\n" + "3: Java");
-        //     choice = scanner.nextInt();
-        // }
-        // scanner.close();
-        // if (args.length != 3) {
-        //     System.out.println("Usage: java Jott <input file> <output file> <language>");
-        //     return;
-        // }
-        // String input = args[0];
-        // String output = args[1];
-        // int choice = Language.valueOf(args[2].toLowerCase()).ordinal();
-        // if (choice > 3 || choice < 0) {
-        //     System.out.println("Invalid language choice\n");
-        //     System.out.println("Usage: java Jott <input file> <output file> <language>");
-        //     return;
-        // }
-        // translate(input, output, choice);
-        translate("phase3testcases/largerValid.jott", "test.txt", 1);
+        System.out.println("Which language would you like to translate to?:");
+        System.out.println("0: Jott\n" + "1: Python\n" + "2: C\n" + "3: Java");
+        int choice = scanner.nextInt();
+        while (choice > 3 || choice < 0) {
+            System.out.println("Invalid language choice\n");
+            System.out.println("Which language would you like to translate to?:");
+            System.out.println("0: Jott\n" + "1: Python\n" + "2: C\n" + "3: Java");
+            choice = scanner.nextInt();
+        }
+        scanner.close();
+        if (args.length != 3) {
+            System.out.println("Usage: java Jott <input file> <output file> <language>");
+            return;
+        }
+        */
+        String input = args[0];
+        String output = args[1];
+        int choice = Language.valueOf(args[2].toLowerCase()).ordinal();
+        if (choice > 3 || choice < 0) {
+            System.out.println("Invalid language choice\n");
+            System.out.println("Usage: java Jott <input file> <output file> <language>");
+            return;
+        }
+        translate(input, output, choice);
     }
 
     public static void translate(String input, String output, int langChoice) {
