@@ -28,14 +28,14 @@ public class ElseIfNode implements BodyStmtNode {
 
     @Override
     public String convertToJava(String className) {
-        String str = "else if (" + expr.convertToJava(className) + ") {\n\t" + 
+        String str = " else if (" + expr.convertToJava(className) + ") {\n\t" + 
         body.convertToJava(className) + "\n}";
         return str;
     }
 
     @Override
     public String convertToC() {
-        String str = "else if (" + expr.convertToC() + ") {\n\t" + 
+        String str = " else if (" + expr.convertToC() + ") {\n\t" + 
         body.convertToC() + "\n}";
         return str;
     }

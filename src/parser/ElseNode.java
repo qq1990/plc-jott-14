@@ -32,14 +32,14 @@ public class ElseNode implements BodyStmtNode {
 
     @Override
     public String convertToJava(String className) {
-        String str = "else {\n\t" + 
+        String str = " else {\n\t" + 
         body.convertToJava(className) + "\n}";
         return str;
     }
 
     @Override
     public String convertToC() {
-        String str = "else {\n\t" + 
+        String str = " else {\n\t" + 
         body.convertToC() + "\n}";
         return str;
     }
