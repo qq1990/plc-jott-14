@@ -40,9 +40,9 @@ public class IdNode implements ExprNode {
     @Override
     public String convertToC() {
         if (getName().equals("True")) {
-            return "true";
+            return "1";
         } else if (getName().equals("False")) {
-            return "false";
+            return "0";
         } else if (getName().equals("elseif")) {
             return "else if";
         } else if (getName().equals("Double")) {
@@ -50,9 +50,9 @@ public class IdNode implements ExprNode {
         } else if (getName().equals("Integer")) {
             return "int";
         } else if (getName().equals("String")) {
-            return "char *";
+            return "char*";
         } else if (getName().equals("Boolean")) {
-            return "bool";
+            return "int";
         } else if (getName().equals("Void")) {
             return "void";
         }
