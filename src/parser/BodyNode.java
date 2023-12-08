@@ -43,8 +43,9 @@ public class BodyNode implements JottTree {
         for (BodyStmtNode bodyStmt : bodyStmts) {
             javaCode.append(bodyStmt.convertToJava(className));
             if (bodyStmt instanceof CallNode) {
-                javaCode.append(";\n");
+                javaCode.append(";");
             }
+            javaCode.append("\n");
         }
 
         // Convert return statement to Java
@@ -64,8 +65,9 @@ public class BodyNode implements JottTree {
         for (BodyStmtNode bodyStmt : bodyStmts) {
             cCode.append(bodyStmt.convertToC());
             if (bodyStmt instanceof CallNode) {
-                cCode.append(";\n");
+                cCode.append(";");
             }
+            cCode.append("\n");
         }
 
         // Convert return statement to C

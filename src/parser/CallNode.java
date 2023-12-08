@@ -49,7 +49,7 @@ public class CallNode implements ExprNode, BodyStmtNode {
                 default:
                     break;
             }
-            return printString+"\", "+params.convertToC()+")";
+            return printString+"\\n\", "+params.convertToC()+")";
         } else if (func_name.getName().equals("concat")) {
             return "concat("+params.convertToC()+")";
         } else if (func_name.getName().equals("length")) {
