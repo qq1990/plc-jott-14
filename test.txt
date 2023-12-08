@@ -1,21 +1,30 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <math.h>
+def foo(x):
+	print(x)
 
-char* concat(char* s1, char* s2) {
-	char* result = (char*) malloc((strlen(s1)+strlen(s2)+1)*sizeof(char));
-	strcpy(result, s1);
-	strcat(result, s2);
-	return result;
-}int foo(intx){
-if (x>10) {
-	return 1;
-}else {
-	return 0;
-}}
 
-int main(void){
-printf("%d", foo(10));
-}
+def baz():
+	print("Hello World")
 
+
+def bar(x):
+	if x>5.1:
+		return "bar"
+
+	baz()
+	return "foo"
+
+
+
+def main():
+	y = 1.0
+	x = 5
+	while x>0:
+		foo(x)
+		print(bar(y))
+		x = x-1
+		y = y+1.1
+	baz()
+
+
+if __name__ == '__main__':
+	main()
