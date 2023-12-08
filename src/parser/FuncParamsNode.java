@@ -51,11 +51,11 @@ public class FuncParamsNode implements JottTree {
                 if (thisType.equals("Void"))
                     out += "void " + this.paramNames.get(i).convertToC() + ",";
                 else if (thisType.equals("Boolean"))
-                    out += "bool " + this.paramNames.get(i).convertToC() + ",";
+                    out += "int " + this.paramNames.get(i).convertToC() + ",";
                 else if (thisType.equals("Integer"))
                     out += "int" + this.paramNames.get(i).convertToC() + ",";
                 else if (thisType.equals("String"))
-                    out += "char[] " + this.paramNames.get(i).convertToC() + ",";
+                    out += "char* " + this.paramNames.get(i).convertToC() + ",";
                 else if (thisType.equals("Double"))
                     out += "double " + this.paramNames.get(i).convertToC() + ",";
             }
@@ -64,11 +64,11 @@ public class FuncParamsNode implements JottTree {
                 if (thisType.equals("Void"))
                     out += "void " + this.paramNames.get(this.paramNames.size() - 1).convertToC() + ")";
                 else if (thisType.equals("Boolean"))
-                    out += "bool " + this.paramNames.get(this.paramNames.size() - 1).convertToC() + ")";
+                    out += "int " + this.paramNames.get(this.paramNames.size() - 1).convertToC() + ")";
                 else if (thisType.equals("Integer"))
                     out += "int" + this.paramNames.get(this.paramNames.size() - 1).convertToC() + ")";
                 else if (thisType.equals("String"))
-                    out += "char[] " + this.paramNames.get(this.paramNames.size() - 1).convertToC() + ")";
+                    out += "char* " + this.paramNames.get(this.paramNames.size() - 1).convertToC() + ")";
                 else if (thisType.equals("Double"))
                     out += "double " + this.paramNames.get(this.paramNames.size() - 1).convertToC() + ")";
         }
@@ -79,10 +79,10 @@ public class FuncParamsNode implements JottTree {
     public String convertToPython(int depth) {
         String out = "(";
         for (int i = 0; i < this.paramNames.size() - 1; i++) {
-            out += this.paramNames.get(i).convertToPython(depth + 1) + ",";
+            out += this.paramNames.get(i).convertToPython(depth) + ",";
         }
         // TODO: out of bounds when no params
-        out += this.paramNames.get(this.paramNames.size() - 1).convertToPython(depth + 1) + ")";
+        out += this.paramNames.get(this.paramNames.size() - 1).convertToPython(depth) + ")";
         return out;
     }
 

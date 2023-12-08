@@ -41,18 +41,22 @@ public class FuncNode implements JottTree{
     public String convertToJava(String className) {
         String out = "public static " + this.funcReturnType.convertToJava(className);
         if (this.funcName.getName().equals("main")) 
-            out += "void main(String args[]){\n\t";
+            out += "void main(String args[]){\n";
         else
             out += this.funcName.convertToJava(className) 
-                    + this.funcParams.convertToJava(className) + "{\n\t";
+                    + this.funcParams.convertToJava(className) + "{\n";
+        out += this.funcBody.convertToJava(className);
         return out;
     }
 
     @Override
     public String convertToC() {
         String out = "";
+        // add check for main to see if change void to int return type
         out += this.funcReturnType.convertToC() + " " + this.funcName.convertToC()
-                + this.funcParams.convertToC() + "{\n\t";
+                + this.funcParams.convertToC() + "{\n";
+        out += this.funcBody.convertToC();
+        // add check for main to see if change void to int return type
 
         return out;
     }
@@ -60,7 +64,8 @@ public class FuncNode implements JottTree{
     @Override
     public String convertToPython(int depth) {
         String out = "def ";
-        out += this.funcName.convertToPython(depth + 1) + this.funcParams.convertToPython(depth + 1) + ":\n\t";
+        out += this.funcName.convertToPython(depth) + this.funcParams.convertToPython(depth) + ":\n";
+        out += this.funcBody.convertToPython(depth + 1);
         return out;
     }
 
