@@ -35,8 +35,25 @@ public class AsmtNode implements BodyStmtNode {
 
     @Override
     public String convertToJava(String className) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
+        if (type == null) {
+            return name.convertToJava(className) + " = " + expr.convertToJava(className) + ";";
+        }
+        String s = "";
+        switch (type.name()) {
+            case "Integer":
+                s = "int";
+                break;
+            case "Double":
+                s = "double";
+                break;
+            case "String":
+                s = "String";
+                break;
+            case "Boolean":
+                s = "boolean";
+                break;
+        }
+        return s + " " + name.convertToJott() + " = " + expr.convertToJott() + ";";
     }
 
     @Override
@@ -46,7 +63,7 @@ public class AsmtNode implements BodyStmtNode {
     }
 
     @Override
-    public String convertToPython() {
+    public String convertToPython(int depth) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
     }

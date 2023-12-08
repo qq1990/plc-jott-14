@@ -20,8 +20,25 @@ public class FuncReturnNode implements JottTree {
 
     @Override
     public String convertToJava(String className) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToJava'");
+        String s = "";
+        switch (type.name()) {
+            case "Integer":
+                s = "int";
+                break;
+            case "Double":
+                s = "double";
+                break;
+            case "String":
+                s = "String";
+                break;
+            case "Boolean":
+                s = "boolean";
+                break;
+            case "Void":
+                s = "void";
+                break;
+        }
+        return s;
     }
 
     @Override
@@ -31,7 +48,7 @@ public class FuncReturnNode implements JottTree {
     }
 
     @Override
-    public String convertToPython() {
+    public String convertToPython(int depth) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
     }

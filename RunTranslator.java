@@ -50,11 +50,11 @@ public class RunTranslator {
                 if (langChoice == 0)
                     System.out.println(root.convertToJott());
                 else if (langChoice == 1)
-                    System.out.println(root.convertToPython());
+                    System.out.println(root.convertToPython(0));
                 else if (langChoice == 2)
                     System.out.println(root.convertToC());
                 else if (langChoice == 3)
-                    System.out.println(root.convertToJava(""));     // empty param for now
+                    System.out.println(root.convertToJava(file.split(".")[0]));     // empty param for now
             } else { System.out.println("Parse failed."); }
         }
     }
