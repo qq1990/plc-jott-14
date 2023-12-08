@@ -77,13 +77,6 @@ public class BodyNode implements JottTree {
         return cCode.toString();
     }
 
-    // @Override
-    // public String convertToPython() {
-    //     // TODO: Implement Python code generation for BodyNode
-    //     // You'll need to convert the body statements and return statement to Python code.
-    //     // Make sure to handle both cases where the body statements are present or not.
-    //     throw new UnsupportedOperationException("Unimplemented method 'convertToPython'");
-    // }
 
     @Override
     public String convertToPython(int indentLevel) {
@@ -94,7 +87,9 @@ public class BodyNode implements JottTree {
         for (BodyStmtNode stmt : bodyStmts) {
             pythonCode.append(indent);
             pythonCode.append(stmt.convertToPython(indentLevel));
-            pythonCode.append("\n");
+            if (stmt instanceof CallNode) {
+                pythonCode.append("\n");
+            }
         }
         if (returnStmt != null) {
             pythonCode.append(indent);
