@@ -36,7 +36,7 @@ public class IfNode implements BodyStmtNode {
     @Override
     public String convertToJava(String className) {
         String str = "if (" + expr.convertToJava(className) + ") {\n\t" + 
-        body.convertToJava(className) + "\n}\n";
+        body.convertToJava(className) + "\n}";
         
         for(int i = 0; i < elseiflist.size(); i++) {
             str = str + elseiflist.get(i).convertToJava(className);
