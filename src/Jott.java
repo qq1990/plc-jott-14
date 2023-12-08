@@ -67,9 +67,8 @@ public class Jott {
                     }
                     else if (langChoice == 3) {
                         int lastSlash = output.lastIndexOf(File.separatorChar);
-                        if (lastSlash == -1) {lastSlash = 0; }
                         String className = output.substring(lastSlash+1, output.indexOf("."));
-                        System.out.println(root.convertToJava(className));
+                        //System.out.println(root.convertToJava(className));
                         writer.write(root.convertToJava(className));
                     }
                     writer.flush();

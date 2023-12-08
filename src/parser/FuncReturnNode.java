@@ -52,7 +52,7 @@ public class FuncReturnNode implements JottTree {
                 s = "double";
                 break;
             case "String":
-                s = "char[]";
+                s = "char*";
                 break;
             case "Boolean":
                 s = "bool";

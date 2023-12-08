@@ -28,15 +28,15 @@ public class AsmtNode implements BodyStmtNode {
     @Override
     public String convertToJott() {
         if (type == null) {
-            return name.convertToJott() + " = " + expr.convertToJott() + ";";
+            return name.convertToJott() + " = " + expr.convertToJott() + ";\n";
         }
-        return type.name() + " " + name.convertToJott() + " = " + expr.convertToJott() + ";";
+        return type.name() + " " + name.convertToJott() + " = " + expr.convertToJott() + ";\n";
     }
 
     @Override
     public String convertToJava(String className) {
         if (type == null) {
-            return name.convertToJava(className) + " = " + expr.convertToJava(className) + ";";
+            return name.convertToJava(className) + " = " + expr.convertToJava(className) + ";\n";
         }
         String s = "";
         switch (type.name()) {
@@ -53,13 +53,13 @@ public class AsmtNode implements BodyStmtNode {
                 s = "boolean";
                 break;
         }
-        return s + " " + name.convertToJava(className) + " = " + expr.convertToJava(className) + ";";
+        return s + " " + name.convertToJava(className) + " = " + expr.convertToJava(className) + ";\n";
     }
 
     @Override
     public String convertToC() {
         if (type == null) {
-            return name.convertToC() + " = " + expr.convertToC() + ";";
+            return name.convertToC() + " = " + expr.convertToC() + ";\n";
         }
         String s = "";
         switch (type.name()) {
@@ -70,18 +70,18 @@ public class AsmtNode implements BodyStmtNode {
                 s = "double";
                 break;
             case "String":
-                s = "char[]";
+                s = "char*";
                 break;
             case "Boolean":
-                s = "bool";
+                s = "int";
                 break;
         }
-        return s + " " + name.convertToC() + " = " + expr.convertToC() + ";";
+        return s + " " + name.convertToC() + " = " + expr.convertToC() + ";\n";
     }
 
     @Override
     public String convertToPython(int depth) {
-        return name.convertToPython(depth) + " = " + expr.convertToPython(depth);
+        return name.convertToPython(depth) + " = " + expr.convertToPython(depth)+"\n";
     }
 
     @Override

@@ -17,19 +17,19 @@ public class ReturnStmtNode implements JottTree {
 
     @Override
     public String convertToJott() {
-        return "return " + expr.convertToJott() + ";";
+        return "return " + expr.convertToJott() + ";\n";
     }
 
     @Override
     public String convertToJava(String className) {
         // Convert the expression to Java code
-        return "return " + expr.convertToJava(className) + ";";
+        return "return " + expr.convertToJava(className) + ";\n";
     }
 
     @Override
     public String convertToC() {
         // Convert the expression to C code
-        return "return " + expr.convertToC() + ";";
+        return "return " + expr.convertToC() + ";\n";
     }
 
     @Override
@@ -40,6 +40,7 @@ public class ReturnStmtNode implements JottTree {
         // pythonCode.append(indent);
         pythonCode.append("return ");
         pythonCode.append(expr.convertToPython(indentLevel));
+        pythonCode.append("\n");
         return pythonCode.toString();
     }
 

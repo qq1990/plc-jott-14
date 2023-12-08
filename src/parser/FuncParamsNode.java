@@ -71,7 +71,7 @@ public class FuncParamsNode implements JottTree {
                 else if (thisType.equals("Boolean"))
                     out += "int " + this.paramNames.get(this.paramNames.size() - 1).convertToC() + ")";
                 else if (thisType.equals("Integer"))
-                    out += "int" + this.paramNames.get(this.paramNames.size() - 1).convertToC() + ")";
+                    out += "int " + this.paramNames.get(this.paramNames.size() - 1).convertToC() + ")";
                 else if (thisType.equals("String"))
                     out += "char* " + this.paramNames.get(this.paramNames.size() - 1).convertToC() + ")";
                 else if (thisType.equals("Double"))
