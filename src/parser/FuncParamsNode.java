@@ -31,11 +31,16 @@ public class FuncParamsNode implements JottTree {
     @Override
     public String convertToJava(String className) {
         String out = "(";
-        for (int i = 0; i < this.paramNames.size() - 1; i++) {
-            out += this.paramTypes.get(i).toString() + this.paramNames.get(i).convertToJava(className) + ",";
+        if (this.paramNames.isEmpty())
+            out += ")";
+        else {
+            for (int i = 0; i < this.paramNames.size() - 1; i++) {
+                out += this.paramTypes.get(i).toString() 
+                        + " " + this.paramNames.get(i).convertToJava(className) + ",";
+            }
+            out += this.paramTypes.get(this.paramNames.size() - 1).toString() 
+                    + " " + this.paramNames.get(this.paramNames.size() - 1).convertToJava(className) + ")";
         }
-        out += this.paramTypes.get(this.paramNames.size() - 1).toString() 
-                + this.paramNames.get(this.paramNames.size() - 1).convertToJava(className) + ")";
         return out;
     }
 
@@ -53,7 +58,7 @@ public class FuncParamsNode implements JottTree {
                 else if (thisType.equals("Boolean"))
                     out += "int " + this.paramNames.get(i).convertToC() + ",";
                 else if (thisType.equals("Integer"))
-                    out += "int" + this.paramNames.get(i).convertToC() + ",";
+                    out += "int " + this.paramNames.get(i).convertToC() + ",";
                 else if (thisType.equals("String"))
                     out += "char* " + this.paramNames.get(i).convertToC() + ",";
                 else if (thisType.equals("Double"))

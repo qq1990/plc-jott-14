@@ -39,12 +39,13 @@ public class FuncNode implements JottTree{
 
     @Override
     public String convertToJava(String className) {
-        String out = "public static " + this.funcReturnType.convertToJava(className);
+        String out = "public static " + this.funcReturnType.convertToJava(className) + " ";
         if (this.funcName.getName().equals("main")) 
-            out += "void main(String args[]){\n";
-        else
+            out += "main(String args[]){\n";
+        else {
             out += this.funcName.convertToJava(className) 
                     + this.funcParams.convertToJava(className) + "{\n";
+        }
         out += this.funcBody.convertToJava(className);
         out += "}\n";
         return out;
