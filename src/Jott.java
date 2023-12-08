@@ -31,19 +31,20 @@ public class Jott {
         //     choice = scanner.nextInt();
         // }
         // scanner.close();
-        if (args.length != 3) {
-            System.out.println("Usage: java Jott <input file> <output file> <language>");
-            return;
-        }
-        String input = args[0];
-        String output = args[1];
-        int choice = Language.valueOf(args[2].toLowerCase()).ordinal();
-        if (choice > 3 || choice < 0) {
-            System.out.println("Invalid language choice\n");
-            System.out.println("Usage: java Jott <input file> <output file> <language>");
-            return;
-        }
-        translate(input, output, choice);
+        // if (args.length != 3) {
+        //     System.out.println("Usage: java Jott <input file> <output file> <language>");
+        //     return;
+        // }
+        // String input = args[0];
+        // String output = args[1];
+        // int choice = Language.valueOf(args[2].toLowerCase()).ordinal();
+        // if (choice > 3 || choice < 0) {
+        //     System.out.println("Invalid language choice\n");
+        //     System.out.println("Usage: java Jott <input file> <output file> <language>");
+        //     return;
+        // }
+        // translate(input, output, choice);
+        translate("phase3testcases/largerValid.jott", "test.txt", 1);
     }
 
     public static void translate(String input, String output, int langChoice) {
