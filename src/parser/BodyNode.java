@@ -86,14 +86,14 @@ public class BodyNode implements JottTree {
     public String convertToPython(int indentLevel) {
         StringBuilder pythonCode = new StringBuilder();
   
-        String indent = String.join("", Collections.nCopies(indentLevel, "\t"));
+        // String indent = String.join("", Collections.nCopies(indentLevel, "\t"));
 
         for (BodyStmtNode stmt : bodyStmts) {
-            pythonCode.append(indent);
+            // pythonCode.append(indent);
             pythonCode.append(stmt.convertToPython(indentLevel));
         }
         if (returnStmt != null) {
-            pythonCode.append(indent);
+            // pythonCode.append(indent);
             pythonCode.append(returnStmt.convertToPython(indentLevel));
         }
         return pythonCode.toString();

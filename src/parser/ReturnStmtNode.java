@@ -36,7 +36,7 @@ public class ReturnStmtNode implements JottTree {
     @Override
     public String convertToPython(int indentLevel) {
         StringBuilder pythonCode = new StringBuilder();
-        String indent = String.join("", Collections.nCopies(indentLevel, " "));
+        String indent = String.join("", Collections.nCopies(indentLevel, "\t"));
         pythonCode.append(indent);
         pythonCode.append("return ");
         pythonCode.append(expr.convertToPython(indentLevel));
