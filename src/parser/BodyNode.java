@@ -23,8 +23,9 @@ public class BodyNode implements JottTree {
         for (BodyStmtNode stmt : bodyStmts) {
             jottCode.append(stmt.convertToJott());
             if (stmt instanceof CallNode) {
-                jottCode.append(";\n");
+                jottCode.append(";");
             }
+            jottCode.append("\n");
         }
         if (returnStmt != null) {
             jottCode.append(returnStmt.convertToJott());
