@@ -44,8 +44,11 @@ public class ProgramNode implements JottTree {
 
     @Override
     public String convertToC() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToC'");
+        String s = "include <stdio.h>\ninclude <string.h>\ninclude <stdlib.h>\n";
+        for(FuncNode node : funcDefNodes) {
+            s = s.concat(node.convertToC())+"\n";
+        }
+        return s;
     }
 
     @Override

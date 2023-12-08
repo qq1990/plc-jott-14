@@ -50,8 +50,22 @@ public class VarDecNode implements BodyStmtNode {
 
     @Override
     public String convertToC() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'convertToC'");
+        String s = "";
+        switch (type.name()) {
+            case "Integer":
+                s = "int";
+                break;
+            case "Double":
+                s = "double";
+                break;
+            case "String":
+                s = "char[]";
+                break;
+            case "Boolean":
+                s = "bool";
+                break;
+        }
+        return s + " " + name.convertToC() + ";";
     }
 
     @Override
