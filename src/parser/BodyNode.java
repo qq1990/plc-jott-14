@@ -28,6 +28,7 @@ public class BodyNode implements JottTree {
         }
         if (returnStmt != null) {
             jottCode.append(returnStmt.convertToJott());
+            jottCode.append("\n");
         }
         return jottCode.toString();
     }
@@ -49,6 +50,7 @@ public class BodyNode implements JottTree {
         // Convert return statement to Java
         if (returnStmt != null) {
             javaCode.append(returnStmt.convertToJava(className));
+            javaCode.append("\n");
         }
 
         return javaCode.toString();
@@ -69,6 +71,7 @@ public class BodyNode implements JottTree {
         // Convert return statement to C
         if (returnStmt != null) {
             cCode.append(returnStmt.convertToC());
+            cCode.append("\n");
         }
 
         return cCode.toString();
@@ -91,10 +94,12 @@ public class BodyNode implements JottTree {
         for (BodyStmtNode stmt : bodyStmts) {
             pythonCode.append(indent);
             pythonCode.append(stmt.convertToPython(indentLevel));
+            pythonCode.append("\n");
         }
         if (returnStmt != null) {
             pythonCode.append(indent);
             pythonCode.append(returnStmt.convertToPython(indentLevel));
+            pythonCode.append("\n");
         }
         return pythonCode.toString();
     }
