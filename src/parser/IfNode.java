@@ -36,7 +36,15 @@ public class IfNode implements BodyStmtNode {
     @Override
     public String convertToJava(String className) {
         String str = "if (" + expr.convertToJava(className) + ") {\n\t" + 
-        body.convertToJava(className) + "\n}";
+        body.convertToJava(className) + "\n}\n";
+        
+        for(int i = 0; i < elseiflist.size(); i++) {
+            str = str + elseiflist.get(i).convertToJava(className);
+        }
+        if(else_node != null) {
+            str = str + else_node.convertToJava(className);
+        }
+        
         return str;
     }
 
@@ -44,15 +52,23 @@ public class IfNode implements BodyStmtNode {
     public String convertToC() {
         String str = "if (" + expr.convertToC() + ") {\n\t" + 
         body.convertToC() + "\n}";
+
+        for(int i = 0; i < elseiflist.size(); i++) {
+            str = str + elseiflist.get(i).convertToC();
+        }
+        if(else_node != null) {
+            str = str + else_node.convertToC();
+        }
+
         return str;
     }
 
     @Override
     public String convertToPython(int depth) {
         String str = "";
-        for(int i = 0; i < depth; i++) {
-            str = str + "\t";
-        }
+        //for(int i = 0; i < depth; i++) {
+        //    str = str + "\t";
+        //}
         str = str + "if " + expr.convertToPython(depth) + ":\n";
         
         str = str + body.convertToPython(depth+1);

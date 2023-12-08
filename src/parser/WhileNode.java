@@ -39,9 +39,9 @@ public class WhileNode implements BodyStmtNode {
     @Override
     public String convertToPython(int depth) {
         String str = "";
-        for(int i = 0; i < depth; i++) {
-            str = str + "\t";
-        }
+        //for(int i = 0; i < depth; i++) {
+        //    str = str + "\t";
+        //}
         str = str + "while " + expr.convertToPython(depth) + ":\n";
         
         str = str + body.convertToPython(depth+1);
