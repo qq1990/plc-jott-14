@@ -47,9 +47,9 @@ public class ElseNode implements BodyStmtNode {
     @Override
     public String convertToPython(int depth) {
         String str = "";
-        for(int i = 0; i < depth; i++) {
-            str = str + "\t";
-        }
+        //for(int i = 0; i < depth; i++) {
+        //    str = str + "\t";
+        //}
         str = str + "else:\n";
         
         str = str + body.convertToPython(depth+1);
