@@ -22,7 +22,7 @@ public class ParamsNode implements JottTree {
         if (params.size() > 0) {
             out = params.get(0).convertToJott();
             for (int i=1; i<params.size(); i++) {
-                out += ","+params.get(i).convertToJott();
+                out += ", "+params.get(i).convertToJott();
             }
         }
         return out;
@@ -34,7 +34,7 @@ public class ParamsNode implements JottTree {
         if (params.size() > 0) {
             out = params.get(0).convertToJava(className);
             for (int i=1; i<params.size(); i++) {
-                out += ","+params.get(i).convertToJava(className);
+                out += ", "+params.get(i).convertToJava(className);
             }
         }
         return out;
@@ -46,7 +46,7 @@ public class ParamsNode implements JottTree {
         if (params.size() > 0) {
             out = params.get(0).convertToC();
             for (int i=1; i<params.size(); i++) {
-                out += ","+params.get(i).convertToC();
+                out += ", "+params.get(i).convertToC();
             }
         }
         return out;
@@ -58,7 +58,7 @@ public class ParamsNode implements JottTree {
         if (params.size() > 0) {
             out = params.get(0).convertToPython(depth);
             for (int i=1; i<params.size(); i++) {
-                out += ","+params.get(i).convertToPython(depth);
+                out += ", "+params.get(i).convertToPython(depth);
             }
         }
         return out;
