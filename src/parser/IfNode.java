@@ -141,8 +141,7 @@ public class IfNode implements BodyStmtNode {
         if (tokens.size() == 0) {
             return null;
         }
-        
-        ArrayList<ElseIfNode> nodes = new ArrayList<>();
+
         if (!tokens.get(0).getToken().equals("if")) {
             throw new SyntaxException("Syntax Error in IfNode, expected if keyword.", tokens.get(0));
         }
@@ -197,7 +196,7 @@ public class IfNode implements BodyStmtNode {
             elsenode = null;
         }
 
-        return new IfNode(expr, body, nodes, elsenode);
+        return new IfNode(expr, body, elseiflist, elsenode);
         
     }
 
