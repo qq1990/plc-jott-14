@@ -33,14 +33,14 @@ def testIf[ d:Double, x:Integer ]:Void{
 
 def testIfLoop[ x:Integer ]:Integer{
     Integer output = 1;
-	Boolean switch = True;
+	Boolean branch = True;
 	while[x>0]{
-	    if[switch]{
+	    if[branch]{
 		    output = output * 2;
-			switch = False;
+			branch = False;
 		}
 		else{
-		    switch = True;
+		    branch = True;
 		}
 		x = x - 1;
 	}

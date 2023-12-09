@@ -80,7 +80,7 @@ public class VarDecNode implements BodyStmtNode {
         }
         name.validateName();
         FuncNode.varTable.put(name.convertToJott(), new VarInfo(type, false));
-        return name.validateTree();
+        return true;
     }
     
     public static VarDecNode parse(ArrayList<Token> tokens) throws SyntaxException{

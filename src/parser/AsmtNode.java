@@ -92,7 +92,7 @@ public class AsmtNode implements BodyStmtNode {
                 throw new SemanticException("Semantic Error in AsmtNode, variable already declared: " + name.convertToJott(), name.getToken());
             }
             name.validateName();
-            FuncNode.varTable.put(name.convertToJott(), new VarInfo(type, true));
+            FuncNode.varTable.put(name.convertToJott(), new VarInfo(type, false));
         }
         else if (!FuncNode.varTable.containsKey(name.convertToJott())) {
             throw new SemanticException("Semantic Error in AsmtNode, variable not declared: " + name.convertToJott(), name.getToken());
@@ -100,6 +100,7 @@ public class AsmtNode implements BodyStmtNode {
         if (FuncNode.varTable.get(name.convertToJott()).type != expr.getType()) {
             throw new SemanticException("Semantic Error in AsmtNode, type mismatch: " + FuncNode.varTable.get(name.convertToJott()).type.name() + " and " + expr.getType(), name.getToken());
         }
+        FuncNode.varTable.get(name.convertToJott()).initialized = true;
         return true;
     }
     

@@ -35,6 +35,7 @@ public class CallNode implements ExprNode, BodyStmtNode {
     public String convertToC() {
         if (func_name.getName().equals("print")) {
             String printString = "printf(\"";
+            System.out.println(params.convertToC());
             switch (params.getTypes()[0]) {
                 case Boolean:
                 case Integer:
