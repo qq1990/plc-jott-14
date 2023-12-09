@@ -90,9 +90,7 @@ public class BodyNode implements JottTree {
         for (BodyStmtNode stmt : bodyStmts) {
             pythonCode.append(indent);
             pythonCode.append(stmt.convertToPython(indentLevel));
-            if (stmt instanceof CallNode) {
-                pythonCode.append("\n");
-            }
+            pythonCode.append("\n");
         }
         if (returnStmt != null) {
             pythonCode.append(indent);

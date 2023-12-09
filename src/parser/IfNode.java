@@ -21,7 +21,7 @@ public class IfNode implements BodyStmtNode {
 
     @Override
     public String convertToJott() {
-        String s = "if["+expr.convertToJott()+"]{"+body.convertToJott()+"}";
+        String s = "if ["+expr.convertToJott()+"] {\n"+body.convertToJott()+"}";
 
         for(ElseIfNode node : elseiflist) {
             s = s.concat(node.convertToJott());
@@ -35,8 +35,8 @@ public class IfNode implements BodyStmtNode {
 
     @Override
     public String convertToJava(String className) {
-        String str = "if (" + expr.convertToJava(className) + ") {\n\t" + 
-        body.convertToJava(className) + "\n}\n";
+        String str = "if (" + expr.convertToJava(className) + ") {\n" + 
+        body.convertToJava(className) + "}";
         
         for(int i = 0; i < elseiflist.size(); i++) {
             str = str + elseiflist.get(i).convertToJava(className);
@@ -50,8 +50,8 @@ public class IfNode implements BodyStmtNode {
 
     @Override
     public String convertToC() {
-        String str = "if (" + expr.convertToC() + ") {\n\t" + 
-        body.convertToC() + "\n}";
+        String str = "if (" + expr.convertToC() + ") {\n" + 
+        body.convertToC() + "}";
 
         for(int i = 0; i < elseiflist.size(); i++) {
             str = str + elseiflist.get(i).convertToC();
@@ -65,14 +65,22 @@ public class IfNode implements BodyStmtNode {
 
     @Override
     public String convertToPython(int depth) {
-        String str = "";
-        //for(int i = 0; i < depth; i++) {
-        //    str = str + "\t";
-        //}
-        str = str + "if " + expr.convertToPython(depth) + ":\n";
-        
+        String str = "if " + expr.convertToPython(depth) + ":\n";
         str = str + body.convertToPython(depth+1);
-        return str;
+        for(int i = 0; i < elseiflist.size(); i++) {
+            for(int j = 0; j < depth; j++) {
+                str = str + "\t";
+            }
+            str = str + elseiflist.get(i).convertToPython(depth);
+        }
+        if(else_node != null) {
+            for(int j = 0; j < depth; j++) {
+                str = str + "\t";
+            }
+            str = str + else_node.convertToC();
+        }
+
+        return str.substring(0,str.length()-1);
     }
 
     public Type getRetType() {

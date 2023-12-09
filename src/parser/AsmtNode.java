@@ -28,15 +28,15 @@ public class AsmtNode implements BodyStmtNode {
     @Override
     public String convertToJott() {
         if (type == null) {
-            return name.convertToJott() + " = " + expr.convertToJott() + ";\n";
+            return name.convertToJott() + " = " + expr.convertToJott() + ";";
         }
-        return type.name() + " " + name.convertToJott() + " = " + expr.convertToJott() + ";\n";
+        return type.name() + " " + name.convertToJott() + " = " + expr.convertToJott() + ";";
     }
 
     @Override
     public String convertToJava(String className) {
         if (type == null) {
-            return name.convertToJava(className) + " = " + expr.convertToJava(className) + ";\n";
+            return name.convertToJava(className) + " = " + expr.convertToJava(className) + ";";
         }
         String s = "";
         switch (type.name()) {
@@ -53,13 +53,13 @@ public class AsmtNode implements BodyStmtNode {
                 s = "boolean";
                 break;
         }
-        return s + " " + name.convertToJava(className) + " = " + expr.convertToJava(className) + ";\n";
+        return s + " " + name.convertToJava(className) + " = " + expr.convertToJava(className) + ";";
     }
 
     @Override
     public String convertToC() {
         if (type == null) {
-            return name.convertToC() + " = " + expr.convertToC() + ";\n";
+            return name.convertToC() + " = " + expr.convertToC() + ";";
         }
         String s = "";
         switch (type.name()) {
@@ -76,12 +76,12 @@ public class AsmtNode implements BodyStmtNode {
                 s = "int";
                 break;
         }
-        return s + " " + name.convertToC() + " = " + expr.convertToC() + ";\n";
+        return s + " " + name.convertToC() + " = " + expr.convertToC() + ";";
     }
 
     @Override
     public String convertToPython(int depth) {
-        return name.convertToPython(depth) + " = " + expr.convertToPython(depth)+"\n";
+        return name.convertToPython(depth) + " = " + expr.convertToPython(depth);
     }
 
     @Override
