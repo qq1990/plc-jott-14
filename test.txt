@@ -9,10 +9,8 @@ def baz():
 def bar(x):
 	if x>5.1:
 		return "bar"
-
 	baz()
 	return "foo"
-
 
 
 def main():
