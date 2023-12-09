@@ -59,10 +59,10 @@ public class VarDecNode implements BodyStmtNode {
                 s = "double";
                 break;
             case "String":
-                s = "char[]";
+                s = "char*";
                 break;
             case "Boolean":
-                s = "bool";
+                s = "int";
                 break;
         }
         return s + " " + name.convertToC() + ";";

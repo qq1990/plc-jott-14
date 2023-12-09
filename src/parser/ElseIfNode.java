@@ -22,33 +22,28 @@ public class ElseIfNode implements BodyStmtNode {
 
     @Override
     public String convertToJott() {
-        String s = "elseif["+expr.convertToJott()+"]{"+body.convertToJott()+"}";
+        String s = " elseif ["+expr.convertToJott()+"] {\n"+body.convertToJott()+"}";
         return s;
     }
 
     @Override
     public String convertToJava(String className) {
-        String str = " else if (" + expr.convertToJava(className) + ") {\n\t" + 
-        body.convertToJava(className) + "\n}";
+        String str = " else if (" + expr.convertToJava(className) + ") {\n" + 
+        body.convertToJava(className) + "}";
         return str;
     }
 
     @Override
     public String convertToC() {
-        String str = " else if (" + expr.convertToC() + ") {\n\t" + 
-        body.convertToC() + "\n}";
+        String str = " else if (" + expr.convertToC() + ") {\n" + 
+        body.convertToC() + "}";
         return str;
     }
 
     @Override
     public String convertToPython(int depth) {
-        String str = "";
-        //for(int i = 0; i < depth; i++) {
-        //    str = str + "\t";
-        //}
-        str = str + "elif " + expr.convertToPython(depth) + ":\n";
-        
-        str = str + body.convertToPython(depth+1);
+        String str = "elif " + expr.convertToPython(depth) + ":\n" + 
+        body.convertToPython(depth+1);
         return str;
     }
 

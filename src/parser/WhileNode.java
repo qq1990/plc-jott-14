@@ -18,34 +18,29 @@ public class WhileNode implements BodyStmtNode {
 
     @Override
     public String convertToJott() {
-        return "while["+expr.convertToJott()+"]{\n"+body.convertToJott()+"}";
+        return "while ["+expr.convertToJott()+"] {\n"+body.convertToJott()+"}";
         
     }
 
     @Override
     public String convertToJava(String className) {
-        String str = "while (" + expr.convertToJava(className) + ") {\n\t" + 
-        body.convertToJava(className) + "\n}";
+        String str = "while (" + expr.convertToJava(className) + ") {\n" + 
+        body.convertToJava(className) + "}";
         return str;
     }
 
     @Override
     public String convertToC() {
-        String str = "while (" + expr.convertToC() + ") {\n\t" + 
-        body.convertToC() + "\n}";
+        String str = "while (" + expr.convertToC() + ") {\n" + 
+        body.convertToC() + "}";
         return str;
     }
 
     @Override
     public String convertToPython(int depth) {
-        String str = "";
-        //for(int i = 0; i < depth; i++) {
-        //    str = str + "\t";
-        //}
-        str = str + "while " + expr.convertToPython(depth) + ":\n";
-        
-        str = str + body.convertToPython(depth+1);
-        return str;
+        String str = "while " + expr.convertToPython(depth) + ":\n" + 
+        body.convertToPython(depth+1);
+        return str.substring(0,str.length()-1);
     }
 
     //cannot make new variable in while loop

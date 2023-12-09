@@ -55,7 +55,7 @@ public class FuncReturnNode implements JottTree {
                 s = "char*";
                 break;
             case "Boolean":
-                s = "bool";
+                s = "int";
                 break;
             case "Void":
                 s = "void";

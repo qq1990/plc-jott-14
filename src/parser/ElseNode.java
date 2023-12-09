@@ -24,7 +24,7 @@ public class ElseNode implements BodyStmtNode {
     public String convertToJott() {
         String s = "";
         if (body != null) {
-            s = s.concat("else{"+body.convertToJott()+"}");
+            s = s.concat("else {\n"+body.convertToJott()+"}");
         }
         
         return s;
@@ -32,27 +32,22 @@ public class ElseNode implements BodyStmtNode {
 
     @Override
     public String convertToJava(String className) {
-        String str = " else {\n\t" + 
-        body.convertToJava(className) + "\n}";
+        String str = " else {\n" + 
+        body.convertToJava(className) + "}";
         return str;
     }
 
     @Override
     public String convertToC() {
-        String str = " else {\n\t" + 
-        body.convertToC() + "\n}";
+        String str = " else {\n" + 
+        body.convertToC() + "}";
         return str;
     }
 
     @Override
     public String convertToPython(int depth) {
-        String str = "";
-        //for(int i = 0; i < depth; i++) {
-        //    str = str + "\t";
-        //}
-        str = str + "else:\n";
-        
-        str = str + body.convertToPython(depth+1);
+        String str = "else:\n" + 
+        body.convertToPython(depth+1);
         return str;        
     }
 

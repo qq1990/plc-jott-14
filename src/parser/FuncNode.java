@@ -29,9 +29,9 @@ public class FuncNode implements JottTree{
         out += this.funcName.convertToJott();
         out += "[";
         out += this.funcParams.convertToJott();
-        out += "]:";
+        out += "]: ";
         out += this.funcReturnType.convertToJott();
-        out += "{\n";
+        out += " {\n";
         out += this.funcBody.convertToJott();
         out += "}\n";
         return out;
@@ -41,10 +41,10 @@ public class FuncNode implements JottTree{
     public String convertToJava(String className) {
         String out = "public static " + this.funcReturnType.convertToJava(className) + " ";
         if (this.funcName.getName().equals("main")) 
-            out += "main(String args[]){\n";
+            out += "main(String args[]) {\n";
         else {
             out += this.funcName.convertToJava(className) 
-                    + this.funcParams.convertToJava(className) + "{\n";
+                    + this.funcParams.convertToJava(className) + " {\n";
         }
         out += this.funcBody.convertToJava(className);
         out += "}\n";
@@ -55,13 +55,13 @@ public class FuncNode implements JottTree{
     public String convertToC() {
         String out = "";
         if (this.funcName.getName().equals("main")) {
-            out += "int main(void){\n";
+            out += "int main(void) {\n";
             out += this.funcBody.convertToC();
             out += "}\n";
         }
         else {
             out += this.funcReturnType.convertToC() + " " + this.funcName.convertToC()
-                    + this.funcParams.convertToC() + "{\n";
+                    + this.funcParams.convertToC() + " {\n";
             out += this.funcBody.convertToC();
             out += "}\n";
         }
