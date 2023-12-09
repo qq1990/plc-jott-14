@@ -77,7 +77,7 @@ public class IfNode implements BodyStmtNode {
             for(int j = 0; j < depth; j++) {
                 str = str + "\t";
             }
-            str = str + else_node.convertToC();
+            str = str + else_node.convertToPython(depth);
         }
 
         return str.substring(0,str.length()-1);
