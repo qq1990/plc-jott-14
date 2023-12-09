@@ -100,7 +100,6 @@ public class FuncParamsNode implements JottTree {
             IdNode name = paramNames.get(i);
             name.validateName();
             if (FuncNode.varTable.containsKey(name.getName())) { throw new SemanticException("Semantic Error in FuncParamsNode, param name already used.", name.getToken()); }
-            System.out.println("Adding " + name.getName() + " to varTable " + paramTypes.get(i));
             FuncNode.varTable.put(name.getName(), new VarInfo(paramTypes.get(i), true));
         }
         return true;

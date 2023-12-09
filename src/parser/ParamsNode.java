@@ -9,9 +9,11 @@ import src.provided.TokenType;
 // Thomas Ehlers
 public class ParamsNode implements JottTree {
     private ArrayList<ExprNode> params;
+    private Type[] types;
 
     public ParamsNode(ArrayList<ExprNode> pars) {
         params = pars;
+        types = null;
     }
 
     @Override
@@ -67,14 +69,14 @@ public class ParamsNode implements JottTree {
         for (ExprNode p : params) {
             p.validateTree();
         }
+        types = new Type[params.size()];
+        for (int i=0; i<params.size(); i++) {
+            types[i] = params.get(i).getType();
+        }
         return true;
     }
 
     public Type[] getTypes() {
-        Type[] types = new Type[params.size()];
-        for (int i=0; i<params.size(); i++) {
-            types[i] = params.get(i).getType();
-        }
         return types;
     }
     
