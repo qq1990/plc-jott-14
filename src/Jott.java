@@ -32,11 +32,11 @@ public class Jott {
             choice = scanner.nextInt();
         }
         scanner.close();
+        */
         if (args.length != 3) {
             System.out.println("Usage: java Jott <input file> <output file> <language>");
             return;
         }
-        */
         String input = args[0];
         String output = args[1];
         int choice = Language.valueOf(args[2].toLowerCase()).ordinal();
@@ -67,7 +67,7 @@ public class Jott {
                     }
                     else if (langChoice == 3) {
                         int lastSlash = output.lastIndexOf(File.separatorChar);
-                        String className = output.substring(lastSlash+1, output.indexOf("."));
+                        String className = output.substring(lastSlash+1, output.lastIndexOf("."));
                         //System.out.println(root.convertToJava(className));
                         writer.write(root.convertToJava(className));
                     }
